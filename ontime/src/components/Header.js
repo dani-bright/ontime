@@ -1,6 +1,6 @@
 import * as React from "react";
 import {useContext, useEffect} from "react";
-import {Link, withRouter} from "react-router-dom";
+import {Link} from "react-router-dom";
 import '../styles/Header.css';
 import SearchBar from "./form/SearchBar";
 import {faAlignJustify} from "@fortawesome/free-solid-svg-icons";
@@ -9,9 +9,11 @@ import {MenuContext} from "../contexts/MenuContext";
 import {PopupContext} from "../contexts/PopupContext";
 import {AuthenticationContext} from "../contexts/AuthentificationContext";
 import {SmartLoginForm} from "./form/LoginForm";
+import {connect} from "react-redux";
+import {setUser} from "../action-creator/user/setUser";
 
 
-const Header = () => {
+const Header = (props) => {
     const menuContext = useContext(MenuContext);
     const popupContext = useContext(PopupContext);
     const authContext = useContext(AuthenticationContext);
@@ -25,7 +27,9 @@ const Header = () => {
     const logout = (e) => {
         e.preventDefault();
         localStorage.removeItem("token");
-
+        props.setUser({
+            user: null
+        });
         authContext.setIsAuth(false)
 
     };
@@ -47,6 +51,14 @@ const Header = () => {
             ) : (<div>connectez vous</div>)}
         </nav>
     )
-}
+};
 
-export default withRouter(Header);
+const mapDispatchToProps = (dispatch) => {
+    return {
+        setUser: (user) => dispatch(setUser(user)),
+    }
+};
+
+export const SmartHeader = connect(undefined, mapDispatchToProps)(Header);
+
+export default Header;

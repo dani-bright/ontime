@@ -1,7 +1,7 @@
 import * as React from "react";
 import {BrowserRouter, Route} from "react-router-dom";
 import {SmartHome} from "./pages/Home";
-import Header from "./components/Header";
+import {SmartHeader} from "./components/Header";
 import "./styles/Page.css";
 import {PopupProvider} from "./contexts/PopupContext";
 import {MenuProvider} from "./contexts/MenuContext";
@@ -47,7 +47,7 @@ class App extends React.PureComponent {
                 <PopupProvider>
                     <BrowserRouter>
                         <MenuProvider>
-                            <Header/>
+                            <SmartHeader/>
                             <Route exact path="/" component={SmartHome}/>
                             <Route exact path="/albums" component={SmartAlbums}/>
                             <Route exact path="/songs" component={SmartSongs}/>

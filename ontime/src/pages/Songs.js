@@ -2,7 +2,6 @@ import * as React from "react";
 import {connect} from "react-redux";
 import {getSongs} from "../selectors/getSongs";
 import {SongList} from "../components/SongList";
-import {SmartCategorySelector} from "../components/CategorySelector";
 import {getSelectedCategory} from "../selectors/getSelectedCategory";
 import {getSongsByCategory} from "../selectors/getSongsByCategory";
 import {Heading} from "../components/Heading";
