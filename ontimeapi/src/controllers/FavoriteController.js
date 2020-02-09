@@ -42,7 +42,7 @@ class FavoriteController {
 
             const favorites = await Favorite.findAll({
                 where: {
-                    userId: req.body.userId
+                    userId: req.params.userId
                 }
             });
 

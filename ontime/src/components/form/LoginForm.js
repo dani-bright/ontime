@@ -17,7 +17,6 @@ export class LoginForm extends React.PureComponent {
         if (response.ok) {
             let data = await response.json();
             localStorage.setItem('token', data.token);
-            localStorage.setItem('userFavorite', JSON.stringify(data.favorites));
             this.props.setUser(data.user);
             //fermer popup
             this.context.popup.show(null, null);

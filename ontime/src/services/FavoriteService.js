@@ -1,7 +1,7 @@
 const baseUrl = "http://localhost:3080/favorites";
 
-class SongService {
-    static async findAll() {
+class FavoriteService {
+    static async findAll(userId) {
         const init = {
             method: "GET",
             headers: {
@@ -9,7 +9,7 @@ class SongService {
                 "Authorization": `Bearer ${localStorage.getItem("token")}`
             }
         };
-        return await fetch(`${baseUrl}`, init);
+        return await fetch(`${baseUrl}/${userId}`, init);
     }
 
     static async create(body) {
@@ -49,4 +49,4 @@ class SongService {
 
 }
 
-export default SongService;
+export default FavoriteService;

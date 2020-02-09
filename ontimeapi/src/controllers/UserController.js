@@ -1,10 +1,8 @@
 import jwt from "jsonwebtoken";
 import User from "../models/User";
 import Role from "../models/Role";
-import Favorite from "../models/Favorite";
-import Album from "../models/Album";
-import Song from "../models/Song";
 import {getUserFavorite} from "../helpers/getUserFavorite";
+import Favorite from "../models/Favorite";
 
 class UserController {
     /***
@@ -56,11 +54,18 @@ class UserController {
             });
             if (user && user.password === req.body.password) {
                 const token = jwt.sign({sub: user._id}, "mysecret94652");
-                const favorites = await getUserFavorite(user);
+                const favorites = await Favorite.findAll(
+                    {
+                        where: {
+                            userId: user.id
+                        }
+                    });
 
                 body = {
-                    user,
-                    favorites,
+                    user: {
+                        user,
+                        favorites,
+                    },
                     token,
                     'message': "User authenticated"
                 }

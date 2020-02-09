@@ -12,6 +12,8 @@ import {setNowPlaying} from "../action-creator/setNowPlaying";
 import {setAudioPlayer} from "../action-creator/setAudioPlayer";
 import {getUser} from "../selectors/getUser";
 import FavoriteService from "../services/FavoriteService";
+import {setUser} from "../action-creator/user/setUser";
+import {getUserFavorites} from "../selectors/getUserFavorites";
 
 class MainPlayer extends React.PureComponent {
     state = {
@@ -60,11 +62,29 @@ class MainPlayer extends React.PureComponent {
         const favorite = await this.checkFavorite();
         if (favorite) {
             await FavoriteService.remove(favorite.id);
-            this.setState({isFavorite: false})
+            const toRemove = this.props.favorites.findIndex(fav => fav.songId === favorite.songId);
+
+            this.props.favorites.splice(toRemove, 1)
+
+            this.setState({isFavorite: false});
+            this.props.setUser({
+                user: {
+                    ...this.props.user
+                },
+                favorites: this.props.favorites
+            })
 
         } else {
-            await FavoriteService.create(body)
+            const newFavoriteResponse = await FavoriteService.create(body);
+            const data = await newFavoriteResponse.json();
             this.setState({isFavorite: true})
+            //refresh favorites page when adding favorite
+            this.props.setUser({
+                user: {
+                    ...this.props.user
+                },
+                favorites: [data.favorite, ...this.props.favorites]
+            })
         }
 
     };
@@ -98,7 +118,6 @@ class MainPlayer extends React.PureComponent {
             audio.play();
         });
         this.props.setNowPlaying(this.props.songs[songsIndex + 1]);
-
     };
     prev = () => {
         const {audio, songsIndex} = this.state;
@@ -200,6 +219,7 @@ class MainPlayer extends React.PureComponent {
 const mapStateToProps = (state) => {
     return {
         user: getUser(state),
+        favorites: getUserFavorites(state),
         nowPlaying: getNowPlaying(state),
         songs: getSongs(state),
     }
@@ -208,7 +228,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         setNowPlaying: (song) => dispatch(setNowPlaying(song)),
-        setAudioPlayer: (audioTag) => dispatch(setAudioPlayer(audioTag))
+        setAudioPlayer: (audioTag) => dispatch(setAudioPlayer(audioTag)),
+        setUser: (user) => dispatch(setUser(user)),
     }
 
 };

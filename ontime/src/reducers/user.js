@@ -1,6 +1,8 @@
 import {SetUser} from "../action-creator/user/setUser";
 
-const initialState = null;
+const initialState = {
+    user: null
+};
 
 const user = (state = initialState, action) => {
     switch (action.type) {

@@ -17,6 +17,7 @@ import {SmartMainPlayer} from "./components/MainPlayer";
 import CategoryService from "./services/CategoryService";
 import {setCategories} from "./action-creator/categories/setCategories";
 import {SmartTrending} from "./pages/Trending";
+import {SmartFavorites} from "./pages/Favorites";
 
 class App extends React.PureComponent {
     async componentDidMount() {
@@ -51,6 +52,7 @@ class App extends React.PureComponent {
                             <Route exact path="/albums" component={SmartAlbums}/>
                             <Route exact path="/songs" component={SmartSongs}/>
                             <Route exact path="/trending" component={SmartTrending}/>
+                            <Route exact path="/favorites" component={SmartFavorites}/>
                             <SmartMainPlayer/>
                         </MenuProvider>
                     </BrowserRouter>
