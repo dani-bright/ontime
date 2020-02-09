@@ -3,7 +3,7 @@ import "../styles/Player.css"
 import {getNowPlaying} from "../selectors/getNowPlaying";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {Filler} from './Filler'
-import {faBackward, faForward, faHeart, faPause, faPlay} from "@fortawesome/free-solid-svg-icons";
+import {faBackward, faForward, faHeart, faHeartbeat, faPause, faPlay} from "@fortawesome/free-solid-svg-icons";
 import ReactAudioPlayer from "react-audio-player";
 import {getSongs} from "../selectors/getSongs";
 import {connect} from "react-redux";
@@ -11,10 +11,11 @@ import SongService from "../services/SongService";
 import {setNowPlaying} from "../action-creator/setNowPlaying";
 import {setAudioPlayer} from "../action-creator/setAudioPlayer";
 import {getUser} from "../selectors/getUser";
+import FavoriteService from "../services/FavoriteService";
 
 class MainPlayer extends React.PureComponent {
     state = {
-        nowPlaying: this.props.songs[0],
+        isFavorite: false,
         isPlaying: false,
         audio: null,
         duration: "00:00",
@@ -23,11 +24,19 @@ class MainPlayer extends React.PureComponent {
         songsIndex: 0,
     };
 
-    componentDidMount() {
+    async componentDidMount() {
         this.setState({
             audio: this.refs.audio.audioEl
         });
-        this.props.setAudioPlayer(this.refs.audio.audioEl)
+        this.props.setAudioPlayer(this.refs.audio.audioEl);
+
+        //no favorite if there is no user
+        if (this.props.user) {
+            const getResponse = await FavoriteService.findOne(this.props.user.id, this.props.nowPlaying.id);
+            const favoriteData = await getResponse.json();
+            favoriteData.favorites ? this.setState({isFavorite: true}) : this.setState({isFavorite: false})
+        }
+
     }
 
     togglePlay = () => {
@@ -39,8 +48,26 @@ class MainPlayer extends React.PureComponent {
         })
     };
 
+    toggleFavorite = async () => {
+        const body = {
+            songId: this.props.nowPlaying.id,
+            userId: this.props.user.id,
+        };
+        const getResponse = await FavoriteService.findOne(this.props.user.id, this.props.nowPlaying.id);
+        const favoriteData = await getResponse.json();
+        if (favoriteData.favorites) {
+            await FavoriteService.remove(favoriteData.favorites.id);
+            this.setState({isFavorite: false})
+
+        } else {
+            await FavoriteService.create(body)
+            this.setState({isFavorite: true})
+        }
+
+    };
+
     play = () => {
-        const {isPlaying, audio} = this.state;
+        const {audio} = this.state;
         this.setState({
             isPlaying: true
         }, () => {
@@ -62,12 +89,12 @@ class MainPlayer extends React.PureComponent {
         const {audio, songsIndex} = this.state;
         this.setState({
             songsIndex: songsIndex + 1,
-            nowPlaying: this.props[songsIndex + 1]
         }, () => {
             audio.pause();
             audio.load();
             audio.play();
         });
+        this.props.setNowPlaying(this.props.songs[songsIndex + 1]);
 
     };
     prev = () => {
@@ -75,12 +102,13 @@ class MainPlayer extends React.PureComponent {
 
         this.setState({
             songsIndex: songsIndex - 1,
-            nowPlaying: this.props[songsIndex - 1]
         }, () => {
             audio.pause();
             audio.load();
             audio.play();
         });
+        this.props.setNowPlaying(this.props.songs[songsIndex - 1]);
+
 
     };
     getDuration = () => {
@@ -93,7 +121,7 @@ class MainPlayer extends React.PureComponent {
     };
 
     getCurrentTime = async (e) => {
-        const {audio, percentage, duration} = this.state;
+        const {audio} = this.state;
         const minutes = audio ? Math.floor(audio.currentTime / 60) : '00';
         const seconds = audio ? audio.currentTime - minutes * 60 : '00';
         this.setState(
@@ -116,9 +144,10 @@ class MainPlayer extends React.PureComponent {
 
 
     render() {
-        const {songsIndex, isPlaying, duration, currentTime, percentage} = this.state;
+        const {songsIndex, isFavorite, isPlaying, duration, currentTime, percentage} = this.state;
         const {nowPlaying, user} = this.props;
         const playPauseIcon = !isPlaying ? faPlay : faPause;
+        const favoriteIcon = !isFavorite ? faHeartbeat : faHeart;
 
         const displayNext = this.props.songs.length !== songsIndex + 1 ?
             <FontAwesomeIcon icon={faForward} onClick={this.next} size="2x" style={{color: 'white'}}/> :
@@ -127,9 +156,7 @@ class MainPlayer extends React.PureComponent {
             : <FontAwesomeIcon icon={faBackward} onClick={this.prev} size="2x" style={{color: 'white'}}/>;
         const displayImg = nowPlaying.img ?
             <img className="picture" src={require(`../assets/pictures/${nowPlaying.img}`)}/>
-            : null
-        console.log(nowPlaying, nowPlaying.audio)
-
+            : null;
 
         return (
             <div className="mainPlayer player">
@@ -149,7 +176,8 @@ class MainPlayer extends React.PureComponent {
                 </div>
                 {
                     user ? (
-                        <FontAwesomeIcon icon={faHeart} size="lg" style={{color: '#46d2e9'}}/>
+                        <FontAwesomeIcon icon={favoriteIcon} size="lg" style={{color: '#46d2e9'}}
+                                         onClick={this.toggleFavorite}/>
 
                     ) : null
                 }
@@ -167,7 +195,6 @@ class MainPlayer extends React.PureComponent {
 }
 
 const mapStateToProps = (state) => {
-    console.log(getUser(state))
     return {
         user: getUser(state),
         nowPlaying: getNowPlaying(state),

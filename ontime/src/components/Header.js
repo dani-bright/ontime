@@ -25,7 +25,6 @@ const Header = () => {
     const logout = (e) => {
         e.preventDefault();
         localStorage.removeItem("token");
-        localStorage.removeItem("redux");
 
         authContext.setIsAuth(false)
 

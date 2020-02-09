@@ -42,7 +42,32 @@ class FavoriteController {
 
             const favorites = await Favorite.findAll({
                 where: {
-                    userId: req.params.userId
+                    userId: req.body.userId
+                }
+            });
+
+            body = {
+                favorites,
+                'message': "200"
+            }
+        } catch (error) {
+            status = 500;
+            body = {'message': error.message}
+        }
+
+        return res.status(status).json(body);
+    }
+
+    static async findOne(req, res) {
+        let status = 200;
+        let body = {};
+        try {
+            await Favorite.sync();
+
+            const favorites = await Favorite.findOne({
+                where: {
+                    userId: req.params.userId,
+                    songId:req.params.songId,
                 }
             });
 
