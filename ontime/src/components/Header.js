@@ -47,7 +47,7 @@ const Header = (props) => {
             <button onClick={loginForm}>Login</button>
             <button onClick={logout}>logout</button>
             {authContext.isAuth ? (
-                <div>vous ête connecté</div>
+                <Link to="uploads">upload</Link>
             ) : (<div>connectez vous</div>)}
         </nav>
     )
