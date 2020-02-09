@@ -154,7 +154,7 @@ class MainPlayer extends React.PureComponent {
         );
 
         if (audio.currentTime.toFixed(0) == 25) {
-            let {nowPlaying} = this.state;
+            let {nowPlaying} = this.props;
             let song = await SongService.findOne(nowPlaying.id);
             const data = await song.json();
             let body = {
