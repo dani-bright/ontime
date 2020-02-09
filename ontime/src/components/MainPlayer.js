@@ -34,9 +34,7 @@ class MainPlayer extends React.PureComponent {
 
         //no favorite if there is no user
         if (this.props.user) {
-            if (this.refs.audio.audioEl.currentTime.toFixed(1) == 0.5) {
-                await this.checkFavorite() ? this.setState({isFavorite: true}) : this.setState({isFavorite: false})
-            }
+            await this.checkFavorite() ? this.setState({isFavorite: true}) : this.setState({isFavorite: false})
         }
 
     }
