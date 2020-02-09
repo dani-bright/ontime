@@ -1,0 +1,140 @@
+.detailContainer {
+    position: relative;
+    background: #fff;
+    height: 200px;
+    border: 6px solid #46d2e9;
+    margin: 65px 0;
+}
+
+.mainPlayer {
+    width: 100%;
+    height: 80px;
+    position: fixed;
+    background: #000;
+    bottom: 0;
+    right: 0;
+    z-index: 28;
+}
+
+.subPlayer {
+    position: relative;
+    background: #fff;
+    width: 100%;
+    color: #000;
+}
+
+.player {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.subPlayer.player {
+    position: absolute;
+    bottom: 0;
+}
+
+.player > * {
+    margin: 6px;
+}
+
+.songDetails {
+    margin-right: 35px;
+}
+
+.detailContainer .songDetails {
+    z-index: 10;
+    display: flex;
+    position: absolute;
+    bottom: 65px;
+    color: #000;
+    font-size: 20px;
+    left: 11px;
+
+}
+
+.detailContainer .detail {
+    font-size: 14px;
+}
+
+.mainPlayer .picture {
+    width: 56px;
+}
+
+.detailContainer .picture {
+    width: 150px;
+    margin-right: 30px;
+}
+
+.detailContainer .author {
+    margin: 20px 0 0 0;
+}
+
+.detailContainer .title {
+    margin: 5px 0 0 0;
+    font-size: 25px;
+    font-weight: bold;
+
+}
+
+.player .title {
+    font-weight: bold;
+}
+
+.controls {
+    margin-right: 45px;
+}
+
+.controls > * {
+    margin: 0 5px;
+}
+
+.mainPlayer .lectureBar, .subPlayer .lectureBar {
+    position: relative;
+    height: 40px;
+    margin-right: 20px;
+    border-right: 1px solid #46d2e9;
+    border-left: 1px solid #46d2e9;
+
+}
+
+.mainPlayer .lectureBar {
+    width: 50%;
+}
+
+.subPlayer .lectureBar {
+    width: 90%;
+}
+
+.mainPlayer .filler, .subPlayer .filler {
+    position: relative;
+    height: 100%;
+    transition: width .2s ease-in;
+    background: #46d2e9;
+}
+
+
+.mainPlayer .end, .mainPlayer .begin, .subPlayer .begin, .subPlayer .end {
+    position: absolute;
+    bottom: -20px;
+    color: #fff;
+    padding: 2px;
+}
+
+.mainPlayer .end, .mainPlayer .begin {
+    background: rgba(70, 210, 233, .5);
+}
+
+.subPlayer .end, .subPlayer .begin {
+    background: rgba(0, 0, 0, .5);
+}
+
+.begin {
+    left: 0;
+}
+
+.end {
+    right: 0;
+}
+
+

@@ -1,0 +1,55 @@
+#menu {
+    position: fixed;
+    height: 100%;
+    transform: translateX(-258%);
+    border-right: 2px solid #fff;
+}
+
+#menu.active {
+    width: 200px;
+    transform: translateX(0%);
+}
+
+
+#menu, .menu-box {
+    z-index: 11;
+    background: #000;
+    transition: all 1s;
+}
+
+.menu-box {
+    position: relative;
+    top: 48px;
+    width: 100%;
+}
+
+.menu-box nav ul{
+    margin: 0;
+    padding: 0;
+}
+
+.menu-box nav ul li {
+    /*	display: inline-block;*/
+    list-style: none;
+    text-align: center;
+    width: 100%;
+    color: #fff;
+}
+
+.menu-box nav li a {
+    position: relative;
+    display: block;
+    margin: 45px 0px;
+    text-align: center;
+    outline: none;
+    color: #fff;
+    text-decoration: none;
+    font-weight: 400;
+    text-shadow: 0 0 1px rgba(255, 255, 255, 0.3);
+    font-size: 22px;
+}
+
+.menu-box nav a:hover,
+.menu-box nav a:focus {
+    outline: none;
+}

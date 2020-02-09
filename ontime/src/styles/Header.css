@@ -1,0 +1,31 @@
+.navBar {
+    position: fixed;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    background: #fff;
+    font-family: 'Roboto', sans-serif;
+    width: 100%;
+    margin: 0 10px 0px 0;
+    overflow: hidden;
+    height: 58px;
+    top: 0;
+    color: #000;
+    z-index: 100;
+
+}
+
+.navBar > * {
+    margin: 5px;
+}
+
+.burgerContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    background: #46d2e9;
+    margin: 0 40px 0 0;
+    cursor: pointer;
+    padding: 1px 10px;
+}
