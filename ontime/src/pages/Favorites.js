@@ -28,15 +28,16 @@ export class Favorites extends React.PureComponent {
 
     render() {
         const {favorites} = this.props;
+        console.log(favorites)
         return (
             <>
                 {
                     this.props.user ? (
                         <div className="container">
                             <Heading pageTitle="Favorites"/>
-                            {favorites.map((favoriteSong, index) => (
-                                <div key={favoriteSong.id}>
-                                    <SmartSongDetail idSong={favoriteSong.id} key={index}/>
+                            {favorites.map((favorite, index) => (
+                                <div key={favorite.id}>
+                                    <SmartSongDetail idSong={favorite.songId} key={index}/>
                                 </div>
                             ))}
                         </div>) : <p

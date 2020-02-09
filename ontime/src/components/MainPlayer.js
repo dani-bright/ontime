@@ -40,6 +40,7 @@ class MainPlayer extends React.PureComponent {
     }
 
     checkFavorite = async () => {
+        //call service multiple time gotta find a way to improve it later
         const getResponse = await FavoriteService.findOne(this.props.user.id, this.props.nowPlaying.id);
         const favoriteData = await getResponse.json();
         return favoriteData.favorites
