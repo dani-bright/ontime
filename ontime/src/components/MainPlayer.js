@@ -10,6 +10,7 @@ import {connect} from "react-redux";
 import SongService from "../services/SongService";
 import {setNowPlaying} from "../action-creator/setNowPlaying";
 import {setAudioPlayer} from "../action-creator/setAudioPlayer";
+import {getUser} from "../selectors/getUser";
 
 class MainPlayer extends React.PureComponent {
     state = {
@@ -116,7 +117,7 @@ class MainPlayer extends React.PureComponent {
 
     render() {
         const {songsIndex, isPlaying, duration, currentTime, percentage} = this.state;
-        const {nowPlaying} = this.props;
+        const {nowPlaying, user} = this.props;
         const playPauseIcon = !isPlaying ? faPlay : faPause;
 
         const displayNext = this.props.songs.length !== songsIndex + 1 ?
@@ -146,7 +147,12 @@ class MainPlayer extends React.PureComponent {
                     <Filler percentage={percentage}/>
                     <p className="begin">{currentTime}</p><p className={"end"}>{duration}</p>
                 </div>
-                <FontAwesomeIcon icon={faHeart} size="lg" style={{color: '#46d2e9'}}/>
+                {
+                    user ? (
+                        <FontAwesomeIcon icon={faHeart} size="lg" style={{color: '#46d2e9'}}/>
+
+                    ) : null
+                }
 
                 <ReactAudioPlayer
                     ref="audio"
@@ -161,8 +167,9 @@ class MainPlayer extends React.PureComponent {
 }
 
 const mapStateToProps = (state) => {
-    console.log(getNowPlaying(state))
+    console.log(getUser(state))
     return {
+        user: getUser(state),
         nowPlaying: getNowPlaying(state),
         songs: getSongs(state),
     }

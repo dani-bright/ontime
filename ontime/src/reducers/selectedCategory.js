@@ -1,8 +1,6 @@
 import {ChangeSelectedCategory} from "../action-creator/changeSelectedCategory";
 
-const initialState = {
-    selectedCategory: undefined
-};
+const initialState = null;
 
 const selectedCategory = (state = initialState, action) => {
     switch (action.type) {

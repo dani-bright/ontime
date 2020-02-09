@@ -35,7 +35,7 @@ router.delete('/albums/:id', AlbumController.delete);
 router.put('/albums/:id', AlbumController.update);
 
 router.get('/favorites', FavoriteController.findAll);
-router.post('/favorites/', FavoriteController.create);
+router.post('/favorites', FavoriteController.create);
 router.delete('/favorites/:id', FavoriteController.delete);
 
 router.get('/categories', CategoryController.findAll);

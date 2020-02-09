@@ -2,7 +2,7 @@
     position: fixed;
     height: 100%;
     transform: translateX(-258%);
-    border-right: 2px solid #fff;
+    border-right: 2px solid #46d2e9;
 }
 
 #menu.active {
@@ -13,7 +13,7 @@
 
 #menu, .menu-box {
     z-index: 11;
-    background: #000;
+    background: #fff;
     transition: all 1s;
 }
 
@@ -25,7 +25,7 @@
 
 .menu-box nav ul{
     margin: 0;
-    padding: 0;
+    padding: 0 0 0 20px;
 }
 
 .menu-box nav ul li {
@@ -33,20 +33,20 @@
     list-style: none;
     text-align: center;
     width: 100%;
-    color: #fff;
+    font-weight: bold;
 }
 
 .menu-box nav li a {
     position: relative;
     display: block;
     margin: 45px 0px;
-    text-align: center;
+    text-align: left;
     outline: none;
-    color: #fff;
+    color: #46d2e9;
     text-decoration: none;
     font-weight: 400;
     text-shadow: 0 0 1px rgba(255, 255, 255, 0.3);
-    font-size: 22px;
+    font-size: 15px;
 }
 
 .menu-box nav a:hover,

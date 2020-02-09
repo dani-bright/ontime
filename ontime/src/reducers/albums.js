@@ -1,8 +1,6 @@
 import {SetAlbums} from "../action-creator/albums/setAlbums";
 
-const initialState = {
-    albums: []
-};
+const initialState = [];
 
 const albums = (state = initialState, action) => {
     switch (action.type) {

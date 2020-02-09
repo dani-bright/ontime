@@ -7,6 +7,7 @@
     overflow: auto;
     overflow-x: hidden;
     overflow-y: auto;
+    z-index: 500;
     transition: all 1s;
     /*display: none;*/
     transform: translateY(-100%);

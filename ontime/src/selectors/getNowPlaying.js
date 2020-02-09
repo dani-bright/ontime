@@ -1,2 +1,3 @@
-//nowPlaying is not at the same location in state on initial state and after
-export const getNowPlaying = state => state.nowPlaying.audio ? state.nowPlaying : state.nowPlaying.nowPlaying;
+import {getSongs} from "./getSongs";
+
+export const getNowPlaying = state => state.nowPlaying || getSongs(state)[0];

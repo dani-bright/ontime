@@ -1,8 +1,6 @@
 import {SetSongs} from "../action-creator/songs/setSongs";
 
-const initialState = {
-    songs: []
-};
+const initialState = [];
 
 const songs = (state = initialState, action) => {
     switch (action.type) {

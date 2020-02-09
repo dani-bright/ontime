@@ -1,8 +1,6 @@
 import {SetAudioPlayer} from "../action-creator/setAudioPlayer";
 
-const initialState = {
-    audioPlayer: null
-};
+const initialState = null;
 
 const audioPlayer = (state = initialState, action) => {
     switch (action.type) {
