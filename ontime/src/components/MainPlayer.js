@@ -24,7 +24,7 @@ class MainPlayer extends React.PureComponent {
         songsIndex: 0,
     };
 
-    async componentDidMount() {
+    async componentDidUpdate() {
         this.setState({
             audio: this.refs.audio.audioEl
         });
@@ -32,12 +32,16 @@ class MainPlayer extends React.PureComponent {
 
         //no favorite if there is no user
         if (this.props.user) {
-            const getResponse = await FavoriteService.findOne(this.props.user.id, this.props.nowPlaying.id);
-            const favoriteData = await getResponse.json();
-            favoriteData.favorites ? this.setState({isFavorite: true}) : this.setState({isFavorite: false})
+            await this.checkFavorite() ? this.setState({isFavorite: true}) : this.setState({isFavorite: false})
         }
 
     }
+
+    checkFavorite = async () => {
+        const getResponse = await FavoriteService.findOne(this.props.user.id, this.props.nowPlaying.id);
+        const favoriteData = await getResponse.json();
+        return favoriteData.favorites
+    };
 
     togglePlay = () => {
         const {isPlaying, audio} = this.state;
@@ -53,10 +57,9 @@ class MainPlayer extends React.PureComponent {
             songId: this.props.nowPlaying.id,
             userId: this.props.user.id,
         };
-        const getResponse = await FavoriteService.findOne(this.props.user.id, this.props.nowPlaying.id);
-        const favoriteData = await getResponse.json();
-        if (favoriteData.favorites) {
-            await FavoriteService.remove(favoriteData.favorites.id);
+        const favorite = await this.checkFavorite();
+        if (favorite) {
+            await FavoriteService.remove(favorite.id);
             this.setState({isFavorite: false})
 
         } else {
