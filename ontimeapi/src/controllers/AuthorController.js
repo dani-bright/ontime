@@ -1,6 +1,5 @@
 import Author from "../models/Author";
 import Album from "../models/Album";
-import Category from "../models/Category";
 import Song from "../models/Song";
 
 class AuthorController {

@@ -19,6 +19,7 @@ import {setCategories} from "./action-creator/categories/setCategories";
 import {SmartTrending} from "./pages/Trending";
 import {SmartFavorites} from "./pages/Favorites";
 import {SmartUploads} from "./pages/Uploads";
+import {setNowPlaying} from "./action-creator/setNowPlaying";
 
 class App extends React.PureComponent {
     async componentDidMount() {
@@ -26,6 +27,7 @@ class App extends React.PureComponent {
         if (songs.ok) {
             let data = await songs.json();
             this.props.setSongs(data.songs);
+            this.props.setNowPlaying(data.songs[0]);
         }
 
         const albums = await AlbumService.findAll();
@@ -66,6 +68,7 @@ class App extends React.PureComponent {
 
 const mapDispatchToProps = (dispatch) => {
     return {
+        setNowPlaying: (song) => dispatch(setNowPlaying(song)),
         setSongs: (songs) => dispatch(setSongs(songs)),
         setAlbums: (albums) => dispatch(setAlbums(albums)),
         setCategories: (categories) => dispatch(setCategories(categories)),

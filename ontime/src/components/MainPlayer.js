@@ -136,8 +136,9 @@ class MainPlayer extends React.PureComponent {
     };
     getDuration = () => {
         const {audio} = this.state;
-        const minutes = audio ? Math.floor(audio.duration / 60) : '00';
-        const seconds = audio ? audio.duration - minutes * 60 : '00';
+        const minutes = audio ? Math.floor(audio.duration / 60) : 0;
+        const seconds = audio ? audio.duration - minutes * 60 : 0;
+        console.log(audio)
         this.setState({
             duration: `${minutes}:${seconds.toFixed(0)}`
         })
@@ -147,6 +148,7 @@ class MainPlayer extends React.PureComponent {
         const {audio} = this.state;
         const minutes = audio ? Math.floor(audio.currentTime / 60) : '00';
         const seconds = audio ? audio.currentTime - minutes * 60 : '00';
+        console.log(seconds)
         this.setState(
             {
                 percentage: ((audio.currentTime * 100) / audio.duration).toFixed(3),
@@ -177,9 +179,13 @@ class MainPlayer extends React.PureComponent {
             <FontAwesomeIcon icon={faForward} size="2x" style={{color: '#141415'}}/>;
         const displayPrev = songsIndex === 0 ? <FontAwesomeIcon icon={faBackward} size="2x" style={{color: '#141415'}}/>
             : <FontAwesomeIcon icon={faBackward} onClick={this.prev} size="2x" style={{color: 'white'}}/>;
-        const displayImg = nowPlaying.img ?
+        const displayImg = nowPlaying && nowPlaying.img ?
             <img className="picture" src={require(`../assets/pictures/${nowPlaying.img}`)}/>
             : null;
+        const displayInfo = nowPlaying ? <div className="songDetails">
+            {/*<p className="author">{nowPlaying.authors[0].name}</p>*/}
+            <p className="title">{nowPlaying.name}</p>
+        </div> : null;
 
         return (
             <div className="mainPlayer player">
@@ -189,10 +195,8 @@ class MainPlayer extends React.PureComponent {
                     {displayNext}
                 </div>
                 {displayImg}
-                <div className="songDetails">
-                    {/*<p className="author">{nowPlaying.authors[0].name}</p>*/}
-                    <p className="title">{nowPlaying.name}</p>
-                </div>
+                {displayInfo}
+
                 <div className="lectureBar">
                     <Filler percentage={percentage}/>
                     <p className="begin">{currentTime}</p><p className={"end"}>{duration}</p>
@@ -204,13 +208,17 @@ class MainPlayer extends React.PureComponent {
 
                     ) : null
                 }
-
-                <ReactAudioPlayer
-                    ref="audio"
-                    src={require(`../assets/songs/${nowPlaying.audio}`)}
-                    onPlay={this.play}
-                    onPause={this.stop}
-                    onLoadedMetadata={this.getDuration} onListen={this.getCurrentTime} listenInterval={1000}/>
+                {
+                    nowPlaying ? (
+                        <ReactAudioPlayer
+                            ref="audio"
+                            src={require(`../assets/songs/${nowPlaying.audio}`)}
+                            onPlay={this.play}
+                            onPause={this.stop}
+                            onLoadedMetadata={this.getDuration} onListen={this.getCurrentTime} listenInterval={1000}/>
+                    ) : (<ReactAudioPlayer
+                        ref="audio"/>)
+                }
 
             </div>
         )

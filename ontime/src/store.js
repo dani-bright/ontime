@@ -1,15 +1,20 @@
 import {loadState, saveState} from "./localStorage";
 import {createStore} from "redux";
 import routeReducer from "./reducers";
+import {throttle} from 'lodash';
 
-//persist state crashing app when deleting "redux" in localStorage --'
-export const store = createStore(routeReducer, loadState());
 
-store.subscribe(() => {
+const reduxDevTools = window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__();
+
+export const store = createStore(routeReducer, loadState(), reduxDevTools);
+
+
+//Wrapping the callback in a throttle ensures that the inner function that is passed in is not going to be called more often than the number of milliseconds that is specified
+store.subscribe(throttle(() => {
     saveState({
         user: store.getState().user,
-        songs: store.getState().songs,
-        albums: store.getState().albums,
-        categories: store.getState().categories,
+        // songs: store.getState().songs,
+        // albums: store.getState().albums,
+        // categories: store.getState().categories,
     });
-});
+}, 1000));
