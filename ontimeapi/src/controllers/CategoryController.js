@@ -1,5 +1,4 @@
 import Category from "../models/Category";
-import Song from "../models/Song";
 
 class CategoryController {
     /***
@@ -14,8 +13,6 @@ class CategoryController {
         let status = 200;
         let body = {};
         try {
-            await Category.sync();
-
             const categories = await Category.findAll();
 
             body = {

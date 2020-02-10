@@ -13,9 +13,6 @@ class AuthorController {
         let status = 200;
         let body = {};
         try {
-            // Note: using `force: true` will drop the table if it already exists
-            await Author.sync();
-            // Now the `authors` table in the database corresponds to the model definition
             const author = await Author.create({
                 name: req.body.name,
             });
@@ -34,8 +31,6 @@ class AuthorController {
         let status = 200;
         let body = {};
         try {
-            await Author.sync();
-
             const authors = await Author.findAll({
                 include: [
                     {
@@ -62,8 +57,6 @@ class AuthorController {
         let status = 200;
         let body = {};
         try {
-            await Author.sync();
-
             const author = await Author.findOne({
                 where: {
                     id: req.params.id
@@ -99,8 +92,6 @@ class AuthorController {
         let status = 200;
         let body = {};
         try {
-            await Author.sync();
-
             await Author.destroy({where: {id: req.params.id}});
 
             body = {

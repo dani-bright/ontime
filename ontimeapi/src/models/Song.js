@@ -8,10 +8,10 @@ const Song = database.define('song', {
         allowNull: false
     },
     img: {
-        type: Sequelize.STRING,
+        type: Sequelize.TEXT,
     },
     audio: {
-        type: Sequelize.STRING,
+        type: Sequelize.TEXT,
         allowNull: false,
     },
     categoryId: {

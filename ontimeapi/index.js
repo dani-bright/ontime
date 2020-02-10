@@ -55,6 +55,10 @@ database.authenticate().then(() => {
     User.sync();
     Album.sync();
     Song.sync();
+    Author.sync();
+    Role.sync();
+    Favorite.sync();
+    Category.sync();
 
     // Now the `users` table in the database corresponds to the model definition
     //execute the relations

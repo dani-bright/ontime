@@ -11,9 +11,6 @@ class FavoriteController {
         let status = 200;
         let body = {};
         try {
-            // Note: using `force: true` will drop the table if it already exists
-            await Favorite.sync();
-            // Now the `favorites` table in the database corresponds to the model definition
             const favorite = await Favorite.create({
                 userId: req.body.userId,
                 songId: req.body.songId,
@@ -38,8 +35,6 @@ class FavoriteController {
         let status = 200;
         let body = {};
         try {
-            await Favorite.sync();
-
             const favorites = await Favorite.findAll({
                 where: {
                     userId: req.params.userId
@@ -62,8 +57,6 @@ class FavoriteController {
         let status = 200;
         let body = {};
         try {
-            await Favorite.sync();
-
             const favorites = await Favorite.findOne({
                 where: {
                     userId: req.params.userId,
@@ -87,8 +80,6 @@ class FavoriteController {
         let status = 200;
         let body = {};
         try {
-            await Favorite.sync();
-
             await Favorite.destroy({where: {id: req.params.id}});
 
             body = {
