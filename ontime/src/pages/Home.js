@@ -7,6 +7,7 @@ import {SongList} from "../components/SongList";
 import {getSelectedCategory} from "../selectors/getSelectedCategory";
 import {getSongsByCategory} from "../selectors/getSongsByCategory";
 import {Heading} from "../components/Heading";
+import {faHome} from "@fortawesome/free-solid-svg-icons";
 
 export class Home extends React.PureComponent {
     static contextType = AuthenticationContext;
@@ -15,7 +16,7 @@ export class Home extends React.PureComponent {
         const {user, songs} = this.props;
         return (
             <div className="container">
-                <Heading pageTitle="Home"/>
+                <Heading pageTitle="Home" icon={faHome}/>
 
                 <SongList songs={songs}/>
             </div>

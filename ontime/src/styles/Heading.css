@@ -2,10 +2,25 @@
     position: relative;
     display: flex;
     justify-content: space-evenly;
-    align-items: flex-start;
+    align-items: center;
     width: 100%;
     background: #46d2e9;
     color: #000;
     height: 60px;
     margin: 90px 0 40px;
+}
+
+.headingTitle {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    color: #fff;
+}
+
+.headingTitle p {
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 16px;
+    font-size: 20px;
+    margin-left: 10px;
 }
