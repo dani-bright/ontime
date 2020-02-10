@@ -13,8 +13,6 @@ export const store = createStore(routeReducer, loadState(), reduxDevTools);
 store.subscribe(throttle(() => {
     saveState({
         user: store.getState().user,
-        // songs: store.getState().songs,
-        // albums: store.getState().albums,
-        // categories: store.getState().categories,
+        songs: store.getState().songs,
     });
 }, 1000));
