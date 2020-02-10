@@ -24,11 +24,11 @@ class SongController {
                     Album, Author
                 ],
             });
-            song.addAuthor(await Author.findOne({where: {id: req.params.authorId}}))
-            req.params.albumId && song.addAlbum(await Album.findOne({where: {id: req.params.albumId}}))
+            song.addAuthor(await Author.findOne({where: {id: req.body.authorId}}));
+            req.body.albumId && song.addAlbum(await Album.findOne({where: {id: req.body.albumId}}));
             body = {
                 song,
-                'message': "200",
+                'message': "song added to database",
             }
         } catch (error) {
             status = 500;

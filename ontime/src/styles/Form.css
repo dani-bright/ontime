@@ -1,0 +1,23 @@
+.form {
+    border: 2px solid #46d2e9;
+    padding: 5px;
+    width: 600px;
+    margin: 0 auto;
+}
+
+.form h3 {
+    margin: 5px auto 10px;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.form input, form select {
+    position: relative;
+    display: block;
+    margin: 10px auto 10px;
+    border-radius: 5px;
+    border: 1px solid #46d2e9;
+    outline: none;
+    width: 95%;
+}
+

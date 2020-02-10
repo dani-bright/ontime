@@ -20,27 +20,28 @@ import {SmartTrending} from "./pages/Trending";
 import {SmartFavorites} from "./pages/Favorites";
 import {SmartUploads} from "./pages/Uploads";
 import {setNowPlaying} from "./action-creator/setNowPlaying";
+import {setAuthors} from "./action-creator/authors/setAuthors";
+import AuthorService from "./services/AuthorService";
+import './styles/Button.css'
 
 class App extends React.PureComponent {
     async componentDidMount() {
         const songs = await SongService.findAll();
-        if (songs.ok) {
-            let data = await songs.json();
-            this.props.setSongs(data.songs);
-            this.props.setNowPlaying(data.songs[0]);
-        }
+        const dataSongs = await songs.json();
+        this.props.setSongs(dataSongs.songs);
+        this.props.setNowPlaying(dataSongs.songs[0]);
 
         const albums = await AlbumService.findAll();
-        if (albums.ok) {
-            let data = await albums.json();
-            this.props.setAlbums(data.albums);
-        }
+        const dataAlbums = await albums.json();
+        this.props.setAlbums(dataAlbums.albums);
 
         const categories = await CategoryService.findAll();
-        if (categories.ok) {
-            let data = await categories.json();
-            this.props.setCategories(data.categories);
-        }
+        const dataCategories = await categories.json();
+        this.props.setCategories(dataCategories.categories);
+
+        const authors = await AuthorService.findAll();
+        const dataAuthors = await authors.json();
+        this.props.setAuthors(dataAuthors.authors);
 
     }
 
@@ -69,6 +70,7 @@ class App extends React.PureComponent {
 const mapDispatchToProps = (dispatch) => {
     return {
         setNowPlaying: (song) => dispatch(setNowPlaying(song)),
+        setAuthors: (authors) => dispatch(setAuthors(authors)),
         setSongs: (songs) => dispatch(setSongs(songs)),
         setAlbums: (albums) => dispatch(setAlbums(albums)),
         setCategories: (categories) => dispatch(setCategories(categories)),

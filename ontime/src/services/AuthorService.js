@@ -1,6 +1,6 @@
-const baseUrl = "http://localhost:3080/songs";
+const baseUrl = "http://localhost:3080/authors";
 
-class SongService {
+class AuthorService {
     static async create(body) {
         const init = {
             method: "post",
@@ -57,7 +57,6 @@ class SongService {
         };
         return await fetch(`${baseUrl}/${id}`, init);
     }
-
 }
 
-export default SongService;
+export default AuthorService;

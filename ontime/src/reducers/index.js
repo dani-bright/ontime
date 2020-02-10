@@ -6,7 +6,8 @@ import nowPlaying from "./nowPlaying";
 import categories from "./categories";
 import selectedCategory from "./selectedCategory";
 import audioPlayer from "./audioPlayer";
+import authors from "./authors";
 
 export default combineReducers({
-    user, songs, albums, nowPlaying, categories, selectedCategory, audioPlayer
+    user, songs, albums, nowPlaying, categories, selectedCategory, audioPlayer, authors
 })

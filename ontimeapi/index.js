@@ -17,10 +17,11 @@ const app = express();
 // app.use(jwt());
 
 app.use(bodyParser.urlencoded({
-    extended: true
+    extended: true, limit: '50mb'
 }));
-app.use(bodyParser.json());
+app.use(bodyParser.json({limit: '50mb'}));
 app.use(cors({origin: true}));
+
 app.use(router);
 
 database.authenticate().then(() => {

@@ -23,7 +23,7 @@ router.delete('/authors/:id', AuthorController.delete);
 router.put('/authors/:id', AuthorController.update);
 
 router.get('/songs', SongController.findAll);
-router.post('/songs/:authorId/:albumId?', SongController.create);
+router.post('/songs', SongController.create);
 router.get('/songs/:id', SongController.findOne);
 router.delete('/songs/:id', SongController.delete);
 router.put('/songs/:id', SongController.update);

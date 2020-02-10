@@ -1,33 +1,69 @@
 import * as React from "react";
-import {AuthenticationContext} from "../contexts/AuthentificationContext";
 import {connect} from "react-redux";
 import {getUser} from "../selectors/getUser";
-import {getSongs} from "../selectors/getSongs";
-import {SongList} from "../components/SongList";
-import {getSelectedCategory} from "../selectors/getSelectedCategory";
-import {getSongsByCategory} from "../selectors/getSongsByCategory";
-import {Heading} from "../components/Heading";
+import "../styles/Form.css"
+import {getAlbums} from "../selectors/getAlbums";
+import {getAuthors} from "../selectors/getAuthors";
+import {getCategories} from "../selectors/getCategories";
+import {SongForm} from "../components/form/SongForm";
+import {AlbumForm} from "../components/form/AlbumForm";
+import {AuthorForm} from "../components/form/AuthorForm";
 
 export class Uploads extends React.PureComponent {
-    static contextType = AuthenticationContext;
+    state = {
+        formToDisplay: "songForm",
+    };
+
+    displaySongForm = () => {
+        this.setState({
+            formToDisplay: "songForm"
+        })
+    };
+
+    displayAlbumForm = () => {
+        this.setState({
+            formToDisplay: "albumForm"
+        })
+    };
+
+    displayAuthorForm = () => {
+        this.setState({
+            formToDisplay: "authorForm"
+        })
+    };
+
 
     render() {
-        const {user, songs} = this.props;
+        const {formToDisplay} = this.state;
+        const {albums, authors, categories} = this.props;
+        const songForm = formToDisplay === "songForm" ?
+            <SongForm albums={albums} authors={authors} categories={categories}/> : null;
+        const albumForm = formToDisplay === "albumForm" ?
+            <AlbumForm authors={authors} categories={categories}/> : null;
+
+        const authorForm = formToDisplay === "authorForm" ?
+            <AuthorForm/> : null;
+
         return (
             <div className="container">
-                <h1>upload page</h1>
+                <h2>upload page</h2>
+                <button onClick={this.displaySongForm}>add Song</button>
+                <button onClick={this.displayAlbumForm}>add Album</button>
+                <button onClick={this.displayAuthorForm}>add Author</button>
+                {songForm}
+                {albumForm}
+                {authorForm}
             </div>
         )
     }
 }
 
 const mapStateToProps = (state) => {
-    //returns an object containing an empty object when selectedCategory is undefined
-    const categoryId = getSelectedCategory(state);
-    const songs = typeof categoryId === "number" ? getSongsByCategory(state)(categoryId) : getSongs(state);
     return {
         user: getUser(state),
-        songs,
+        albums: getAlbums(state),
+        authors: getAuthors(state),
+        categories: getCategories(state),
     }
 };
 

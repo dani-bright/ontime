@@ -1,6 +1,19 @@
 const baseUrl = "http://localhost:3080/albums";
 
 class AlbumService {
+
+    static async create(body) {
+        const init = {
+            method: "post",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${localStorage.getItem("token")}`
+            },
+            body: JSON.stringify(body)
+        };
+        return await fetch(`${baseUrl}`, init);
+    }
+
     static async findAll() {
         const init = {
             method: "GET",
