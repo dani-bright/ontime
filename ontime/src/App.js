@@ -5,7 +5,6 @@ import {SmartHeader} from "./components/Header";
 import "./styles/Page.css";
 import {PopupProvider} from "./contexts/PopupContext";
 import {MenuProvider} from "./contexts/MenuContext";
-import {AuthenticationProvider} from "./contexts/AuthentificationContext";
 import SongService from "./services/SongService";
 import {connect} from "react-redux";
 import {setSongs} from "./action-creator/songs/setSongs";
@@ -47,22 +46,20 @@ class App extends React.PureComponent {
 
     render() {
         return (
-            <AuthenticationProvider>
-                <PopupProvider>
-                    <BrowserRouter>
-                        <MenuProvider>
-                            <SmartHeader/>
-                            <Route exact path="/" component={SmartHome}/>
-                            <Route exact path="/albums" component={SmartAlbums}/>
-                            <Route exact path="/songs" component={SmartSongs}/>
-                            <Route exact path="/trending" component={SmartTrending}/>
-                            <Route exact path="/favorites" component={SmartFavorites}/>
-                            <Route exact path="/uploads" component={SmartUploads}/>
-                            <SmartMainPlayer/>
-                        </MenuProvider>
-                    </BrowserRouter>
-                </PopupProvider>
-            </AuthenticationProvider>
+            <PopupProvider>
+                <BrowserRouter>
+                    <MenuProvider>
+                        <SmartHeader/>
+                        <Route exact path="/" component={SmartHome}/>
+                        <Route exact path="/albums" component={SmartAlbums}/>
+                        <Route exact path="/songs" component={SmartSongs}/>
+                        <Route exact path="/trending" component={SmartTrending}/>
+                        <Route exact path="/favorites" component={SmartFavorites}/>
+                        <Route exact path="/uploads" component={SmartUploads}/>
+                        <SmartMainPlayer/>
+                    </MenuProvider>
+                </BrowserRouter>
+            </PopupProvider>
         );
     }
 }

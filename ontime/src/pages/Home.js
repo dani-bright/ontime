@@ -1,5 +1,4 @@
 import * as React from "react";
-import {AuthenticationContext} from "../contexts/AuthentificationContext";
 import {connect} from "react-redux";
 import {getUser} from "../selectors/getUser";
 import {getSongs} from "../selectors/getSongs";
@@ -10,8 +9,6 @@ import {Heading} from "../components/Heading";
 import {faHome} from "@fortawesome/free-solid-svg-icons";
 
 export class Home extends React.PureComponent {
-    static contextType = AuthenticationContext;
-
     render() {
         const {user, songs} = this.props;
         return (

@@ -5,11 +5,24 @@ import "../styles/Form.css"
 import {SmartSongForm} from "../components/form/SongForm";
 import {SmartAlbumForm} from "../components/form/AlbumForm";
 import {SmartAuthorForm} from "../components/form/AuthorForm";
+import {isAdmin} from "../selectors/isAdmin";
 
 export class Uploads extends React.PureComponent {
-    state = {
-        formToDisplay: "songForm",
-    };
+    constructor(props) {
+        super(props);
+        this.state = {
+            formToDisplay: "songForm",
+        };
+        if (!this.props.isAdmin) {
+            this.props.history.push('/');
+        }
+    }
+
+    componentDidUpdate() {
+        if (!this.props.isAdmin) {
+            this.props.history.push('/');
+        }
+    }
 
     displaySongForm = () => {
         this.setState({
@@ -55,6 +68,7 @@ export class Uploads extends React.PureComponent {
 
 const mapStateToProps = (state) => {
     return {
+        isAdmin: isAdmin(state),
         user: getUser(state),
     }
 };

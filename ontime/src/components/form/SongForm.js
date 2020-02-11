@@ -14,6 +14,7 @@ import {getUser} from "../../selectors/getUser";
 import {getAlbums} from "../../selectors/getAlbums";
 import {getAuthors} from "../../selectors/getAuthors";
 import {getCategories} from "../../selectors/getCategories";
+import {isAdmin} from "../../selectors/isAdmin";
 
 export class SongForm extends React.PureComponent {
     state = {

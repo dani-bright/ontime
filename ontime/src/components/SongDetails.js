@@ -1,5 +1,4 @@
 import * as React from "react";
-import {AuthenticationContext} from "../contexts/AuthentificationContext";
 import {connect} from "react-redux";
 import ReactAudioPlayer from "react-audio-player";
 import {getSong} from "../selectors/getSong";
@@ -10,10 +9,8 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {Filler} from "./Filler";
 import {faPause, faPlayCircle} from "@fortawesome/free-solid-svg-icons";
 import {getAudioPlayer} from "../selectors/getAudioPlayer";
-import {getNowPlaying} from "../selectors/getNowPlaying";
 
 export class SongDetails extends React.PureComponent {
-    static contextType = AuthenticationContext;
     state = {
         isPlaying: false,
         audio: null,
