@@ -2,12 +2,9 @@ import * as React from "react";
 import {connect} from "react-redux";
 import {getUser} from "../selectors/getUser";
 import "../styles/Form.css"
-import {getAlbums} from "../selectors/getAlbums";
-import {getAuthors} from "../selectors/getAuthors";
-import {getCategories} from "../selectors/getCategories";
-import {SongForm} from "../components/form/SongForm";
-import {AlbumForm} from "../components/form/AlbumForm";
-import {AuthorForm} from "../components/form/AuthorForm";
+import {SmartSongForm} from "../components/form/SongForm";
+import {SmartAlbumForm} from "../components/form/AlbumForm";
+import {SmartAuthorForm} from "../components/form/AuthorForm";
 
 export class Uploads extends React.PureComponent {
     state = {
@@ -35,14 +32,12 @@ export class Uploads extends React.PureComponent {
 
     render() {
         const {formToDisplay} = this.state;
-        const {albums, authors, categories} = this.props;
         const songForm = formToDisplay === "songForm" ?
-            <SongForm albums={albums} authors={authors} categories={categories}/> : null;
+            <SmartSongForm/> : null;
         const albumForm = formToDisplay === "albumForm" ?
-            <AlbumForm authors={authors} categories={categories}/> : null;
-
+            <SmartAlbumForm/> : null;
         const authorForm = formToDisplay === "authorForm" ?
-            <AuthorForm/> : null;
+            <SmartAuthorForm/> : null;
 
         return (
             <div className="container">
@@ -61,9 +56,6 @@ export class Uploads extends React.PureComponent {
 const mapStateToProps = (state) => {
     return {
         user: getUser(state),
-        albums: getAlbums(state),
-        authors: getAuthors(state),
-        categories: getCategories(state),
     }
 };
 

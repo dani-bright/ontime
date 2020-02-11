@@ -41,9 +41,12 @@ class MainPlayer extends React.PureComponent {
 
     checkFavorite = async () => {
         //call service multiple time gotta find a way to improve it later
-        const getResponse = await FavoriteService.findOne(this.props.user.id, this.props.nowPlaying.id);
-        const favoriteData = await getResponse.json();
-        return favoriteData.favorites
+        if (this.props.songs.length) {
+            const getResponse = await FavoriteService.findOne(this.props.user.id, this.props.nowPlaying.id);
+            const favoriteData = await getResponse.json();
+            return favoriteData.favorites
+        }
+
     };
 
     togglePlay = () => {
@@ -138,7 +141,6 @@ class MainPlayer extends React.PureComponent {
         const {audio} = this.state;
         const minutes = audio ? Math.floor(audio.duration / 60) : 0;
         const seconds = audio ? audio.duration - minutes * 60 : 0;
-        console.log(audio)
         this.setState({
             duration: `${minutes}:${seconds.toFixed(0)}`
         })
@@ -148,7 +150,6 @@ class MainPlayer extends React.PureComponent {
         const {audio} = this.state;
         const minutes = audio ? Math.floor(audio.currentTime / 60) : '00';
         const seconds = audio ? audio.currentTime - minutes * 60 : '00';
-        console.log(seconds)
         this.setState(
             {
                 percentage: ((audio.currentTime * 100) / audio.duration).toFixed(3),
@@ -180,7 +181,7 @@ class MainPlayer extends React.PureComponent {
         const displayPrev = songsIndex === 0 ? <FontAwesomeIcon icon={faBackward} size="2x" style={{color: '#141415'}}/>
             : <FontAwesomeIcon icon={faBackward} onClick={this.prev} size="2x" style={{color: 'white'}}/>;
         const displayImg = nowPlaying && nowPlaying.img ?
-            <img className="picture" src={require(`../assets/pictures/${nowPlaying.img}`)}/>
+            <img className="picture" src={nowPlaying.img}/>
             : null;
         const displayInfo = nowPlaying ? <div className="songDetails">
             {/*<p className="author">{nowPlaying.authors[0].name}</p>*/}
@@ -212,7 +213,8 @@ class MainPlayer extends React.PureComponent {
                     nowPlaying ? (
                         <ReactAudioPlayer
                             ref="audio"
-                            src={require(`../assets/songs/${nowPlaying.audio}`)}
+                            src={nowPlaying.audio}
+                            title="song"
                             onPlay={this.play}
                             onPause={this.stop}
                             onLoadedMetadata={this.getDuration} onListen={this.getCurrentTime} listenInterval={1000}/>

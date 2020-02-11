@@ -29,7 +29,7 @@ class App extends React.PureComponent {
         const songs = await SongService.findAll();
         const dataSongs = await songs.json();
         this.props.setSongs(dataSongs.songs);
-        this.props.setNowPlaying(dataSongs.songs[0]);
+        dataSongs.songs.length && this.props.setNowPlaying(dataSongs.songs[0]);
 
         const albums = await AlbumService.findAll();
         const dataAlbums = await albums.json();

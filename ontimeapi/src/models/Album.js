@@ -17,7 +17,7 @@ const Album = database.define('album', {
         allowNull: false,
     },
     img: {
-        type: Sequelize.TEXT,
+        type: Sequelize.TEXT('long'),
     },
 
 }, {

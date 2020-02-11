@@ -73,7 +73,7 @@ export class SongDetails extends React.PureComponent {
         const playPauseIcon = !isPlaying ? faPlayCircle : faPause;
 
         const displayImg = song.img ?
-            <img className="picture" src={require(`../assets/pictures/${song.img}`)}/>
+            <img className="picture" src={song.img}/>
             : null
         return (
             <div className="detailContainer">
@@ -99,7 +99,7 @@ export class SongDetails extends React.PureComponent {
                     </div>
                     <ReactAudioPlayer ref="audio2"
                                       key={song.id}
-                                      src={require(`../assets/songs/${song.audio}`)}
+                                      src={song.audio}
                                       onPlay={this.setNowPlaying}
                                       onLoadedMetadata={this.getDuration} onListen={this.getCurrentTime}
                                       listenInterval={1000}
@@ -121,7 +121,9 @@ const mapStateToProps = (state, ownProps) => {
 };
 const mapDispatchToProps = (dispatch) => {
     return {
-        setNowPlaying: (song) => {dispatch(setNowPlaying(song))}
+        setNowPlaying: (song) => {
+            dispatch(setNowPlaying(song))
+        }
     }
 };
 

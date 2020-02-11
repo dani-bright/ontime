@@ -5,6 +5,12 @@ import {connect} from "react-redux";
 import {setUser} from "../../action-creator/user/setUser";
 import SongService from "../../services/SongService";
 import AlbumService from "../../services/AlbumService";
+import {getAlbums} from "../../selectors/getAlbums";
+import {getAuthors} from "../../selectors/getAuthors";
+import {getCategories} from "../../selectors/getCategories";
+import {setSongs} from "../../action-creator/songs/setSongs";
+import {SongForm} from "./SongForm";
+import {setAlbums} from "../../action-creator/albums/setAlbums";
 
 export class AlbumForm extends React.PureComponent {
     state = {
@@ -36,7 +42,16 @@ export class AlbumForm extends React.PureComponent {
         });
         const data = await response.json();
         if (response.ok) {
-            this.setState({error: "album added to database"})
+            this.setState({
+                error: "album added to database",
+                imageSrc: null,
+                categoryId: "",
+                authorId: "",
+                name: "",
+            })
+            const albums = await AlbumService.findAll();
+            const dataAlbums = await albums.json();
+            this.props.setAlbums(dataAlbums.albums);
 
         } else {
             this.setState({error: JSON.stringify(data.message)})
@@ -84,3 +99,17 @@ export class AlbumForm extends React.PureComponent {
     }
 }
 
+const mapStateToProps = (state) => {
+    return {
+        authors: getAuthors(state),
+        categories: getCategories(state),
+    }
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        setAlbums: (albums) => dispatch(setAlbums(albums)),
+    }
+};
+
+export const SmartAlbumForm = connect(mapStateToProps, mapDispatchToProps)(AlbumForm);

@@ -4,6 +4,16 @@ import {PopupContext} from "../../contexts/PopupContext";
 import {connect} from "react-redux";
 import {setUser} from "../../action-creator/user/setUser";
 import SongService from "../../services/SongService";
+import {setNowPlaying} from "../../action-creator/setNowPlaying";
+import {setAuthors} from "../../action-creator/authors/setAuthors";
+import {setSongs} from "../../action-creator/songs/setSongs";
+import {setAlbums} from "../../action-creator/albums/setAlbums";
+import {setCategories} from "../../action-creator/categories/setCategories";
+import App from "../../App";
+import {getUser} from "../../selectors/getUser";
+import {getAlbums} from "../../selectors/getAlbums";
+import {getAuthors} from "../../selectors/getAuthors";
+import {getCategories} from "../../selectors/getCategories";
 
 export class SongForm extends React.PureComponent {
     state = {
@@ -48,7 +58,18 @@ export class SongForm extends React.PureComponent {
         const data = await response.json();
         //if adding song doesnt work check your mysql configuration file and set to max_allowed_packet 20M it should be enough
         if (response.ok) {
-            this.setState({error: "song added to database"})
+            this.setState({
+                error: "song added to database",
+                imageSrc: null,
+                audioSrc: null,
+                categoryId: "",
+                albumId: "",
+                authorId: "",
+                name: ""
+            })
+            const songs = await SongService.findAll();
+            const dataSongs = await songs.json();
+            this.props.setSongs(dataSongs.songs);
 
         } else {
             this.setState({error: JSON.stringify(data.message)})
@@ -103,4 +124,20 @@ export class SongForm extends React.PureComponent {
         );
     }
 }
+
+const mapStateToProps = (state) => {
+    return {
+        albums: getAlbums(state),
+        authors: getAuthors(state),
+        categories: getCategories(state),
+    }
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        setSongs: (songs) => dispatch(setSongs(songs)),
+    }
+};
+
+export const SmartSongForm = connect(mapStateToProps, mapDispatchToProps)(SongForm);
 

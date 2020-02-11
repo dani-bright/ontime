@@ -1,11 +1,7 @@
 import * as React from "react";
-import UserService from "../../services/UserService";
-import {PopupContext} from "../../contexts/PopupContext";
 import {connect} from "react-redux";
-import {setUser} from "../../action-creator/user/setUser";
-import SongService from "../../services/SongService";
-import AlbumService from "../../services/AlbumService";
 import AuthorService from "../../services/AuthorService";
+import {setAuthors} from "../../action-creator/authors/setAuthors";
 
 export class AuthorForm extends React.PureComponent {
     state = {
@@ -22,7 +18,10 @@ export class AuthorForm extends React.PureComponent {
         });
         const data = await response.json();
         if (response.ok) {
-            this.setState({error: "author added to database"})
+            this.setState({error: "author added to database", name: ""})
+            const authors = await AuthorService.findAll();
+            const dataAuthors = await authors.json();
+            this.props.setAuthors(dataAuthors.authors);
 
         } else {
             this.setState({error: JSON.stringify(data.message)})
@@ -49,4 +48,12 @@ export class AuthorForm extends React.PureComponent {
         );
     }
 }
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        setAuthors: (authors) => dispatch(setAuthors(authors)),
+    }
+};
+
+export const SmartAuthorForm = connect(undefined, mapDispatchToProps)(AuthorForm);
 
