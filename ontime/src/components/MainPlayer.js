@@ -137,8 +137,8 @@ class MainPlayer extends React.PureComponent {
 
 
     };
-    getDuration = () => {
-        const {audio} = this.state;
+    getDuration = (e) => {
+        const audio = e.target;
         const minutes = audio ? Math.floor(audio.duration / 60) : 0;
         const seconds = audio ? audio.duration - minutes * 60 : 0;
         this.setState({
