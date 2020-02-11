@@ -14,6 +14,7 @@ import {getUser} from "../selectors/getUser";
 import FavoriteService from "../services/FavoriteService";
 import {setUser} from "../action-creator/user/setUser";
 import {getUserFavorites} from "../selectors/getUserFavorites";
+import {getAudioPlayer} from "../selectors/getAudioPlayer";
 
 class MainPlayer extends React.PureComponent {
     state = {
@@ -30,7 +31,10 @@ class MainPlayer extends React.PureComponent {
         this.setState({
             audio: this.refs.audio.audioEl
         });
-        this.props.setAudioPlayer(this.refs.audio.audioEl);
+
+        if (!this.props.audioPlayer) {
+            this.props.setAudioPlayer(this.refs.audio.audioEl);
+        }
 
         //no favorite if there is no user
         if (this.props.user) {
@@ -40,7 +44,7 @@ class MainPlayer extends React.PureComponent {
     }
 
     checkFavorite = async () => {
-        //call service multiple time gotta find a way to improve it later
+        //call service multiple time gotta find a way to improve it
         if (this.props.songs.length) {
             const getResponse = await FavoriteService.findOne(this.props.user.id, this.props.nowPlaying.id);
             const favoriteData = await getResponse.json();
@@ -229,6 +233,7 @@ class MainPlayer extends React.PureComponent {
 
 const mapStateToProps = (state) => {
     return {
+        audioPlayer: getAudioPlayer(state),
         user: getUser(state),
         favorites: getUserFavorites(state),
         nowPlaying: getNowPlaying(state),

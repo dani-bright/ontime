@@ -11,7 +11,6 @@ export const store = createStore(routeReducer, loadState(), reduxDevTools);
 
 //Wrapping the callback in a throttle ensures that the inner function that is passed in is not going to be called more often than the number of milliseconds that is specified
 store.subscribe(throttle(() => {
-    console.log('qdlqjl')
     saveState({
         user: store.getState().user,
     });
