@@ -30,5 +30,6 @@ const User = database.define('user', {
     freezeTableName: true,
 });
 
+User.sync();
 
 export default User;

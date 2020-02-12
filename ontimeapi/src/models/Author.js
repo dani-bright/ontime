@@ -5,12 +5,15 @@ import {Sequelize} from "sequelize";
 const Author = database.define('author', {
     name: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: false,
+        unique: true
     },
 
 }, {
     timestamps: false,
     freezeTableName: true,
 });
+
+Author.sync();
 
 export default Author;

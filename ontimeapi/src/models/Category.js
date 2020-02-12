@@ -13,5 +13,6 @@ const Category = database.define('category', {
     freezeTableName: true,
 });
 
+Category.sync();
 
 export default Category;

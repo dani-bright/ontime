@@ -3,7 +3,7 @@ import {useContext} from "react";
 import {Link} from "react-router-dom";
 import '../styles/Header.css';
 import SearchBar from "./form/SearchBar";
-import {faAlignJustify} from "@fortawesome/free-solid-svg-icons";
+import {faAlignJustify, faSignInAlt, faSignOutAlt, faUpload} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {MenuContext} from "../contexts/MenuContext";
 import {PopupContext} from "../contexts/PopupContext";
@@ -42,12 +42,17 @@ const Header = (props) => {
             <SearchBar/>
             {
                 props.user ? (
-                    <button onClick={logout}>logout</button>
-                ) : <button onClick={loginForm}>Login</button>
+                    <button className="logout" onClick={logout}>
+                        <FontAwesomeIcon icon={faSignOutAlt} size="xd"/> logout</button>
+                ) : <button className="login" onClick={loginForm}>
+                    <FontAwesomeIcon icon={faSignInAlt} size="xd"/> Login
+                </button>
             }
             {
                 props.isAdmin ? (
-                    <Link to="uploads">upload</Link>
+                    <Link to="uploads" className="button">
+                        <FontAwesomeIcon icon={faUpload} size="xd"/> upload
+                    </Link>
                 ) : null}
         </nav>
     )

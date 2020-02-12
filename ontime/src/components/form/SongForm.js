@@ -24,16 +24,20 @@ export class SongForm extends React.PureComponent {
         albumId: "",
         authorId: "",
         name: "",
-        error: ""
+        error: "",
+        errorColor: "error",
     };
 
     onPhotoSelected = (e) => {
         const file = e.target.files[0];
-        const reader = new FileReader();
-        reader.onload = (event) => {
-            this.setState({imageSrc: event.target.result})
-        };
-        reader.readAsDataURL(file);
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                this.setState({imageSrc: event.target.result})
+            };
+            reader.readAsDataURL(file);
+        }
+
     };
     onAudioSelected = (e) => {
         const file = e.target.files[0];
@@ -59,6 +63,9 @@ export class SongForm extends React.PureComponent {
         const data = await response.json();
         //if adding song doesnt work check your mysql configuration file and set to max_allowed_packet 20M it should be enough
         if (response.ok) {
+            const songs = await SongService.findAll();
+            const dataSongs = await songs.json();
+            this.props.setSongs(dataSongs.songs);
             this.setState({
                 error: "song added to database",
                 imageSrc: null,
@@ -66,14 +73,12 @@ export class SongForm extends React.PureComponent {
                 categoryId: "",
                 albumId: "",
                 authorId: "",
-                name: ""
-            })
-            const songs = await SongService.findAll();
-            const dataSongs = await songs.json();
-            this.props.setSongs(dataSongs.songs);
+                name: "",
+                errorColor: "success",
+            });
 
         } else {
-            this.setState({error: JSON.stringify(data.message)})
+            this.setState({error: JSON.stringify(data.message), errorColor: "error",})
         }
     };
 
@@ -84,15 +89,15 @@ export class SongForm extends React.PureComponent {
     };
 
     render() {
-        const {imageSrc, error} = this.state;
+        const {imageSrc, error, name, errorColor} = this.state;
         const {albums, authors, categories} = this.props;
         const img = imageSrc ? <img src={imageSrc} alt="" width={60}/> : null;
-        const errorMsg = error ? <p>{error}</p> : null;
+        const errorMsg = error ? <p className={errorColor}>{error}</p> : null;
         return (
             <form className="form song" onSubmit={this.submit}>
                 <h3>Song</h3>
                 <label>name (required)</label>
-                <input type="text" required={true} onChange={this.handleChange} id="name"/>
+                <input type="text" required={true} onChange={this.handleChange} id="name" value={name}/>
                 <label>image</label>
                 {img}
                 <input type="file" onChange={this.onPhotoSelected} accept="image/png, image/jpeg"/>

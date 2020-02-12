@@ -27,5 +27,6 @@ const Song = database.define('song', {
 }, {
     freezeTableName: true,
 });
+Song.sync();
 
 export default Song;

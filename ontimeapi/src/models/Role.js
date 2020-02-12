@@ -12,4 +12,6 @@ const Role = database.define('role', {
     freezeTableName: true,
 });
 
+Role.sync();
+
 export default Role;

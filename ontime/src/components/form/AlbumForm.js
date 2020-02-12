@@ -1,15 +1,8 @@
 import * as React from "react";
-import UserService from "../../services/UserService";
-import {PopupContext} from "../../contexts/PopupContext";
 import {connect} from "react-redux";
-import {setUser} from "../../action-creator/user/setUser";
-import SongService from "../../services/SongService";
 import AlbumService from "../../services/AlbumService";
-import {getAlbums} from "../../selectors/getAlbums";
 import {getAuthors} from "../../selectors/getAuthors";
 import {getCategories} from "../../selectors/getCategories";
-import {setSongs} from "../../action-creator/songs/setSongs";
-import {SongForm} from "./SongForm";
 import {setAlbums} from "../../action-creator/albums/setAlbums";
 
 export class AlbumForm extends React.PureComponent {
@@ -18,16 +11,19 @@ export class AlbumForm extends React.PureComponent {
         categoryId: "",
         authorId: "",
         name: "",
-        error: ""
+        error: "",
+        errorColor: "error",
     };
 
     onPhotoSelected = (e) => {
         const file = e.target.files[0];
-        const reader = new FileReader();
-        reader.onload = (event) => {
-            this.setState({imageSrc: event.target.result})
-        };
-        reader.readAsDataURL(file);
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                this.setState({imageSrc: event.target.result})
+            };
+            reader.readAsDataURL(file);
+        }
     };
 
 
@@ -48,13 +44,14 @@ export class AlbumForm extends React.PureComponent {
                 categoryId: "",
                 authorId: "",
                 name: "",
-            })
+                errorColor: "success"
+            });
             const albums = await AlbumService.findAll();
             const dataAlbums = await albums.json();
             this.props.setAlbums(dataAlbums.albums);
 
         } else {
-            this.setState({error: JSON.stringify(data.message)})
+            this.setState({error: JSON.stringify(data.message), errorColor: "error"})
         }
     };
 
@@ -65,15 +62,15 @@ export class AlbumForm extends React.PureComponent {
     };
 
     render() {
-        const {imageSrc, error} = this.state;
+        const {imageSrc, error, name, errorColor} = this.state;
         const {authors, categories} = this.props;
         const img = imageSrc ? <img src={imageSrc} alt="" width={60}/> : null;
-        const errorMsg = error ? <p>{error}</p> : null;
+        const errorMsg = error ? <p className={errorColor}>{error}</p> : null;
         return (
             <form className="form album" onSubmit={this.submit}>
                 <h3>Album</h3>
                 <label>name (required)</label>
-                <input type="text" required={true} onChange={this.handleChange} id="name"/>
+                <input type="text" required={true} onChange={this.handleChange} id="name" value={name}/>
                 <label>image</label>
                 {img}
                 <input type="file" onChange={this.onPhotoSelected} accept="image/png, image/jpeg"/>

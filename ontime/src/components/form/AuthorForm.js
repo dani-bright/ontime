@@ -6,7 +6,8 @@ import {setAuthors} from "../../action-creator/authors/setAuthors";
 export class AuthorForm extends React.PureComponent {
     state = {
         name: "",
-        error: ""
+        error: "",
+        errorColor: "error",
     };
 
 
@@ -18,13 +19,13 @@ export class AuthorForm extends React.PureComponent {
         });
         const data = await response.json();
         if (response.ok) {
-            this.setState({error: "author added to database", name: ""})
+            this.setState({error: "author added to database", name: "", errorColor: "success"})
             const authors = await AuthorService.findAll();
             const dataAuthors = await authors.json();
             this.props.setAuthors(dataAuthors.authors);
 
         } else {
-            this.setState({error: JSON.stringify(data.message)})
+            this.setState({error: JSON.stringify(data.message), errorColor: "error",})
         }
     };
 
@@ -35,13 +36,13 @@ export class AuthorForm extends React.PureComponent {
     };
 
     render() {
-        const {error} = this.state;
-        const errorMsg = error ? <p>{error}</p> : null;
+        const {error, name, errorColor} = this.state;
+        const errorMsg = error ? <p className={errorColor}>{error}</p> : null;
         return (
             <form className="form author" onSubmit={this.submit}>
                 <h3>Author</h3>
                 <label>name (required)</label>
-                <input type="text" required={true} onChange={this.handleChange} id="name"/>
+                <input type="text" required={true} onChange={this.handleChange} id="name" value={name}/>
                 {errorMsg}
                 <button className="">Add</button>
             </form>

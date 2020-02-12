@@ -53,17 +53,8 @@ database.authenticate().then(() => {
     Song.hasMany(Favorite);
 
     // Note: using `force: true` will drop the table if it already exists
-    User.sync();
-    Album.sync();
-    Song.sync();
-    Author.sync();
-    Role.sync();
-    Favorite.sync();
-    Category.sync();
-
-    // Now the `users` table in the database corresponds to the model definition
     //execute the relations
-    database.sync({logging: false});
+    database.sync();
 
     app.listen('3080', function (req, res) {
         console.log("app is listening on 3080")

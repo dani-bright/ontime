@@ -1,8 +1,20 @@
-button {
+button, .button {
     border: none;
     padding: 5px;
     margin: 5px;
     text-transform: uppercase;
     color: #fff;
     background: #46d2e9;
+    font-size: 14px;
+    text-decoration: none;
 }
+
+button.login{
+    background: mediumseagreen;
+}
+
+button.logout{
+    background: darkred;
+}
+
+

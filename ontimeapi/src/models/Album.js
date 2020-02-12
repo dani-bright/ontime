@@ -24,5 +24,6 @@ const Album = database.define('album', {
     freezeTableName: true,
 });
 
+Album.sync();
 
 export default Album;

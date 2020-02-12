@@ -18,5 +18,6 @@ const Favorite = database.define('favorite', {
     freezeTableName: true,
 });
 
+Favorite.sync();
 
 export default Favorite;

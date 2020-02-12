@@ -11,6 +11,14 @@
     text-transform: uppercase;
 }
 
+.error {
+    color: darkred;
+}
+
+.success {
+    color: mediumseagreen;
+}
+
 .form input, form select {
     position: relative;
     display: block;
