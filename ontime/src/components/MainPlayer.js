@@ -1,22 +1,22 @@
 import * as React from "react";
 import "../styles/Player.css"
-import {getNowPlaying} from "../selectors/getNowPlaying";
+import {getNowPlaying} from "../selectors/audio/getNowPlaying";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {Filler} from './Filler'
 import {faBackward, faForward, faHeart, faHeartbeat, faPause, faPlay} from "@fortawesome/free-solid-svg-icons";
 import ReactAudioPlayer from "react-audio-player";
-import {getSongs} from "../selectors/getSongs";
+import {getSongs} from "../selectors/song/getSongs";
 import {connect} from "react-redux";
 import SongService from "../services/SongService";
 import {setNowPlaying} from "../action-creator/setNowPlaying";
 import {setAudioPlayer} from "../action-creator/audioPlayer/setAudioPlayer";
-import {getUser} from "../selectors/getUser";
+import {getUser} from "../selectors/user/getUser";
 import FavoriteService from "../services/FavoriteService";
 import {setUser} from "../action-creator/user/setUser";
-import {getUserFavorites} from "../selectors/getUserFavorites";
-import {getAudioPlayer} from "../selectors/getAudioPlayer";
-import {getPlaylist} from "../selectors/getPlaylist";
-import {getPlaylistIndex} from "../selectors/getPlaylistIndex";
+import {getUserFavorites} from "../selectors/user/getUserFavorites";
+import {getAudioPlayer} from "../selectors/audio/getAudioPlayer";
+import {getPlaylist} from "../selectors/audio/getPlaylist";
+import {getPlaylistIndex} from "../selectors/audio/getPlaylistIndex";
 import {setPlaylistIndex} from "../action-creator/playlist/setPlaylistIndex";
 import {setIsPlaying} from "../action-creator/audioPlayer/setIsPlaying";
 

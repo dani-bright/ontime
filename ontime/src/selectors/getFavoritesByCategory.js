@@ -1,5 +1,5 @@
-import {getUserFavorites} from "./getUserFavorites";
-import {getSongs} from "./getSongs";
+import {getUserFavorites} from "./user/getUserFavorites";
+import {getSongs} from "./song/getSongs";
 
 export const getFavoritesByCategory = (state) => (idCategory) => {
     const favSongIds = getUserFavorites(state).map(fav => fav.songId);

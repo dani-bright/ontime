@@ -1,11 +1,11 @@
 import * as React from "react";
 import {connect} from "react-redux";
-import {getUser} from "../selectors/getUser";
+import {getUser} from "../selectors/user/getUser";
 import "../styles/Form.css"
 import {SmartSongForm} from "../components/form/SongForm";
 import {SmartAlbumForm} from "../components/form/AlbumForm";
 import {SmartAuthorForm} from "../components/form/AuthorForm";
-import {isAdmin} from "../selectors/isAdmin";
+import {isAdmin} from "../selectors/user/isAdmin";
 
 export class Uploads extends React.PureComponent {
     constructor(props) {

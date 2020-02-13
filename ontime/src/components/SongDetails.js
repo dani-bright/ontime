@@ -1,14 +1,14 @@
 import * as React from "react";
 import {connect} from "react-redux";
 import ReactAudioPlayer from "react-audio-player";
-import {getSong} from "../selectors/getSong";
+import {getSong} from "../selectors/song/getSong";
 import {setNowPlaying} from "../action-creator/setNowPlaying";
-import {getSongAuthor} from "../selectors/getSongAuthor";
+import {getSongAuthor} from "../selectors/song/getSongAuthor";
 import "../styles/Player.css"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {Filler} from "./Filler";
 import {faPause, faPlayCircle} from "@fortawesome/free-solid-svg-icons";
-import {getAudioPlayer} from "../selectors/getAudioPlayer";
+import {getAudioPlayer} from "../selectors/audio/getAudioPlayer";
 
 export class SongDetails extends React.PureComponent {
     state = {

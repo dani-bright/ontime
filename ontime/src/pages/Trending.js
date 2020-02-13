@@ -1,9 +1,9 @@
 import * as React from "react";
 import {connect} from "react-redux";
 import {SongList} from "../components/SongList";
-import {getSelectedCategory} from "../selectors/getSelectedCategory";
-import {getSongsSorted} from "../selectors/getSongsSorted";
-import {getSongsByCategorySorted} from "../selectors/getSongsByCategorySorted";
+import {getSelectedCategory} from "../selectors/category/getSelectedCategory";
+import {getSongsSorted} from "../selectors/song/getSongsSorted";
+import {getSongsByCategorySorted} from "../selectors/song/getSongsByCategorySorted";
 import {Heading} from "../components/Heading";
 import {faBroadcastTower} from "@fortawesome/free-solid-svg-icons";
 

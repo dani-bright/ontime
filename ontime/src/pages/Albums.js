@@ -1,11 +1,11 @@
 import * as React from "react";
 import {connect} from "react-redux";
 import {AlbumList} from "../components/AlbumList";
-import {getAlbums} from "../selectors/getAlbums";
+import {getAlbums} from "../selectors/album/getAlbums";
 import {Heading} from "../components/Heading";
 import {faCompactDisc} from "@fortawesome/free-solid-svg-icons";
-import {getSelectedCategory} from "../selectors/getSelectedCategory";
-import {getAlbumsByCategory} from "../selectors/getAlbumsByCategory";
+import {getSelectedCategory} from "../selectors/category/getSelectedCategory";
+import {getAlbumsByCategory} from "../selectors/album/getAlbumsByCategory";
 import {AlbumContext} from "../contexts/AlbumContext";
 
 export class Albums extends React.PureComponent {

@@ -1,9 +1,9 @@
 import * as React from "react";
 import {connect} from "react-redux";
 import "../styles/Player.css"
-import {getAudioPlayer} from "../selectors/getAudioPlayer";
-import {getAlbum} from "../selectors/getAlbum";
-import {getAlbumAuthor} from "../selectors/getAlbumAuthor";
+import {getAudioPlayer} from "../selectors/audio/getAudioPlayer";
+import {getAlbum} from "../selectors/album/getAlbum";
+import {getAlbumAuthor} from "../selectors/album/getAlbumAuthor";
 import {setPlaylist} from "../action-creator/playlist/setPlaylist";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faToggleOff, faToggleOn} from "@fortawesome/free-solid-svg-icons";

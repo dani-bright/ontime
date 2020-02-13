@@ -2,7 +2,7 @@ import * as React from "react";
 import {connect} from "react-redux";
 import AlbumService from "../../services/AlbumService";
 import {getAuthors} from "../../selectors/getAuthors";
-import {getCategories} from "../../selectors/getCategories";
+import {getCategories} from "../../selectors/category/getCategories";
 import {setAlbums} from "../../action-creator/albums/setAlbums";
 
 export class AlbumForm extends React.PureComponent {

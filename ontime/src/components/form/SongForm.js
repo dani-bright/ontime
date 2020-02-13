@@ -10,11 +10,11 @@ import {setSongs} from "../../action-creator/songs/setSongs";
 import {setAlbums} from "../../action-creator/albums/setAlbums";
 import {setCategories} from "../../action-creator/categories/setCategories";
 import App from "../../App";
-import {getUser} from "../../selectors/getUser";
-import {getAlbums} from "../../selectors/getAlbums";
+import {getUser} from "../../selectors/user/getUser";
+import {getAlbums} from "../../selectors/album/getAlbums";
 import {getAuthors} from "../../selectors/getAuthors";
-import {getCategories} from "../../selectors/getCategories";
-import {isAdmin} from "../../selectors/isAdmin";
+import {getCategories} from "../../selectors/category/getCategories";
+import {isAdmin} from "../../selectors/user/isAdmin";
 
 export class SongForm extends React.PureComponent {
     state = {

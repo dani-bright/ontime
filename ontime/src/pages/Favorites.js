@@ -2,9 +2,9 @@ import * as React from "react";
 import {connect} from "react-redux";
 import {Heading} from "../components/Heading";
 import {SmartSongDetail} from "../components/SongDetails";
-import {getUser} from "../selectors/getUser";
-import {getUserFavorites} from "../selectors/getUserFavorites";
-import {getSelectedCategory} from "../selectors/getSelectedCategory";
+import {getUser} from "../selectors/user/getUser";
+import {getUserFavorites} from "../selectors/user/getUserFavorites";
+import {getSelectedCategory} from "../selectors/category/getSelectedCategory";
 import {getFavoritesByCategory} from "../selectors/getFavoritesByCategory";
 import {faThumbsUp} from "@fortawesome/free-solid-svg-icons";
 

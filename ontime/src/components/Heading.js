@@ -1,6 +1,6 @@
 import * as React from "react";
 import '../styles/Heading.css'
-import {SmartCategorySelector} from "./SongCategorySelector";
+import {SmartCategorySelector} from "./CategorySelector";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 export class Heading extends React.PureComponent {

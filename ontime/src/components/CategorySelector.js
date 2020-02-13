@@ -1,9 +1,9 @@
 import * as React from "react";
 import {connect} from "react-redux";
-import {getCategories} from "../selectors/getCategories";
+import {getCategories} from "../selectors/category/getCategories";
 import {changeSelectedCategory} from "../action-creator/changeSelectedCategory";
 
-export class SongCategorySelector extends React.PureComponent {
+export class CategorySelector extends React.PureComponent {
 
     onCategorySelected = (e) => {
         this.props.changeSelectedCategory(parseFloat(e.target.value))
@@ -33,4 +33,4 @@ const mapDispatchToProps = (dispatch) => {
     }
 };
 
-export const SmartCategorySelector = connect(mapStateToProps, mapDispatchToProps)(SongCategorySelector);
+export const SmartCategorySelector = connect(mapStateToProps, mapDispatchToProps)(CategorySelector);

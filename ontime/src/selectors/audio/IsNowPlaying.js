@@ -1,4 +1,4 @@
-import {getSong} from "./getSong";
+import {getSong} from "../song/getSong";
 import {getPlaylist} from "./getPlaylist";
 import {getPlaylistIndex} from "./getPlaylistIndex";
 

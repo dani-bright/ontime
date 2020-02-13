@@ -10,8 +10,8 @@ import {PopupContext} from "../contexts/PopupContext";
 import {SmartLoginForm} from "./form/LoginForm";
 import {connect} from "react-redux";
 import {setUser} from "../action-creator/user/setUser";
-import {isAdmin} from "../selectors/isAdmin";
-import {getUser} from "../selectors/getUser";
+import {isAdmin} from "../selectors/user/isAdmin";
+import {getUser} from "../selectors/user/getUser";
 
 
 const Header = (props) => {
