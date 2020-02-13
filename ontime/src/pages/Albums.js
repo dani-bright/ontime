@@ -6,7 +6,6 @@ import {Heading} from "../components/Heading";
 import {faCompactDisc} from "@fortawesome/free-solid-svg-icons";
 import {getSelectedCategory} from "../selectors/category/getSelectedCategory";
 import {getAlbumsByCategory} from "../selectors/album/getAlbumsByCategory";
-import {AlbumContext} from "../contexts/AlbumContext";
 
 export class Albums extends React.PureComponent {
     render() {
