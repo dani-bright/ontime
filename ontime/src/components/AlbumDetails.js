@@ -6,18 +6,22 @@ import {getAlbum} from "../selectors/getAlbum";
 import {getAlbumAuthor} from "../selectors/getAlbumAuthor";
 import {setPlaylist} from "../action-creator/playlist/setPlaylist";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faForward, faToggleOff, faToggleOn} from "@fortawesome/free-solid-svg-icons";
+import {faToggleOff, faToggleOn} from "@fortawesome/free-solid-svg-icons";
 import {AlbumSongList} from "./AlbumSongList";
 
 export class AlbumDetails extends React.PureComponent {
+
     state = {
         showSongs: false,
     };
 
     toggleShow = () => {
-        this.setState({showSongs: !this.state.showSongs})
-        this.props.setPlaylist(this.props.album.songs);
+        this.setState({showSongs: !this.state.showSongs}, () => {
+            this.state.showSongs && this.props.setPlaylist(this.props.album.songs);
+
+        })
     };
+
 
     render() {
         const {album, author} = this.props;
@@ -33,7 +37,8 @@ export class AlbumDetails extends React.PureComponent {
         return (
             <>
                 <div className="detailContainer album">
-                    <FontAwesomeIcon icon={toggleShowIcon} onClick={this.toggleShow} size="lg" style={{color: '#46d2e9'}} className="albumListToggler"/>
+                    <FontAwesomeIcon icon={toggleShowIcon} onClick={this.toggleShow} size="lg"
+                                     style={{color: '#46d2e9'}} className="albumListToggler"/>
                     <div className="songDetails">
                         {displayImg}
                         <div>

@@ -6,6 +6,7 @@ import {Heading} from "../components/Heading";
 import {faCompactDisc} from "@fortawesome/free-solid-svg-icons";
 import {getSelectedCategory} from "../selectors/getSelectedCategory";
 import {getAlbumsByCategory} from "../selectors/getAlbumsByCategory";
+import {AlbumContext} from "../contexts/AlbumContext";
 
 export class Albums extends React.PureComponent {
     render() {
@@ -13,7 +14,6 @@ export class Albums extends React.PureComponent {
         return (
             <div className="container">
                 <Heading icon={faCompactDisc} pageTitle="albums"/>
-
                 <AlbumList albums={albums}/>
             </div>
         )

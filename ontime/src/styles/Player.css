@@ -7,7 +7,7 @@
 }
 
 .detailContainer.album {
-    margin: -20px 0 10px;
+    margin: 20px 0;
     height: 150px;
     padding: 5px;
     display: flex;
