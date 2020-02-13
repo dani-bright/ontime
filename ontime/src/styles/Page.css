@@ -11,3 +11,8 @@ body {
     margin: 20px auto 0;
     padding: 10px;
 }
+
+select, input {
+    border: none;
+    border-radius: 3px;
+}

@@ -5,6 +5,7 @@ import {getSelectedCategory} from "../selectors/getSelectedCategory";
 import {getSongsSorted} from "../selectors/getSongsSorted";
 import {getSongsByCategorySorted} from "../selectors/getSongsByCategorySorted";
 import {Heading} from "../components/Heading";
+import {faBroadcastTower} from "@fortawesome/free-solid-svg-icons";
 
 export class Trending extends React.PureComponent {
 
@@ -12,7 +13,7 @@ export class Trending extends React.PureComponent {
         const {songs} = this.props;
         return (
             <div className="container">
-                <Heading pageTitle="Trending"/>
+                <Heading icon={faBroadcastTower} pageTitle="Trending"/>
                 <SongList songs={songs}/>
             </div>
         )

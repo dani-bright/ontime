@@ -3,13 +3,16 @@ import {connect} from "react-redux";
 import {AlbumList} from "../components/AlbumList";
 import {getAlbums} from "../selectors/getAlbums";
 import {Heading} from "../components/Heading";
+import {faCompactDisc} from "@fortawesome/free-solid-svg-icons";
+import {getSelectedCategory} from "../selectors/getSelectedCategory";
+import {getAlbumsByCategory} from "../selectors/getAlbumsByCategory";
 
 export class Albums extends React.PureComponent {
     render() {
         const {albums} = this.props;
         return (
             <div className="container">
-                <Heading pageTitle="albums"/>
+                <Heading icon={faCompactDisc} pageTitle="albums"/>
 
                 <AlbumList albums={albums}/>
             </div>
@@ -18,8 +21,10 @@ export class Albums extends React.PureComponent {
 }
 
 const mapStateToProps = (state) => {
+    const categoryId = getSelectedCategory(state);
+    const albums = typeof categoryId === "number" ? getAlbumsByCategory(state)(categoryId) : getAlbums(state);
     return {
-        albums: getAlbums(state),
+        albums,
     }
 };
 

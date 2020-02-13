@@ -1,0 +1,1 @@
+export const isAudioPlayerPlaying = (state) => state.audioPlayer.isPlaying;

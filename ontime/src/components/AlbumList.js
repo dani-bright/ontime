@@ -1,14 +1,16 @@
 import * as React from "react";
-import {SongList} from "./SongList";
+import {SmartAlbumDetail} from "./AlbumDetails";
 
 export class AlbumList extends React.PureComponent {
 
+
     render() {
         const {albums} = this.props;
+
         return (
             <>
                 {albums.map(album => (
-                    <SongList songs={album.songs}/>
+                    <SmartAlbumDetail idAlbum={album.id} key={album.id}/>
                 ))}
             </>
         )

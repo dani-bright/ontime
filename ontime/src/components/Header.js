@@ -43,15 +43,15 @@ const Header = (props) => {
             {
                 props.user ? (
                     <button className="logout" onClick={logout}>
-                        <FontAwesomeIcon icon={faSignOutAlt} size="xd"/> logout</button>
+                        <FontAwesomeIcon icon={faSignOutAlt} size="lg"/> logout</button>
                 ) : <button className="login" onClick={loginForm}>
-                    <FontAwesomeIcon icon={faSignInAlt} size="xd"/> Login
+                    <FontAwesomeIcon icon={faSignInAlt} size="lg"/> Login
                 </button>
             }
             {
                 props.isAdmin ? (
                     <Link to="uploads" className="button">
-                        <FontAwesomeIcon icon={faUpload} size="xd"/> upload
+                        <FontAwesomeIcon icon={faUpload} size="lg"/> upload
                     </Link>
                 ) : null}
         </nav>

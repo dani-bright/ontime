@@ -1,1 +1,1 @@
-export const getAudioPlayer = state => state.audioPlayer;
+export const getAudioPlayer = state => state.audioPlayer.player;

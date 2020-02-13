@@ -22,6 +22,7 @@ import {setNowPlaying} from "./action-creator/setNowPlaying";
 import {setAuthors} from "./action-creator/authors/setAuthors";
 import AuthorService from "./services/AuthorService";
 import './styles/Button.css'
+import {setPlaylist} from "./action-creator/playlist/setPlaylist";
 
 class App extends React.PureComponent {
     async componentDidMount() {
@@ -29,6 +30,7 @@ class App extends React.PureComponent {
         const dataSongs = await songs.json();
         this.props.setSongs(dataSongs.songs);
         dataSongs.songs.length && this.props.setNowPlaying(dataSongs.songs[0]);
+        dataSongs.songs.length && this.props.setPlaylist(dataSongs.songs);
 
         const albums = await AlbumService.findAll();
         const dataAlbums = await albums.json();
@@ -67,6 +69,7 @@ class App extends React.PureComponent {
 const mapDispatchToProps = (dispatch) => {
     return {
         setNowPlaying: (song) => dispatch(setNowPlaying(song)),
+        setPlaylist: (songs) => dispatch(setPlaylist(songs)),
         setAuthors: (authors) => dispatch(setAuthors(authors)),
         setSongs: (songs) => dispatch(setSongs(songs)),
         setAlbums: (albums) => dispatch(setAlbums(albums)),

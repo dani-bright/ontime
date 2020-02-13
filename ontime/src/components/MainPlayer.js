@@ -9,12 +9,16 @@ import {getSongs} from "../selectors/getSongs";
 import {connect} from "react-redux";
 import SongService from "../services/SongService";
 import {setNowPlaying} from "../action-creator/setNowPlaying";
-import {setAudioPlayer} from "../action-creator/setAudioPlayer";
+import {setAudioPlayer} from "../action-creator/audioPlayer/setAudioPlayer";
 import {getUser} from "../selectors/getUser";
 import FavoriteService from "../services/FavoriteService";
 import {setUser} from "../action-creator/user/setUser";
 import {getUserFavorites} from "../selectors/getUserFavorites";
 import {getAudioPlayer} from "../selectors/getAudioPlayer";
+import {getPlaylist} from "../selectors/getPlaylist";
+import {getPlaylistIndex} from "../selectors/getPlaylistIndex";
+import {setPlaylistIndex} from "../action-creator/playlist/setPlaylistIndex";
+import {setIsPlaying} from "../action-creator/audioPlayer/setIsPlaying";
 
 class MainPlayer extends React.PureComponent {
     state = {
@@ -45,7 +49,7 @@ class MainPlayer extends React.PureComponent {
 
     checkFavorite = async () => {
         //call service multiple time gotta find a way to improve it
-        if (this.props.songs.length) {
+        if (this.props.playlist.length) {
             const getResponse = await FavoriteService.findOne(this.props.user.id, this.props.nowPlaying.id);
             const favoriteData = await getResponse.json();
             return favoriteData.favorites
@@ -103,6 +107,7 @@ class MainPlayer extends React.PureComponent {
             isPlaying: true
         }, () => {
             audio.play();
+            this.props.setIsPlaying(true);
         });
         this.props.setNowPlaying(this.props.nowPlaying)
     };
@@ -113,6 +118,7 @@ class MainPlayer extends React.PureComponent {
             isPlaying: false
         }, () => {
             audio.pause();
+            this.props.setIsPlaying(false);
         })
     };
 
@@ -125,7 +131,11 @@ class MainPlayer extends React.PureComponent {
             audio.load();
             audio.play();
         });
-        this.props.setNowPlaying(this.props.songs[songsIndex + 1]);
+        const actualSongIndex = this.props.playlist.findIndex(song => song.id === this.props.nowPlaying.id) + 1;
+        this.props.playlist.length !== actualSongIndex && this.props.setNowPlaying(this.props.playlist[actualSongIndex]);
+
+        // +1 because now playing hasn't change yet
+        this.props.setPlaylistIndex(actualSongIndex);
     };
     prev = () => {
         const {audio, songsIndex} = this.state;
@@ -137,8 +147,11 @@ class MainPlayer extends React.PureComponent {
             audio.load();
             audio.play();
         });
-        this.props.setNowPlaying(this.props.songs[songsIndex - 1]);
+        const actualSongIndex = this.props.playlist.findIndex(song => song.id === this.props.nowPlaying.id) - 1;
+        actualSongIndex !== 0 && this.props.setNowPlaying(this.props.playlist[actualSongIndex]);
 
+        // -1 because now playing hasn't change yet
+        this.props.setPlaylistIndex(actualSongIndex);
 
     };
     getDuration = (e) => {
@@ -174,15 +187,16 @@ class MainPlayer extends React.PureComponent {
 
 
     render() {
-        const {songsIndex, isFavorite, isPlaying, duration, currentTime, percentage} = this.state;
-        const {nowPlaying, user} = this.props;
+        const {isFavorite, isPlaying, duration, currentTime, percentage} = this.state;
+        const {nowPlaying, user, playlistIndex} = this.props;
         const playPauseIcon = !isPlaying ? faPlay : faPause;
         const favoriteIcon = !isFavorite ? faHeartbeat : faHeart;
 
-        const displayNext = this.props.songs.length !== songsIndex + 1 ?
+        const displayNext = this.props.playlist.length !== playlistIndex + 1 ?
             <FontAwesomeIcon icon={faForward} onClick={this.next} size="2x" style={{color: 'white'}}/> :
             <FontAwesomeIcon icon={faForward} size="2x" style={{color: '#141415'}}/>;
-        const displayPrev = songsIndex === 0 ? <FontAwesomeIcon icon={faBackward} size="2x" style={{color: '#141415'}}/>
+        const displayPrev = playlistIndex === 0 ?
+            <FontAwesomeIcon icon={faBackward} size="2x" style={{color: '#141415'}}/>
             : <FontAwesomeIcon icon={faBackward} onClick={this.prev} size="2x" style={{color: 'white'}}/>;
         const displayImg = nowPlaying && nowPlaying.img ?
             <img className="picture" src={nowPlaying.img}/>
@@ -233,19 +247,22 @@ class MainPlayer extends React.PureComponent {
 
 const mapStateToProps = (state) => {
     return {
+        playlistIndex: getPlaylistIndex(state),
         audioPlayer: getAudioPlayer(state),
         user: getUser(state),
         favorites: getUserFavorites(state),
         nowPlaying: getNowPlaying(state),
-        songs: getSongs(state),
+        playlist: getPlaylist(state),
     }
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
         setNowPlaying: (song) => dispatch(setNowPlaying(song)),
+        setPlaylistIndex: (index) => dispatch(setPlaylistIndex(index)),
         setAudioPlayer: (audioTag) => dispatch(setAudioPlayer(audioTag)),
         setUser: (user) => dispatch(setUser(user)),
+        setIsPlaying: (isPlaying) => dispatch(setIsPlaying(isPlaying)),
     }
 
 };

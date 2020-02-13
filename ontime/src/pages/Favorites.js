@@ -5,36 +5,23 @@ import {SmartSongDetail} from "../components/SongDetails";
 import {getUser} from "../selectors/getUser";
 import {getUserFavorites} from "../selectors/getUserFavorites";
 import {getSelectedCategory} from "../selectors/getSelectedCategory";
-import {getSongsByCategorySorted} from "../selectors/getSongsByCategorySorted";
-import {getSongsSorted} from "../selectors/getSongsSorted";
 import {getFavoritesByCategory} from "../selectors/getFavoritesByCategory";
+import {faThumbsUp} from "@fortawesome/free-solid-svg-icons";
 
 export class Favorites extends React.PureComponent {
     state = {
         favorites: []
     };
 
-    async componentDidMount() {
-        // if (this.props.user) {
-        //     const favorites = await FavoriteService.findAll(this.props.user.id);
-        //     if (favorites.ok) {
-        //         let data = await favorites.json();
-        //         const favoriteSongs = data.favorites.filter(favorite => favorite.songId)
-        //         this.setState({favorites: favoriteSongs});
-        //     }
-        // }
-
-    }
 
     render() {
         const {favorites} = this.props;
-        console.log(favorites)
         return (
             <>
                 {
                     this.props.user ? (
                         <div className="container">
-                            <Heading pageTitle="Favorites"/>
+                            <Heading icon={faThumbsUp} pageTitle="Favorites"/>
                             {favorites.map((favorite, index) => (
                                 <div key={favorite.id}>
                                     <SmartSongDetail idSong={favorite.songId} key={index}/>
