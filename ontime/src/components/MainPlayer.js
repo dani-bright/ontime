@@ -132,6 +132,7 @@ class MainPlayer extends React.PureComponent {
             audio.play();
         });
         const actualSongIndex = this.props.playlist.findIndex(song => song.id === this.props.nowPlaying.id) + 1;
+        console.log(actualSongIndex)
         this.props.playlist.length !== actualSongIndex && this.props.setNowPlaying(this.props.playlist[actualSongIndex]);
 
         // +1 because now playing hasn't change yet
@@ -148,7 +149,7 @@ class MainPlayer extends React.PureComponent {
             audio.play();
         });
         const actualSongIndex = this.props.playlist.findIndex(song => song.id === this.props.nowPlaying.id) - 1;
-        actualSongIndex !== 0 && this.props.setNowPlaying(this.props.playlist[actualSongIndex]);
+        actualSongIndex === 0 ? this.props.setNowPlaying(this.props.playlist[0]) : this.props.setNowPlaying(this.props.playlist[actualSongIndex]);
 
         // -1 because now playing hasn't change yet
         this.props.setPlaylistIndex(actualSongIndex);

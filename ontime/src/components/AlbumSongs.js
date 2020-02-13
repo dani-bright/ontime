@@ -14,7 +14,6 @@ import {setPlaylist} from "../action-creator/playlist/setPlaylist";
 import {getPlaylistIndex} from "../selectors/getPlaylistIndex";
 import {setPlaylistIndex} from "../action-creator/playlist/setPlaylistIndex";
 import {getPlaylist} from "../selectors/getPlaylist";
-import nowPlaying from "../reducers/nowPlaying";
 
 export class AlbumSongs extends React.PureComponent {
     state = {
@@ -55,17 +54,15 @@ export class AlbumSongs extends React.PureComponent {
 
     render() {
         const {song, authors, isNowPlaying} = this.props;
-        const {isPlaying, duration} = this.state;
+        const {duration} = this.state;
 
         const playIcon = isNowPlaying ? <FontAwesomeIcon icon={faFileAudio} onClick={this.togglePlay} size="2x"
                                                          style={{color: '#46d2e9'}}/>
             :
             <FontAwesomeIcon icon={faFileAudio} onClick={this.togglePlay} size="2x"
                              style={{color: 'grey'}}/>;
-        const text = isNowPlaying ? "true" : "false";
         return (
             <div className="albumSong" onClick={this.setNowPlaying}>
-                <p>{text}</p>
                 <div className="albumSongDetail">
                     <div className="controls">
                         {playIcon}
