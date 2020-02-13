@@ -9,6 +9,12 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {Filler} from "./Filler";
 import {faPause, faPlayCircle} from "@fortawesome/free-solid-svg-icons";
 import {getAudioPlayer} from "../selectors/audio/getAudioPlayer";
+import {isAudioPlayerPlaying} from "../selectors/audio/isAudioPlayerPlaying";
+import {isNowPlaying} from "../selectors/audio/IsNowPlaying";
+import {getNowPlaying} from "../selectors/audio/getNowPlaying";
+import {setPlaylistIndex} from "../action-creator/playlist/setPlaylistIndex";
+import {getCurrentTime} from "../selectors/audio/getCurrentTime";
+import {getPlaylist} from "../selectors/audio/getPlaylist";
 
 export class SongDetails extends React.PureComponent {
     state = {
@@ -20,54 +26,69 @@ export class SongDetails extends React.PureComponent {
         songsIndex: 0,
     };
 
-    componentDidMount() {
-        this.setState({
-            audio: this.refs.audio2.audioEl
-        })
+    componentDidUpdate() {
+        this.props.isNowPlaying ?
+            this.setState({
+                audio: this.refs.audio2.audioEl
+            }) : this.setState({
+                audio: this.refs.audio2.audioEl,
+                isPlaying: false,
+            });
     }
 
-    togglePlay = () => {
-        const {isPlaying, audio} = this.state;
-        const {audioPlayer} = this.props;
-        this.setState({
-            isPlaying: !isPlaying
-        }, () => {
-            !isPlaying ? audio.play() : audio.pause();
-            !isPlaying ? audioPlayer.play() : audioPlayer.pause();
-        })
-    };
-
-    getDuration = () => {
-        const {audio} = this.state;
-        const minutes = audio ? Math.floor(audio.duration / 60) : '00';
-        const seconds = audio ? audio.duration - minutes * 60 : '00';
+    getDuration = (e) => {
+        const audio = e.target;
+        const minutes = audio ? Math.floor(audio.duration / 60) : 0;
+        const seconds = audio ? audio.duration - minutes * 60 : 0;
         this.setState({
             duration: `${minutes}:${seconds.toFixed(0)}`
         })
     };
 
-    getCurrentTime = async (e) => {
+    getCurrentTime = () => {
         const {audio} = this.state;
-        const minutes = audio ? Math.floor(audio.currentTime / 60) : '00';
-        const seconds = audio ? audio.currentTime - minutes * 60 : '00';
-        this.setState(
-            {
-                percentage: ((audio.currentTime * 100) / audio.duration).toFixed(3),
-                currentTime: `${minutes}:${seconds.toFixed(0)}`
-            }
-        );
+        const {audioPlayerCurrentTime} = this.props;
+        const minutes = audio ? Math.floor(audioPlayerCurrentTime / 60) : '00';
+        const seconds = audio ? audioPlayerCurrentTime - minutes * 60 : '00';
+        if (this.props.isNowPlaying) {
+            this.setState(
+                {
+                    percentage: ((audioPlayerCurrentTime * 100) / audio.duration).toFixed(3),
+                    currentTime: `${minutes}:${seconds.toFixed(0)}`
+                }
+            );
+        }
+
 
     };
 
     setNowPlaying = () => {
-        this.props.setNowPlaying(this.props.song)
+        const {audioPlayer} = this.props;
+        const {isPlaying} = this.state;
+        this.props.setNowPlaying(this.props.song);
+
+        this.setState({isPlaying: !isPlaying}, () => {
+            if (!isPlaying) {
+                audioPlayer.play();
+                const actualSongIndex = this.props.playlist.findIndex(song => song.id === this.props.song.id);
+                //setting the mainPlayer progress bar with the actual song progressBar
+                setInterval(() => {
+                    this.getCurrentTime();
+                }, 1000);
+                this.props.setPlaylistIndex(actualSongIndex);
+            } else {
+                audioPlayer.pause()
+            }
+
+        })
     };
 
+
     render() {
-        const {song, authors} = this.props;
+        const {song, authors, isNowPlaying} = this.props;
         const {isPlaying, duration, currentTime, percentage} = this.state;
 
-        const playPauseIcon = !isPlaying ? faPlayCircle : faPause;
+        const playPauseIcon = isNowPlaying ? faPause : faPlayCircle;
 
         const displayImg = song.img ?
             <img className="picture" src={song.img}/>
@@ -86,7 +107,7 @@ export class SongDetails extends React.PureComponent {
 
                 <div className="subPlayer player">
                     <div className="controls">
-                        <FontAwesomeIcon icon={playPauseIcon} onClick={this.togglePlay} size="2x"
+                        <FontAwesomeIcon icon={playPauseIcon} onClick={this.setNowPlaying} size="2x"
                                          style={{color: '#46d2e9'}}/>
                     </div>
 
@@ -97,8 +118,7 @@ export class SongDetails extends React.PureComponent {
                     <ReactAudioPlayer ref="audio2"
                                       key={song.id}
                                       src={song.audio}
-                                      onPlay={this.setNowPlaying}
-                                      onLoadedMetadata={this.getDuration} onListen={this.getCurrentTime}
+                                      onLoadedMetadata={this.getDuration}
                                       listenInterval={1000}
                                       volume={0}
                     />
@@ -111,6 +131,11 @@ export class SongDetails extends React.PureComponent {
 
 const mapStateToProps = (state, ownProps) => {
     return {
+        audioPlayerCurrentTime: getCurrentTime(state),
+        playlist: getPlaylist(state),
+        nowPlaying: getNowPlaying(state),
+        isNowPlaying: isNowPlaying(state)(ownProps.idSong),
+        isAudioPlayerPlaying: isAudioPlayerPlaying(state),
         song: getSong(state)(ownProps.idSong),
         authors: getSongAuthor(state)(ownProps.idSong),
         audioPlayer: getAudioPlayer(state),
@@ -118,9 +143,8 @@ const mapStateToProps = (state, ownProps) => {
 };
 const mapDispatchToProps = (dispatch) => {
     return {
-        setNowPlaying: (song) => {
-            dispatch(setNowPlaying(song))
-        }
+        setNowPlaying: (song) => dispatch(setNowPlaying(song)),
+        setPlaylistIndex: (song) => dispatch(setPlaylistIndex(song)),
     }
 };
 

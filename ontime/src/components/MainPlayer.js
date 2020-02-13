@@ -19,6 +19,7 @@ import {getPlaylist} from "../selectors/audio/getPlaylist";
 import {getPlaylistIndex} from "../selectors/audio/getPlaylistIndex";
 import {setPlaylistIndex} from "../action-creator/playlist/setPlaylistIndex";
 import {setIsPlaying} from "../action-creator/audioPlayer/setIsPlaying";
+import {setCurrentTime} from "../action-creator/audioPlayer/setCurrentTime";
 
 class MainPlayer extends React.PureComponent {
     state = {
@@ -168,6 +169,7 @@ class MainPlayer extends React.PureComponent {
         const {audio} = this.state;
         const minutes = audio ? Math.floor(audio.currentTime / 60) : '00';
         const seconds = audio ? audio.currentTime - minutes * 60 : '00';
+        this.props.setCurrentTime(audio.currentTime);
         this.setState(
             {
                 percentage: ((audio.currentTime * 100) / audio.duration).toFixed(3),
@@ -260,6 +262,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         setNowPlaying: (song) => dispatch(setNowPlaying(song)),
+        setCurrentTime: (currentTime) => dispatch(setCurrentTime(currentTime)),
         setPlaylistIndex: (index) => dispatch(setPlaylistIndex(index)),
         setAudioPlayer: (audioTag) => dispatch(setAudioPlayer(audioTag)),
         setUser: (user) => dispatch(setUser(user)),

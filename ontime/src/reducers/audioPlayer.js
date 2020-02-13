@@ -1,9 +1,11 @@
 import {SetAudioPlayer} from "../action-creator/audioPlayer/setAudioPlayer";
 import {SetIsPlaying} from "../action-creator/audioPlayer/setIsPlaying";
+import {SetCurrentTime} from "../action-creator/audioPlayer/setCurrentTime";
 
 const initialState = {
     player: null,
-    isPlaying: false
+    isPlaying: false,
+    currentTime: 0,
 };
 
 const audioPlayer = (state = initialState, action) => {
@@ -17,6 +19,11 @@ const audioPlayer = (state = initialState, action) => {
             return {
                 ...state,
                 isPlaying: action.payload.isPlaying
+            };
+        case SetCurrentTime:
+            return {
+                ...state,
+                currentTime: action.payload.currentTime
             };
         default:
             return state
