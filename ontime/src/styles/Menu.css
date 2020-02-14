@@ -23,30 +23,36 @@
     width: 100%;
 }
 
-.menu-box nav ul{
-    margin: 0;
+.menu-box nav ul {
+    margin: 50px 0;
     padding: 0 0 0 20px;
 }
 
 .menu-box nav ul li {
     /*	display: inline-block;*/
+    display: flex;
+    align-items: center;
     list-style: none;
     text-align: center;
     width: 100%;
+    margin: 25px 0px;
     font-weight: bold;
+}
+
+.menu-box nav ul li > * {
+    margin: 0 5px;
 }
 
 .menu-box nav li a {
     position: relative;
     display: block;
-    margin: 45px 0px;
     text-align: left;
     outline: none;
     color: #46d2e9;
     text-decoration: none;
     font-weight: 400;
     text-shadow: 0 0 1px rgba(255, 255, 255, 0.3);
-    font-size: 15px;
+    font-size: 18px;
 }
 
 .menu-box nav a:hover,

@@ -4,7 +4,7 @@ import {getSongs} from "../selectors/song/getSongs";
 import {SongList} from "../components/SongList";
 import {getSelectedCategory} from "../selectors/category/getSelectedCategory";
 import {getSongsByCategory} from "../selectors/song/getSongsByCategory";
-import {Heading} from "../components/Heading";
+import {Heading, SmartHeading} from "../components/Heading";
 import {faMusic} from "@fortawesome/free-solid-svg-icons";
 
 export class Songs extends React.PureComponent {
@@ -13,7 +13,7 @@ export class Songs extends React.PureComponent {
         const {songs} = this.props;
         return (
             <div className="container">
-                <Heading icon={faMusic} pageTitle="Songs"/>
+                <SmartHeading icon={faMusic} pageTitle="Songs"/>
                 <SongList songs={songs}/>
             </div>
         )

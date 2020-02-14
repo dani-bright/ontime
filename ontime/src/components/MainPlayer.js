@@ -5,7 +5,6 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {Filler} from './Filler'
 import {faBackward, faForward, faHeart, faHeartbeat, faPause, faPlay} from "@fortawesome/free-solid-svg-icons";
 import ReactAudioPlayer from "react-audio-player";
-import {getSongs} from "../selectors/song/getSongs";
 import {connect} from "react-redux";
 import SongService from "../services/SongService";
 import {setNowPlaying} from "../action-creator/setNowPlaying";
@@ -133,12 +132,12 @@ class MainPlayer extends React.PureComponent {
             audio.play();
         });
         const actualSongIndex = this.props.playlist.findIndex(song => song.id === this.props.nowPlaying.id) + 1;
-        console.log(actualSongIndex)
         this.props.playlist.length !== actualSongIndex && this.props.setNowPlaying(this.props.playlist[actualSongIndex]);
 
         // +1 because now playing hasn't change yet
         this.props.setPlaylistIndex(actualSongIndex);
     };
+
     prev = () => {
         const {audio, songsIndex} = this.state;
 
@@ -154,8 +153,8 @@ class MainPlayer extends React.PureComponent {
 
         // -1 because now playing hasn't change yet
         this.props.setPlaylistIndex(actualSongIndex);
-
     };
+
     getDuration = (e) => {
         const audio = e.target;
         const minutes = audio ? Math.floor(audio.duration / 60) : 0;
@@ -186,6 +185,20 @@ class MainPlayer extends React.PureComponent {
             };
             await SongService.update(nowPlaying.id, body);
         }
+    };
+
+    playNext = (e) => {
+        const {audio, songsIndex} = this.state;
+        this.setState({
+            songsIndex: songsIndex + 1,
+        }, () => {
+            audio.play();
+        });
+        const actualSongIndex = this.props.playlist.findIndex(song => song.id === this.props.nowPlaying.id) + 1;
+        this.props.playlist.length !== actualSongIndex && this.props.setNowPlaying(this.props.playlist[actualSongIndex]);
+
+        // +1 because now playing hasn't change yet
+        this.props.setPlaylistIndex(actualSongIndex);
     };
 
 
@@ -238,6 +251,7 @@ class MainPlayer extends React.PureComponent {
                             title="song"
                             onPlay={this.play}
                             onPause={this.stop}
+                            onEnded={this.playNext}
                             onLoadedMetadata={this.getDuration} onListen={this.getCurrentTime} listenInterval={1000}/>
                     ) : (<ReactAudioPlayer
                         ref="audio"/>)

@@ -1,18 +1,19 @@
 import * as React from "react";
 import {connect} from "react-redux";
-import {Heading} from "../components/Heading";
+import {SmartHeading} from "../components/Heading";
 import {SmartSongDetail} from "../components/SongDetails";
 import {getUser} from "../selectors/user/getUser";
 import {getUserFavorites} from "../selectors/user/getUserFavorites";
 import {getSelectedCategory} from "../selectors/category/getSelectedCategory";
 import {getFavoritesByCategory} from "../selectors/getFavoritesByCategory";
 import {faThumbsUp} from "@fortawesome/free-solid-svg-icons";
+import {setPlaylist} from "../action-creator/playlist/setPlaylist";
+import {getFavoritesSongs} from "../selectors/getFavoritesSongs";
 
 export class Favorites extends React.PureComponent {
-    state = {
-        favorites: []
-    };
-
+    componentDidMount() {
+        this.props.setPlaylist(this.props.songs);
+    }
 
     render() {
         const {favorites} = this.props;
@@ -21,10 +22,10 @@ export class Favorites extends React.PureComponent {
                 {
                     this.props.user ? (
                         <div className="container">
-                            <Heading icon={faThumbsUp} pageTitle="Favorites"/>
+                            <SmartHeading icon={faThumbsUp} pageTitle="Favorites"/>
                             {favorites.map((favorite, index) => (
                                 <div key={favorite.id}>
-                                    <SmartSongDetail idSong={favorite.songId} key={index}/>
+                                    <SmartSongDetail idSong={favorite.songId}/>
                                 </div>
                             ))}
                         </div>) : <p
@@ -46,7 +47,14 @@ const mapStateToProps = (state) => {
     return {
         user: getUser(state),
         favorites,
+        songs: getFavoritesSongs(state)
     }
 };
 
-export const SmartFavorites = connect(mapStateToProps)(Favorites);
+const mapDispatchToProps = (dispatch) => {
+    return {
+        setPlaylist: (songs) => dispatch(setPlaylist(songs)),
+    }
+};
+
+export const SmartFavorites = connect(mapStateToProps, mapDispatchToProps)(Favorites);

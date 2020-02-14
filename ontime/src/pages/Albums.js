@@ -2,7 +2,7 @@ import * as React from "react";
 import {connect} from "react-redux";
 import {AlbumList} from "../components/AlbumList";
 import {getAlbums} from "../selectors/album/getAlbums";
-import {Heading} from "../components/Heading";
+import {Heading, SmartHeading} from "../components/Heading";
 import {faCompactDisc} from "@fortawesome/free-solid-svg-icons";
 import {getSelectedCategory} from "../selectors/category/getSelectedCategory";
 import {getAlbumsByCategory} from "../selectors/album/getAlbumsByCategory";
@@ -12,7 +12,7 @@ export class Albums extends React.PureComponent {
         const {albums} = this.props;
         return (
             <div className="container">
-                <Heading icon={faCompactDisc} pageTitle="albums"/>
+                <SmartHeading icon={faCompactDisc} pageTitle="albums"/>
                 <AlbumList albums={albums}/>
             </div>
         )

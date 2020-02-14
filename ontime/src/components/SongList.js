@@ -8,8 +8,8 @@ export class SongList extends React.PureComponent {
         return (
             <>
                 {songs.map((song, index) => (
-                    <div key={song.id + index}>
-                        <SmartSongDetail idSong={song.id} key={index}/>
+                    <div key={song.id + "huh"}>
+                        <SmartSongDetail idSong={song.id}/>
                     </div>
                 ))}
             </>

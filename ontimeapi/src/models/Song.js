@@ -15,7 +15,7 @@ const Song = database.define('song', {
         allowNull: false,
     },
     categoryId: {
-        type: Sequelize.UUID,
+        type: Sequelize.INTEGER,
         allowNull: false,
     },
     listened: {

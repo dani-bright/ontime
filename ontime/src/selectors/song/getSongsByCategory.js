@@ -1,3 +1,5 @@
+import {getSongs} from "./getSongs";
+
 export const getSongsByCategory = (state) => (idCategory) => {
-    return state.songs.filter(song => song.categoryId === idCategory);
+    return getSongs(state).filter(song => song.categoryId === idCategory);
 };

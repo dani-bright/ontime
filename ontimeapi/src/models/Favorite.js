@@ -4,14 +4,14 @@ import {Sequelize} from "sequelize";
 
 const Favorite = database.define('favorite', {
     userId: {
-        type: Sequelize.UUID,
+        type: Sequelize.INTEGER,
         allowNull: false,
     },
     songId: {
-        type: Sequelize.UUID,
+        type: Sequelize.INTEGER,
     },
     albumId: {
-        type: Sequelize.UUID,
+        type: Sequelize.INTEGER,
     },
 }, {
     timestamps: false,

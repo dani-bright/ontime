@@ -7,7 +7,7 @@ import {getSongAuthor} from "../selectors/song/getSongAuthor";
 import "../styles/Player.css"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {Filler} from "./Filler";
-import {faPause, faPlayCircle} from "@fortawesome/free-solid-svg-icons";
+import {faHeadphones, faPause, faPlayCircle} from "@fortawesome/free-solid-svg-icons";
 import {getAudioPlayer} from "../selectors/audio/getAudioPlayer";
 import {isAudioPlayerPlaying} from "../selectors/audio/isAudioPlayerPlaying";
 import {isNowPlaying} from "../selectors/audio/IsNowPlaying";
@@ -15,8 +15,14 @@ import {getNowPlaying} from "../selectors/audio/getNowPlaying";
 import {setPlaylistIndex} from "../action-creator/playlist/setPlaylistIndex";
 import {getCurrentTime} from "../selectors/audio/getCurrentTime";
 import {getPlaylist} from "../selectors/audio/getPlaylist";
+import {setPlaylist} from "../action-creator/playlist/setPlaylist";
+import {getSongs} from "../selectors/song/getSongs";
+import nowPlaying from "../reducers/nowPlaying";
 
 export class SongDetails extends React.PureComponent {
+    //prevent memory leak
+    _isMounted = false;
+
     state = {
         isPlaying: false,
         audio: null,
@@ -26,13 +32,29 @@ export class SongDetails extends React.PureComponent {
         songsIndex: 0,
     };
 
+    componentDidMount() {
+        this._isMounted = true;
+        this.props.setPlaylist(this.props.songs);
+    }
+
+    componentWillUnmount() {
+        this._isMounted = false;
+    }
+
     componentDidUpdate() {
-        this.props.isNowPlaying ?
+        this._isMounted && this.props.isNowPlaying ?
             this.setState({
-                audio: this.refs.audio2.audioEl
+                audio: this.refs.audio2.audioEl,
+                isPlaying: true,
+            }, () => {
+                setInterval(() => {
+                    this.getCurrentTime();
+                }, 1000);
             }) : this.setState({
                 audio: this.refs.audio2.audioEl,
                 isPlaying: false,
+                percentage: 0,
+                currentTime: '00:00'
             });
     }
 
@@ -50,7 +72,7 @@ export class SongDetails extends React.PureComponent {
         const {audioPlayerCurrentTime} = this.props;
         const minutes = audio ? Math.floor(audioPlayerCurrentTime / 60) : '00';
         const seconds = audio ? audioPlayerCurrentTime - minutes * 60 : '00';
-        if (this.props.isNowPlaying) {
+        if (this.props.isNowPlaying && this._isMounted) {
             this.setState(
                 {
                     percentage: ((audioPlayerCurrentTime * 100) / audio.duration).toFixed(3),
@@ -67,8 +89,8 @@ export class SongDetails extends React.PureComponent {
         const {isPlaying} = this.state;
         this.props.setNowPlaying(this.props.song);
 
-        this.setState({isPlaying: !isPlaying}, () => {
-            if (!isPlaying) {
+        this.setState({isPlaying: true}, () => {
+            if ((!isPlaying && this._isMounted) || (this.props.isNowPlaying && isPlaying)) {
                 audioPlayer.play();
                 const actualSongIndex = this.props.playlist.findIndex(song => song.id === this.props.song.id);
                 //setting the mainPlayer progress bar with the actual song progressBar
@@ -85,16 +107,20 @@ export class SongDetails extends React.PureComponent {
 
 
     render() {
-        const {song, authors, isNowPlaying} = this.props;
+        const {song, authors} = this.props;
         const {isPlaying, duration, currentTime, percentage} = this.state;
 
-        const playPauseIcon = isNowPlaying ? faPause : faPlayCircle;
+        const playPauseIcon = isPlaying ? faPause : faPlayCircle;
 
         const displayImg = song.img ?
             <img className="picture" src={song.img}/>
             : null
         return (
             <div className="detailContainer">
+                <div className="listened">
+                    <p>{song.listened}</p>
+                    <FontAwesomeIcon icon={faHeadphones} size="lg" style={{color: '#46d2e9'}}/>
+                </div>
                 <div className="songDetails">
                     {displayImg}
                     <div>
@@ -132,6 +158,7 @@ export class SongDetails extends React.PureComponent {
 const mapStateToProps = (state, ownProps) => {
     return {
         audioPlayerCurrentTime: getCurrentTime(state),
+        songs: getSongs(state),
         playlist: getPlaylist(state),
         nowPlaying: getNowPlaying(state),
         isNowPlaying: isNowPlaying(state)(ownProps.idSong),
@@ -145,6 +172,7 @@ const mapDispatchToProps = (dispatch) => {
     return {
         setNowPlaying: (song) => dispatch(setNowPlaying(song)),
         setPlaylistIndex: (song) => dispatch(setPlaylistIndex(song)),
+        setPlaylist: (songs) => dispatch(setPlaylist(songs)),
     }
 };
 

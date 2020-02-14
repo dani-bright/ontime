@@ -8,12 +8,12 @@ import "../styles/Player.css"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faFileAudio} from "@fortawesome/free-solid-svg-icons";
 import {getAudioPlayer} from "../selectors/audio/getAudioPlayer";
-import {isNowPlaying} from "../selectors/audio/IsNowPlaying";
 import {getAlbum} from "../selectors/album/getAlbum";
 import {setPlaylist} from "../action-creator/playlist/setPlaylist";
 import {getPlaylistIndex} from "../selectors/audio/getPlaylistIndex";
 import {setPlaylistIndex} from "../action-creator/playlist/setPlaylistIndex";
 import {getPlaylist} from "../selectors/audio/getPlaylist";
+import {isNowPlayingSongPlaylist} from "../selectors/audio/IsNowPlayingSongPlaylist";
 
 export class AlbumSongs extends React.PureComponent {
     state = {
@@ -93,7 +93,7 @@ const mapStateToProps = (state, ownProps) => {
         playlistIndex: getPlaylistIndex(state),
         playlist: getPlaylist(state),
         album: getAlbum(state)(ownProps.idAlbum),
-        isNowPlaying: isNowPlaying(state)(ownProps.idSong),
+        isNowPlaying: isNowPlayingSongPlaylist(state)(ownProps.idSong),
         song: getSong(state)(ownProps.idSong),
         authors: getSongAuthor(state)(ownProps.idSong),
         audioPlayer: getAudioPlayer(state),

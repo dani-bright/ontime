@@ -15,7 +15,6 @@
     justify-content: space-between;
 }
 
-
 .albumSong {
     position: relative;
     background: #fff;
@@ -27,7 +26,21 @@
     justify-content: space-between;
 }
 
-.albumListToggler{
+.listened {
+    display: flex;
+    position: absolute;
+    right: 5px;
+    font-size: 15px;
+    top: 5px;
+    color: #46d2e9;
+    align-items: center;
+}
+
+.listened > * {
+    margin: 0 3px;
+}
+
+.albumListToggler {
     position: absolute;
     right: 5px;
     top: 5px;
@@ -47,7 +60,6 @@
     color: dimgrey;
     margin: 4px;
 }
-
 
 .mainPlayer {
     width: 100%;
@@ -89,6 +101,10 @@
 
 .songDetails {
     margin-right: 35px;
+}
+
+.songDetails p {
+    margin: 2px;
 }
 
 .detailContainer .songDetails {

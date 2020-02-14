@@ -13,7 +13,7 @@ const Album = database.define('album', {
         allowNull: false,
     },
     categoryId: {
-        type: Sequelize.UUID,
+        type: Sequelize.INTEGER,
         allowNull: false,
     },
     img: {

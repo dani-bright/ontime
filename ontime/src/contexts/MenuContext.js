@@ -1,6 +1,8 @@
 import * as React from "react";
 import {Link} from "react-router-dom";
 import "../styles/Menu.css"
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faBroadcastTower, faCompactDisc, faHome, faMusic, faThumbsUp} from "@fortawesome/free-solid-svg-icons";
 
 export const MenuContext = React.createContext([]);
 
@@ -34,13 +36,26 @@ export class MenuProvider extends React.PureComponent {
                     <div className="menu-box">
                         <nav>
                             <ul>
-                                <li><Link to="/">Home</Link></li>
-                                <li><Link to="/trending">Trending</Link></li>
-                                <li><Link to="/songs">Top Songs</Link></li>
-                                <li><Link to="/albums">Top almbums</Link></li>
-                            </ul>
-                            <ul>
-                                <li><Link to="/favorites">Favorites</Link></li>
+                                <li>
+                                    <FontAwesomeIcon icon={faHome} size="xs" style={{color: '#46d2e9'}}/>
+                                    <Link to="/">Home</Link>
+                                </li>
+                                <li>
+                                    <FontAwesomeIcon icon={faBroadcastTower} size="xs" style={{color: '#46d2e9'}}/>
+                                    <Link to="/trending">Trending</Link>
+                                </li>
+                                <li>
+                                    <FontAwesomeIcon icon={faMusic} size="xs" style={{color: '#46d2e9'}}/>
+                                    <Link to="/songs">Songs</Link>
+                                </li>
+                                <li>
+                                    <FontAwesomeIcon icon={faCompactDisc} size="xs" style={{color: '#46d2e9'}}/>
+                                    <Link to="/albums">Albums</Link>
+                                </li>
+                                <li>
+                                    <FontAwesomeIcon icon={faThumbsUp} size="xs" style={{color: '#46d2e9'}}/>
+                                    <Link to="/favorites">Favorites</Link>
+                                </li>
                             </ul>
                         </nav>
                     </div>
