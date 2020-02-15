@@ -54,10 +54,12 @@ export class Uploads extends React.PureComponent {
 
         return (
             <div className="container">
-                <h2>upload page</h2>
-                <button onClick={this.displaySongForm}>add Song</button>
-                <button onClick={this.displayAlbumForm}>add Album</button>
-                <button onClick={this.displayAuthorForm}>add Author</button>
+                <div style={{marginTop: "34px"}}>
+                    <button onClick={this.displaySongForm}>add Song</button>
+                    <button onClick={this.displayAlbumForm}>add Album</button>
+                    <button onClick={this.displayAuthorForm}>add Author</button>
+                </div>
+
                 {songForm}
                 {albumForm}
                 {authorForm}

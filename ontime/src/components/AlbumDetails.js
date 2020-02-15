@@ -36,23 +36,30 @@ export class AlbumDetails extends React.PureComponent {
             : null
         return (
             <>
-                <div className="detailContainer album">
-                    <FontAwesomeIcon icon={toggleShowIcon} onClick={this.toggleShow} size="lg"
-                                     style={{color: '#46d2e9'}} className="albumListToggler"/>
-                    <div className="songDetails">
-                        {displayImg}
-                        <div>
-                            {authorName}
-                            <p className="title">{album.name}</p>
-                        </div>
+                {
+                    album.songs.length ? (
+                        <>
+                            <div className="detailContainer album">
+                                <FontAwesomeIcon icon={toggleShowIcon} onClick={this.toggleShow} size="lg"
+                                                 style={{color: '#46d2e9'}} className="albumListToggler"/>
+                                <div className="songDetails">
+                                    {displayImg}
+                                    <div>
+                                        {authorName}
+                                        <p className="title">{album.name}</p>
+                                    </div>
 
-                    </div>
-                    <div>{album.songs.length} songs</div>
+                                </div>
+                                <div>{album.songs.length} songs</div>
 
-                </div>
-                <AlbumSongList songs={album.songs} key={album.id + '54'} idAlbum={album.id} show={showSongs}/>
+                            </div>
+                            <AlbumSongList songs={album.songs} key={album.id + '54'} idAlbum={album.id}
+                                           show={showSongs}/>
+                        </>
+
+                    ) : null
+                }
             </>
-
         )
     }
 }

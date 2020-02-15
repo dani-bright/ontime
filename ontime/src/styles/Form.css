@@ -11,6 +11,14 @@
     text-transform: uppercase;
 }
 
+.message{
+    display: none;
+}
+
+.message.active{
+    display: block;
+}
+
 .error {
     color: #e04343;
 }

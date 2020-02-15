@@ -15,6 +15,7 @@ export class SongForm extends React.PureComponent {
         authorId: "",
         name: "",
         error: "",
+        showError: false,
         errorColor: "error",
     };
 
@@ -41,6 +42,12 @@ export class SongForm extends React.PureComponent {
 
     submit = async (e) => {
         e.preventDefault();
+        const {name, categoryId, authorId, audio} = this.state;
+        if (!name || !categoryId || !authorId || !audio) {
+            this.setState({error: "all required fields have to be filled", errorColor: "error", showError: true});
+            this.hideMessage();
+            return false;
+        }
         const response = await SongService.create(this.state);
         const data = await response.json();
         //if adding song doesnt work check your mysql configuration file and set to max_allowed_packet 20M it should be enough
@@ -56,12 +63,21 @@ export class SongForm extends React.PureComponent {
                 albumId: "",
                 authorId: "",
                 name: "",
+                showError: true,
                 errorColor: "success",
             });
+            this.hideMessage();
 
         } else {
-            this.setState({error: data.message, errorColor: "error"})
+            this.setState({error: data.message, errorColor: "error", showError: true});
+            this.hideMessage();
         }
+    };
+
+    hideMessage = () => {
+        setTimeout(() => {
+            this.setState({showError: false})
+        }, 2500);
     };
 
     handleChange = (e) => {
@@ -71,15 +87,15 @@ export class SongForm extends React.PureComponent {
     };
 
     render() {
-        const {img, error, name, errorColor} = this.state;
+        const {img, error, name, errorColor, showError} = this.state;
         const {albums, authors, categories} = this.props;
         const image = img ? <img src={img} alt="" width={60}/> : null;
-        const errorMsg = error ? <p className={errorColor}>{error}</p> : null;
+        const errorMsg = error ? <p className={`message ${showError && 'active'} ${errorColor}`}>{error}</p> : null;
         return (
             <form className="form song" onSubmit={this.submit}>
                 <h3>Song</h3>
                 <label>name (required)</label>
-                <input type="text" required={true} onChange={this.handleChange} id="name" value={name}/>
+                <input type="text" onChange={this.handleChange} id="name" value={name}/>
                 <label>image</label>
                 {image}
                 <input type="file" onChange={this.onPhotoSelected} accept="image/png, image/jpeg"/>

@@ -8,6 +8,7 @@ export class AuthorForm extends React.PureComponent {
         name: "",
         error: "",
         errorColor: "error",
+        showError: false,
     };
 
 
@@ -16,14 +17,22 @@ export class AuthorForm extends React.PureComponent {
         const response = await AuthorService.create(this.state);
         const data = await response.json();
         if (response.ok) {
-            this.setState({error: "author added to database", name: "", errorColor: "success"})
+            this.setState({error: "author added to database", name: "", errorColor: "success", showError: true})
             const authors = await AuthorService.findAll();
             const dataAuthors = await authors.json();
             this.props.setAuthors(dataAuthors.authors);
+            this.hideMessage();
 
         } else {
-            this.setState({error: data.message, errorColor: "error",})
+            this.setState({error: data.message, errorColor: "error", showError: true})
+            this.hideMessage();
         }
+    };
+
+    hideMessage = () => {
+        setTimeout(() => {
+            this.setState({showError: false})
+        }, 2500);
     };
 
     handleChange = (e) => {
@@ -33,8 +42,8 @@ export class AuthorForm extends React.PureComponent {
     };
 
     render() {
-        const {error, name, errorColor} = this.state;
-        const errorMsg = error ? <p className={errorColor}>{error}</p> : null;
+        const {error, name, errorColor, showError} = this.state;
+        const errorMsg = error ? <p className={`message ${showError && 'active'} ${errorColor}`}>{error}</p> : null;
         return (
             <form className="form author" onSubmit={this.submit}>
                 <h3>Author</h3>

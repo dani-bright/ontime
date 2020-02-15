@@ -3,7 +3,14 @@ import {useContext} from "react";
 import {Link} from "react-router-dom";
 import '../styles/Header.css';
 import SearchBar from "./form/SearchBar";
-import {faAlignJustify, faSignInAlt, faSignOutAlt, faUpload, faUserSecret} from "@fortawesome/free-solid-svg-icons";
+import {
+    faAlignJustify,
+    faSignInAlt,
+    faSignOutAlt,
+    faUpload,
+    faUser,
+    faUserSecret
+} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {MenuContext} from "../contexts/MenuContext";
 import {PopupContext} from "../contexts/PopupContext";
@@ -43,25 +50,8 @@ const Header = (props) => {
             <div className="burgerContainer" onClick={showMenu}>
                 <FontAwesomeIcon icon={faAlignJustify} size="2x" style={{color: 'white'}}/>
             </div>
-            <Link to="/"><img src={require("../assets/images/logo.png")} alt=""/></Link>
+            <Link className="logo" to="/"><img src={require("../assets/images/logo.png")} alt=""/></Link>
             <SearchBar/>
-            {
-                props.user ? (
-                    <>
-                        <button className="logout" onClick={logout}>
-                            <FontAwesomeIcon icon={faSignOutAlt} size="lg"/> logout
-                        </button>
-                        <p>loggged in as <span style={{color: "green"}}>{props.user.username}</span></p>
-                    </>
-                ) : <>
-                    <button className="login" onClick={loginForm}>
-                        <FontAwesomeIcon icon={faSignInAlt} size="lg"/> Login
-                    </button>
-                    <button className="subscribe" onClick={subscribeForm}>
-                        subscribe
-                    </button>
-                </>
-            }
             {
                 props.isAdmin ? (
                     <>
@@ -74,6 +64,27 @@ const Header = (props) => {
                     </>
 
                 ) : null}
+            {
+                props.user ? (
+                    <>
+                        <button className="logout" onClick={logout}>
+                            <FontAwesomeIcon icon={faSignOutAlt} size="lg"/> logout
+                        </button>
+                        <p>
+                            <FontAwesomeIcon icon={faUser} size="lg" color="#46d2e9"/>
+                            <span style={{color: "#46d2e9", marginLeft: "4px"}}>{props.user.username}</span>
+                        </p>
+                    </>
+                ) : <>
+                    <button className="login" onClick={loginForm}>
+                        <FontAwesomeIcon icon={faSignInAlt} size="lg"/> Login
+                    </button>
+                    <button className="subscribe" onClick={subscribeForm}>
+                        subscribe
+                    </button>
+                </>
+            }
+
         </nav>
     )
 };

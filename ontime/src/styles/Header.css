@@ -18,6 +18,9 @@
 .navBar > * {
     margin: 5px;
 }
+.logo{
+    margin-right: 45px;
+}
 
 .burgerContainer {
     display: flex;

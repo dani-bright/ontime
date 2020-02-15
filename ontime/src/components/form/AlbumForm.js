@@ -7,12 +7,13 @@ import {setAlbums} from "../../action-creator/albums/setAlbums";
 
 export class AlbumForm extends React.PureComponent {
     state = {
-        imageSrc: null,
+        img: null,
         categoryId: "",
         authorId: "",
         name: "",
         error: "",
         errorColor: "error",
+        showError: false,
     };
 
     onPhotoSelected = (e) => {
@@ -20,7 +21,7 @@ export class AlbumForm extends React.PureComponent {
         if (file) {
             const reader = new FileReader();
             reader.onload = (event) => {
-                this.setState({imageSrc: event.target.result})
+                this.setState({img: event.target.result})
             };
             reader.readAsDataURL(file);
         }
@@ -29,30 +30,39 @@ export class AlbumForm extends React.PureComponent {
 
     submit = async (e) => {
         e.preventDefault();
-        const {name, categoryId, authorId, imageSrc} = this.state;
-        const response = await AlbumService.create({
-            name,
-            categoryId,
-            img: imageSrc,
-            authorId,
-        });
+        const {name, categoryId, authorId, img} = this.state;
+        if (!name || !categoryId || !authorId) {
+            this.setState({error: "all required fields have to be filled", errorColor: "error", showError: true});
+            this.hideMessage();
+            return false;
+        }
+        const response = await AlbumService.create(this.state);
         const data = await response.json();
         if (response.ok) {
             this.setState({
                 error: "album added to database",
-                imageSrc: null,
+                img: null,
                 categoryId: "",
                 authorId: "",
                 name: "",
-                errorColor: "success"
+                errorColor: "success",
+                showError: true,
             });
+            this.hideMessage();
             const albums = await AlbumService.findAll();
             const dataAlbums = await albums.json();
             this.props.setAlbums(dataAlbums.albums);
 
         } else {
-            this.setState({error: data.message, errorColor: "error"})
+            this.setState({error: data.message, errorColor: "error", showError: true})
+            this.hideMessage();
         }
+    };
+
+    hideMessage = () => {
+        setTimeout(() => {
+            this.setState({showError: false})
+        }, 2500);
     };
 
     handleChange = (e) => {
@@ -62,17 +72,17 @@ export class AlbumForm extends React.PureComponent {
     };
 
     render() {
-        const {imageSrc, error, name, errorColor} = this.state;
+        const {img, error, name, errorColor, showError} = this.state;
         const {authors, categories} = this.props;
-        const img = imageSrc ? <img src={imageSrc} alt="" width={60}/> : null;
-        const errorMsg = error ? <p className={errorColor}>{error}</p> : null;
+        const image = img ? <img src={img} alt="" width={60}/> : null;
+        const errorMsg = error ? <p className={`message ${showError && 'active'} ${errorColor}`}>{error}</p> : null;
         return (
             <form className="form album" onSubmit={this.submit}>
                 <h3>Album</h3>
                 <label>name (required)</label>
-                <input type="text" required={true} onChange={this.handleChange} id="name" value={name}/>
+                <input type="text" onChange={this.handleChange} id="name" value={name}/>
                 <label>image</label>
-                {img}
+                {image}
                 <input type="file" onChange={this.onPhotoSelected} accept="image/png, image/jpeg"/>
 
                 <label>author (required)</label>

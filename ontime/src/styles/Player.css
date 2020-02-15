@@ -126,11 +126,17 @@
     font-size: 14px;
 }
 
-.mainPlayer .picture {
-    width: 56px;
+.picture {
+    width: 150px;
+    margin-right: 30px;
 }
 
-.imgContainer{
+.mainPlayer .picture {
+    width: 56px;
+    margin: 0;
+}
+
+.imgContainer {
     width: 150px;
     height: 150px;
     overflow: hidden;
