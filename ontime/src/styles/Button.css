@@ -9,12 +9,17 @@ button, .button {
     text-decoration: none;
 }
 
-button.login{
+button.login {
     background: mediumseagreen;
 }
 
-button.logout{
-    background: darkred;
+button.logout, button.danger {
+    background: #e04343;
+}
+
+button.warning{
+    background: #D7E944;
+    color: #000;
 }
 
 

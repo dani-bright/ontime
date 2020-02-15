@@ -6,6 +6,18 @@ body {
     font-family: 'Roboto', sans-serif;
 }
 
+table {
+    width: 100%;
+}
+
+tr {
+    text-align: center;
+}
+td{
+    border-bottom: 1px solid #ccc;
+    padding: 4px;
+}
+
 .container {
     width: 80%;
     margin: 20px auto 0;

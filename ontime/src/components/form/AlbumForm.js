@@ -51,7 +51,7 @@ export class AlbumForm extends React.PureComponent {
             this.props.setAlbums(dataAlbums.albums);
 
         } else {
-            this.setState({error: JSON.stringify(data.message), errorColor: "error"})
+            this.setState({error: data.message, errorColor: "error"})
         }
     };
 

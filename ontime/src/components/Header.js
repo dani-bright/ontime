@@ -3,13 +3,13 @@ import {useContext} from "react";
 import {Link} from "react-router-dom";
 import '../styles/Header.css';
 import SearchBar from "./form/SearchBar";
-import {faAlignJustify, faSignInAlt, faSignOutAlt, faUpload} from "@fortawesome/free-solid-svg-icons";
+import {faAlignJustify, faSignInAlt, faSignOutAlt, faUpload, faUserSecret} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {MenuContext} from "../contexts/MenuContext";
 import {PopupContext} from "../contexts/PopupContext";
 import {SmartLoginForm} from "./form/LoginForm";
 import {connect} from "react-redux";
-import {setUser} from "../action-creator/user/setUser";
+import {setUser} from "../action-creator/users/user/setUser";
 import {isAdmin} from "../selectors/user/isAdmin";
 import {getUser} from "../selectors/user/getUser";
 import {SmartSubscribeForm} from "./form/SubscribeForm";
@@ -64,9 +64,15 @@ const Header = (props) => {
             }
             {
                 props.isAdmin ? (
-                    <Link to="uploads" className="button">
-                        <FontAwesomeIcon icon={faUpload} size="lg"/> upload
-                    </Link>
+                    <>
+                        <Link to="uploads" className="button">
+                            <FontAwesomeIcon icon={faUpload} size="lg"/> upload
+                        </Link>
+                        <Link to="admin" className="button">
+                            <FontAwesomeIcon icon={faUserSecret} size="lg"/>
+                        </Link>
+                    </>
+
                 ) : null}
         </nav>
     )

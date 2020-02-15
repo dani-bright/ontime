@@ -11,7 +11,7 @@ import {setNowPlaying} from "../action-creator/setNowPlaying";
 import {setAudioPlayer} from "../action-creator/audioPlayer/setAudioPlayer";
 import {getUser} from "../selectors/user/getUser";
 import FavoriteService from "../services/FavoriteService";
-import {setUser} from "../action-creator/user/setUser";
+import {setUser} from "../action-creator/users/user/setUser";
 import {getUserFavorites} from "../selectors/user/getUserFavorites";
 import {getAudioPlayer} from "../selectors/audio/getAudioPlayer";
 import {getPlaylist} from "../selectors/audio/getPlaylist";
@@ -177,10 +177,10 @@ class MainPlayer extends React.PureComponent {
         );
 
         if (audio.currentTime.toFixed(0) == 25) {
-            let {nowPlaying} = this.props;
-            let song = await SongService.findOne(nowPlaying.id);
+            const {nowPlaying} = this.props;
+            const song = await SongService.findOne(nowPlaying.id);
             const data = await song.json();
-            let body = {
+            const body = {
                 listened: data.song.listened + 1,
             };
             await SongService.update(nowPlaying.id, body);
@@ -207,7 +207,7 @@ class MainPlayer extends React.PureComponent {
         const {nowPlaying, user, playlistIndex} = this.props;
         const playPauseIcon = !isPlaying ? faPlay : faPause;
         const favoriteIcon = !isFavorite ? faHeartbeat : faHeart;
-        console.log(nowPlaying)
+        // console.log(nowPlaying)
 
         const displayNext = this.props.playlist.length !== playlistIndex + 1 ?
             <FontAwesomeIcon icon={faForward} onClick={this.next} size="2x" style={{color: 'white'}}/> :

@@ -3,7 +3,7 @@ import UserService from "../../services/UserService";
 import {PopupContext} from "../../contexts/PopupContext";
 import '../../styles/Form.css';
 import {connect} from "react-redux";
-import {setUser} from "../../action-creator/user/setUser";
+import {setUser} from "../../action-creator/users/user/setUser";
 
 export class LoginForm extends React.PureComponent {
     static contextType = PopupContext;
@@ -16,7 +16,7 @@ export class LoginForm extends React.PureComponent {
         e.preventDefault();
         const response = await UserService.auth(this.state);
         if (response.ok) {
-            let data = await response.json();
+            const data = await response.json();
             localStorage.setItem('token', data.token);
             this.props.setUser(data.user);
             //fermer popup

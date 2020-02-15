@@ -23,6 +23,7 @@ import {setAuthors} from "./action-creator/authors/setAuthors";
 import AuthorService from "./services/AuthorService";
 import './styles/Button.css'
 import {setPlaylist} from "./action-creator/playlist/setPlaylist";
+import {SmartAdmin} from "./pages/Admin";
 
 class App extends React.PureComponent {
     async componentDidMount() {
@@ -58,6 +59,7 @@ class App extends React.PureComponent {
                         <Route exact path="/trending" component={SmartTrending}/>
                         <Route exact path="/favorites" component={SmartFavorites}/>
                         <Route exact path="/uploads" component={SmartUploads}/>
+                        <Route exact path="/admin" component={SmartAdmin}/>
                         <SmartMainPlayer/>
                     </MenuProvider>
                 </BrowserRouter>

@@ -13,10 +13,7 @@ export class AuthorForm extends React.PureComponent {
 
     submit = async (e) => {
         e.preventDefault();
-        const {name} = this.state;
-        const response = await AuthorService.create({
-            name,
-        });
+        const response = await AuthorService.create(this.state);
         const data = await response.json();
         if (response.ok) {
             this.setState({error: "author added to database", name: "", errorColor: "success"})
@@ -25,7 +22,7 @@ export class AuthorForm extends React.PureComponent {
             this.props.setAuthors(dataAuthors.authors);
 
         } else {
-            this.setState({error: JSON.stringify(data.message), errorColor: "error",})
+            this.setState({error: data.message, errorColor: "error",})
         }
     };
 

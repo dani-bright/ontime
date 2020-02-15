@@ -8,8 +8,8 @@ import {getCategories} from "../../selectors/category/getCategories";
 
 export class SongForm extends React.PureComponent {
     state = {
-        imageSrc: null,
-        audioSrc: null,
+        img: null,
+        audio: null,
         categoryId: "",
         albumId: "",
         authorId: "",
@@ -23,7 +23,7 @@ export class SongForm extends React.PureComponent {
         if (file) {
             const reader = new FileReader();
             reader.onload = (event) => {
-                this.setState({imageSrc: event.target.result})
+                this.setState({img: event.target.result})
             };
             reader.readAsDataURL(file);
         }
@@ -33,7 +33,7 @@ export class SongForm extends React.PureComponent {
         const file = e.target.files[0];
         const reader = new FileReader();
         reader.onload = (event) => {
-            this.setState({audioSrc: event.target.result})
+            this.setState({audio: event.target.result})
         };
         reader.readAsDataURL(file);
     };
@@ -41,15 +41,7 @@ export class SongForm extends React.PureComponent {
 
     submit = async (e) => {
         e.preventDefault();
-        const {name, categoryId, albumId, audioSrc, authorId, imageSrc} = this.state;
-        const response = await SongService.create({
-            name,
-            categoryId,
-            albumId,
-            img: imageSrc,
-            audio: audioSrc,
-            authorId,
-        });
+        const response = await SongService.create(this.state);
         const data = await response.json();
         //if adding song doesnt work check your mysql configuration file and set to max_allowed_packet 20M it should be enough
         if (response.ok) {
@@ -58,8 +50,8 @@ export class SongForm extends React.PureComponent {
             this.props.setSongs(dataSongs.songs);
             this.setState({
                 error: "song added to database",
-                imageSrc: null,
-                audioSrc: null,
+                img: null,
+                audio: null,
                 categoryId: "",
                 albumId: "",
                 authorId: "",
@@ -68,7 +60,7 @@ export class SongForm extends React.PureComponent {
             });
 
         } else {
-            this.setState({error: JSON.stringify(data.message), errorColor: "error"})
+            this.setState({error: data.message, errorColor: "error"})
         }
     };
 
@@ -79,9 +71,9 @@ export class SongForm extends React.PureComponent {
     };
 
     render() {
-        const {imageSrc, error, name, errorColor} = this.state;
+        const {img, error, name, errorColor} = this.state;
         const {albums, authors, categories} = this.props;
-        const img = imageSrc ? <img src={imageSrc} alt="" width={60}/> : null;
+        const image = img ? <img src={img} alt="" width={60}/> : null;
         const errorMsg = error ? <p className={errorColor}>{error}</p> : null;
         return (
             <form className="form song" onSubmit={this.submit}>
@@ -89,7 +81,7 @@ export class SongForm extends React.PureComponent {
                 <label>name (required)</label>
                 <input type="text" required={true} onChange={this.handleChange} id="name" value={name}/>
                 <label>image</label>
-                {img}
+                {image}
                 <input type="file" onChange={this.onPhotoSelected} accept="image/png, image/jpeg"/>
                 <label>song (required)</label>
                 <input type="file" onChange={this.onAudioSelected} accept=".mp3"/>

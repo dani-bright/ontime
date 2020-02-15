@@ -3,10 +3,11 @@ import UserService from "../../services/UserService";
 import {PopupContext} from "../../contexts/PopupContext";
 import '../../styles/Form.css';
 import {connect} from "react-redux";
-import {setUser} from "../../action-creator/user/setUser";
+import {setUsers} from "../../action-creator/users/setUsers";
 
 export class SubscribeForm extends React.PureComponent {
     static contextType = PopupContext;
+
     state = {
         name: "",
         username: "",
@@ -16,8 +17,52 @@ export class SubscribeForm extends React.PureComponent {
         errorColor: "error",
     };
 
+    async componentDidMount() {
+        const {userId} = this.props;
+        if (userId) {
+            const response = await UserService.findOne(userId);
+            if (response.ok) {
+                let data = await response.json();
+                this.setState({
+                    name: data.user.name,
+                    username: data.user.username,
+                    email: data.user.email,
+                    //I know its not securised
+                    password: data.user.password,
+                });
+            }
+        }
+    }
+
+
     submit = async (e) => {
         e.preventDefault();
+        const {userId} = this.props;
+        if (!userId) {
+            await this.create()
+        } else {
+            await this.edit(userId)
+        }
+
+    };
+
+    edit = async (id) => {
+        const response = await UserService.update(id, this.state);
+        const data = await response.json();
+        if (response.ok) {
+            const newUsers = await UserService.findAll();
+            await newUsers.json().then((data) => {
+                //refresh list
+                this.props.setUsers(data.users);
+                this.context.popup.show(null, null);
+            });
+
+        } else {
+            this.setState({error: data.message, errorColor: "error"})
+        }
+    };
+
+    create = async () => {
         const response = await UserService.create(this.state);
         const data = await response.json();
         if (response.ok) {
@@ -37,31 +82,32 @@ export class SubscribeForm extends React.PureComponent {
     };
 
     render() {
-        const {error, errorColor} = this.state;
+        const {error, errorColor, name, username, password, email} = this.state;
         const errorMsg = error ? <p className={errorColor}>{error}</p> : null;
         return (
             <div className="container">
                 <form onSubmit={this.submit}>
                     <div>
                         <label>name</label>
-                        <input type="text" id="name" onChange={this.handleChange}/>
+                        <input type="text" id="name" onChange={this.handleChange} value={name}/>
                     </div>
                     <div>
                         <label>username</label>
-                        <input type="text" id="username" onChange={this.handleChange}/>
+                        <input type="text" id="username" onChange={this.handleChange} value={username}/>
                     </div>
 
                     <div>
                         <label>email</label>
-                        <input type="email" id="email" onChange={this.handleChange}/>
+                        <input type="email" id="email" onChange={this.handleChange} value={email}/>
                     </div>
 
                     <div>
                         <label>Password</label>
-                        <input type="text" id="password" className="form-control" onChange={this.handleChange}/>
+                        <input type="text" id="password" className="form-control" onChange={this.handleChange}
+                               value={password}/>
                     </div>
                     {errorMsg}
-                    <button className="btn btn-primary">Connexion</button>
+                    <button className="btn btn-primary">Update</button>
                 </form>
             </div>
         );
@@ -71,8 +117,8 @@ export class SubscribeForm extends React.PureComponent {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        setUser: (user) => dispatch(setUser(user))
+        setUsers: (user) => dispatch(setUsers(user))
     }
 };
 
-export const SmartSubscribeForm = connect(undefined, mapDispatchToProps)(SubscribeForm)
+export const SmartSubscribeForm = connect(undefined, mapDispatchToProps)(SubscribeForm);

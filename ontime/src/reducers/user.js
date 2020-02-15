@@ -1,4 +1,4 @@
-import {SetUser} from "../action-creator/user/setUser";
+import {SetUser} from "../action-creator/users/user/setUser";
 
 const initialState = {
     user: null

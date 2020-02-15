@@ -2,7 +2,7 @@
     position: fixed;
     display: flex;
     justify-content: flex-start;
-    align-items: flex-start;
+    align-items: center;
     background: #fff;
     font-family: 'Roboto', sans-serif;
     width: 100%;
