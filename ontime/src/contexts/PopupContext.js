@@ -41,16 +41,15 @@ export class PopupProvider extends React.PureComponent {
                     }
                 }
             }>
-                <div aria-label="oppened modal" className={`outer ${isOpen && 'active'}`}>
-                    <div className="inner">
-                        <div className="header">
-                            {displayTitle}
-                            <PopupProvider.Toggle>X</PopupProvider.Toggle>
-                        </div>
-                        <div className="content">
-                            {content}
-                        </div>
-                        <PopupProvider.Toggle className="overlay"/>
+                <PopupProvider.Toggle className={`overlay ${isOpen && 'active'}`}/>
+
+                <div className={`inner ${isOpen && 'active'}`}>
+                    <div className="header">
+                        {displayTitle}
+                        <PopupProvider.Toggle>X</PopupProvider.Toggle>
+                    </div>
+                    <div className="content">
+                        {content}
                     </div>
                 </div>
                 {children}

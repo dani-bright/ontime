@@ -1,6 +1,7 @@
 import * as React from "react";
 import UserService from "../../services/UserService";
 import {PopupContext} from "../../contexts/PopupContext";
+import '../../styles/Form.css';
 import {connect} from "react-redux";
 import {setUser} from "../../action-creator/user/setUser";
 
@@ -35,12 +36,12 @@ export class LoginForm extends React.PureComponent {
         return (
             <div className="container">
                 <form onSubmit={this.submit}>
-                    <div className="form-group">
-                        <label>Email</label>
+                    <div>
+                        <label>username</label>
                         <input type="text" id="username" className="form-control" onChange={this.handleChange}/>
                     </div>
 
-                    <div className="form-group">
+                    <div>
                         <label>Password</label>
                         <input type="text" id="password" className="form-control" onChange={this.handleChange}/>
                     </div>

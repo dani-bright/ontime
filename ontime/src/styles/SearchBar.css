@@ -1,0 +1,33 @@
+.searchBar {
+    border-radius: 0px 37px 37px 0px;
+    display: flex;
+    align-items: center;
+    height: 45px;
+}
+
+.searchBar input {
+    height: 100%;
+    width: 340px;
+    border: none;
+    font-size: 15px;
+    border: 2px solid #46d2e9;
+    padding: 0 10px 0 10px;
+    color: white;
+    margin: 0;
+}
+
+.searchBar button {
+    height: 100%;
+    width: 45px;
+    height: 45px;
+    border: none;
+    border: 2px solid #46d2e9;
+    border-left: none;
+    margin: 0;
+    color: #fff;
+}
+
+.searchBar button:hover {
+    background: #fff;
+    color: #46d2e9;
+}

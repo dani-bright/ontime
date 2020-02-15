@@ -19,8 +19,9 @@
     color: mediumseagreen;
 }
 
-.form input, form select {
+.form input, form select, input {
     position: relative;
+    padding: 4px;
     display: block;
     margin: 10px auto 10px;
     border-radius: 5px;
