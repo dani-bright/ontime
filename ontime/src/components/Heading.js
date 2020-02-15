@@ -3,7 +3,6 @@ import '../styles/Heading.css'
 import {SmartCategorySelector} from "./CategorySelector";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {getSelectedCategory} from "../selectors/category/getSelectedCategory";
-import {getAlbumsByCategory} from "../selectors/album/getAlbumsByCategory";
 import {getAlbums} from "../selectors/album/getAlbums";
 import {getCategory} from "../selectors/category/getCategory";
 import {connect} from "react-redux";

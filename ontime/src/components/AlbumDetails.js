@@ -18,7 +18,6 @@ export class AlbumDetails extends React.PureComponent {
     toggleShow = () => {
         this.setState({showSongs: !this.state.showSongs}, () => {
             this.state.showSongs && this.props.setPlaylist(this.props.album.songs);
-
         })
     };
 
@@ -32,7 +31,7 @@ export class AlbumDetails extends React.PureComponent {
         const toggleShowIcon = showSongs ? faToggleOn : faToggleOff;
 
         const displayImg = album.img ?
-            <img className="picture" src={album.img}/>
+            <img className="picture" src={album.img} alt="albumImg"/>
             : null
         return (
             <>

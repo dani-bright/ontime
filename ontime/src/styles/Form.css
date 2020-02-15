@@ -1,7 +1,7 @@
 .form {
     border: 2px solid #46d2e9;
     padding: 5px;
-    width: 600px;
+    width: 90%;
     margin: 0 auto;
 }
 
@@ -11,11 +11,11 @@
     text-transform: uppercase;
 }
 
-.message{
+.message {
     display: none;
 }
 
-.message.active{
+.message.active {
     display: block;
 }
 

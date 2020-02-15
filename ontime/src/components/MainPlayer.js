@@ -176,7 +176,7 @@ class MainPlayer extends React.PureComponent {
             }
         );
 
-        if (audio.currentTime.toFixed(0) == 25) {
+        if (parseFloat(audio.currentTime.toFixed(0)) === 25) {
             const {nowPlaying} = this.props;
             const song = await SongService.findOne(nowPlaying.id);
             const data = await song.json();
@@ -216,7 +216,7 @@ class MainPlayer extends React.PureComponent {
             <FontAwesomeIcon icon={faBackward} size="2x" style={{color: '#141415'}}/>
             : <FontAwesomeIcon icon={faBackward} onClick={this.prev} size="2x" style={{color: 'white'}}/>;
         const displayImg = nowPlaying && nowPlaying.img ?
-            <img className="picture" src={nowPlaying.img}/>
+            <img className="picture" src={nowPlaying.img} alt="songImg"/>
             : null;
         const displayInfo = nowPlaying ? <div className="songDetails">
             <p className="author">{nowPlaying.authors[0].name}</p>

@@ -2,7 +2,7 @@ import * as React from "react";
 import {connect} from "react-redux";
 import {AlbumList} from "../components/AlbumList";
 import {getAlbums} from "../selectors/album/getAlbums";
-import {Heading, SmartHeading} from "../components/Heading";
+import {SmartHeading} from "../components/Heading";
 import {faCompactDisc} from "@fortawesome/free-solid-svg-icons";
 import {getSelectedCategory} from "../selectors/category/getSelectedCategory";
 import {getAlbumsByCategory} from "../selectors/album/getAlbumsByCategory";

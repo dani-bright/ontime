@@ -5,7 +5,7 @@ import '../../styles/Form.css';
 import {connect} from "react-redux";
 import {setUsers} from "../../action-creator/users/setUsers";
 
-export class SubscribeForm extends React.PureComponent {
+export class UserForm extends React.PureComponent {
     static contextType = PopupContext;
 
     state = {
@@ -88,7 +88,7 @@ export class SubscribeForm extends React.PureComponent {
         const response = await UserService.create(this.state);
         const data = await response.json();
         if (response.ok) {
-            //fermer popup
+            //close popup
             setTimeout(() => {
                 this.context.popup.show(null, null);
             }, 500)
@@ -144,4 +144,4 @@ const mapDispatchToProps = (dispatch) => {
     }
 };
 
-export const SmartSubscribeForm = connect(undefined, mapDispatchToProps)(SubscribeForm);
+export const SmartUserForm = connect(undefined, mapDispatchToProps)(UserForm);

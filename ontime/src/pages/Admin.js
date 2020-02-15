@@ -1,15 +1,16 @@
 import * as React from "react";
 import "../styles/Form.css"
-import {SmartUserList} from "../components/UserList";
+import {SmartUserList} from "../components/admin/UserList";
 import {getUser} from "../selectors/user/getUser";
 import {isAdmin} from "../selectors/user/isAdmin";
 import {connect} from "react-redux";
+import {SmartAdminSongList} from "../components/admin/AdminSongList";
 
 export class Admin extends React.PureComponent {
     constructor(props) {
         super(props);
         this.state = {
-            toDisplay: "users",
+            toDisplay: "songs",
         };
         if (!this.props.isAdmin) {
             this.props.history.push('/');
@@ -40,7 +41,7 @@ export class Admin extends React.PureComponent {
         const users = toDisplay === "users" ?
             <SmartUserList/> : null;
         const songs = toDisplay === "songs" ?
-            <SmartUserList/> : null;
+            <SmartAdminSongList/> : null;
 
         return (
             <div className="container">

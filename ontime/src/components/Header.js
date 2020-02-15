@@ -19,7 +19,7 @@ import {connect} from "react-redux";
 import {setUser} from "../action-creator/users/user/setUser";
 import {isAdmin} from "../selectors/user/isAdmin";
 import {getUser} from "../selectors/user/getUser";
-import {SmartSubscribeForm} from "./form/SubscribeForm";
+import {SmartUserForm} from "./form/UserForm";
 
 
 const Header = (props) => {
@@ -43,7 +43,7 @@ const Header = (props) => {
     };
     const subscribeForm = () => {
         popupContext.popup.show("Subscription",
-            <SmartSubscribeForm/>)
+            <SmartUserForm/>)
     };
     return (
         <nav className="navBar">

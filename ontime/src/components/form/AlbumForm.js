@@ -30,7 +30,7 @@ export class AlbumForm extends React.PureComponent {
 
     submit = async (e) => {
         e.preventDefault();
-        const {name, categoryId, authorId, img} = this.state;
+        const {name, categoryId, authorId} = this.state;
         if (!name || !categoryId || !authorId) {
             this.setState({error: "all required fields have to be filled", errorColor: "error", showError: true});
             this.hideMessage();
@@ -74,7 +74,7 @@ export class AlbumForm extends React.PureComponent {
     render() {
         const {img, error, name, errorColor, showError} = this.state;
         const {authors, categories} = this.props;
-        const image = img ? <img src={img} alt="" width={60}/> : null;
+        const image = img ? <img src={img} width={60} alt="songImg"/> : null;
         const errorMsg = error ? <p className={`message ${showError && 'active'} ${errorColor}`}>{error}</p> : null;
         return (
             <form className="form album" onSubmit={this.submit}>

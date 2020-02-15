@@ -1,7 +1,6 @@
 import {getSong} from "../song/getSong";
 import {getPlaylist} from "./getPlaylist";
 import {getPlaylistIndex} from "./getPlaylistIndex";
-import {getNowPlaying} from "./getNowPlaying";
 
 export const isNowPlayingSongPlaylist = (state) => (idSong) => {
     const song = getSong(state)(idSong);

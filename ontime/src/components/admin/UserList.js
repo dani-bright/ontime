@@ -1,13 +1,13 @@
 import * as React from "react";
-import UserService from "../services/UserService";
+import UserService from "../../services/UserService";
 import {SmartUser} from "./User";
-import {getUsers} from "../selectors/getUsers";
-import {setUsers} from "../action-creator/users/setUsers";
+import {getUsers} from "../../selectors/getUsers";
+import {setUsers} from "../../action-creator/users/setUsers";
 import {connect} from "react-redux";
-import {PopupContext} from "../contexts/PopupContext";
-import {SmartSubscribeForm} from "./form/SubscribeForm";
+import {PopupContext} from "../../contexts/PopupContext";
+import {SmartUserForm} from "../form/UserForm";
 
-export default class UserList extends React.Component {
+class UserList extends React.Component {
     static contextType = PopupContext;
 
     async componentDidMount() {
@@ -30,7 +30,7 @@ export default class UserList extends React.Component {
 
     editUser = async (id) => {
         this.context.popup.show("Connexion",
-            <SmartSubscribeForm userId={id}/>)
+            <SmartUserForm userId={id}/>)
     };
 
     render() {
@@ -49,7 +49,7 @@ export default class UserList extends React.Component {
                 {
                     this.props.users.map(user => {
                         return (
-                            <SmartUser user={user} delete={() => {
+                            <SmartUser key={user.id} user={user} delete={() => {
                                 this.deleteUser(user.id)
                             }} edit={() => {
                                 this.editUser(user.id)

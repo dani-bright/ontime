@@ -4,7 +4,7 @@ import {SongList} from "../components/SongList";
 import {getSelectedCategory} from "../selectors/category/getSelectedCategory";
 import {getSongsSortedByListened} from "../selectors/song/getSongsSortedByListened";
 import {getSongsByCategorySorted} from "../selectors/song/getSongsByCategorySorted";
-import {Heading, SmartHeading} from "../components/Heading";
+import {SmartHeading} from "../components/Heading";
 import {faBroadcastTower} from "@fortawesome/free-solid-svg-icons";
 import {setPlaylist} from "../action-creator/playlist/setPlaylist";
 

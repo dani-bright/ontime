@@ -4,7 +4,7 @@ import {getSongs} from "../selectors/song/getSongs";
 import {SongList} from "../components/SongList";
 import {getSelectedCategory} from "../selectors/category/getSelectedCategory";
 import {getSongsByCategory} from "../selectors/song/getSongsByCategory";
-import {Heading, SmartHeading} from "../components/Heading";
+import {SmartHeading} from "../components/Heading";
 import {faMusic} from "@fortawesome/free-solid-svg-icons";
 
 export class Songs extends React.PureComponent {
