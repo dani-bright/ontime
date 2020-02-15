@@ -43,7 +43,7 @@ export class LoginForm extends React.PureComponent {
 
                     <div>
                         <label>Password</label>
-                        <input type="text" id="password" className="form-control" onChange={this.handleChange}/>
+                        <input type="password" id="password" className="form-control" onChange={this.handleChange}/>
                     </div>
 
                     <button className="btn btn-primary">Connexion</button>

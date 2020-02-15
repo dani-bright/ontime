@@ -1,20 +1,10 @@
 import * as React from "react";
-import UserService from "../../services/UserService";
-import {PopupContext} from "../../contexts/PopupContext";
 import {connect} from "react-redux";
-import {setUser} from "../../action-creator/user/setUser";
 import SongService from "../../services/SongService";
-import {setNowPlaying} from "../../action-creator/setNowPlaying";
-import {setAuthors} from "../../action-creator/authors/setAuthors";
 import {setSongs} from "../../action-creator/songs/setSongs";
-import {setAlbums} from "../../action-creator/albums/setAlbums";
-import {setCategories} from "../../action-creator/categories/setCategories";
-import App from "../../App";
-import {getUser} from "../../selectors/user/getUser";
 import {getAlbums} from "../../selectors/album/getAlbums";
 import {getAuthors} from "../../selectors/getAuthors";
 import {getCategories} from "../../selectors/category/getCategories";
-import {isAdmin} from "../../selectors/user/isAdmin";
 
 export class SongForm extends React.PureComponent {
     state = {
@@ -78,7 +68,7 @@ export class SongForm extends React.PureComponent {
             });
 
         } else {
-            this.setState({error: JSON.stringify(data.message), errorColor: "error",})
+            this.setState({error: JSON.stringify(data.message), errorColor: "error"})
         }
     };
 

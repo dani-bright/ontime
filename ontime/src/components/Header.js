@@ -12,6 +12,7 @@ import {connect} from "react-redux";
 import {setUser} from "../action-creator/user/setUser";
 import {isAdmin} from "../selectors/user/isAdmin";
 import {getUser} from "../selectors/user/getUser";
+import {SmartSubscribeForm} from "./form/SubscribeForm";
 
 
 const Header = (props) => {
@@ -33,6 +34,10 @@ const Header = (props) => {
         popupContext.popup.show("Connexion",
             <SmartLoginForm/>)
     };
+    const subscribeForm = () => {
+        popupContext.popup.show("Subscription",
+            <SmartSubscribeForm/>)
+    };
     return (
         <nav className="navBar">
             <div className="burgerContainer" onClick={showMenu}>
@@ -42,11 +47,20 @@ const Header = (props) => {
             <SearchBar/>
             {
                 props.user ? (
-                    <button className="logout" onClick={logout}>
-                        <FontAwesomeIcon icon={faSignOutAlt} size="lg"/> logout</button>
-                ) : <button className="login" onClick={loginForm}>
-                    <FontAwesomeIcon icon={faSignInAlt} size="lg"/> Login
-                </button>
+                    <>
+                        <button className="logout" onClick={logout}>
+                            <FontAwesomeIcon icon={faSignOutAlt} size="lg"/> logout
+                        </button>
+                        <p>loggged in as <span style={{color: "green"}}>{props.user.username}</span></p>
+                    </>
+                ) : <>
+                    <button className="login" onClick={loginForm}>
+                        <FontAwesomeIcon icon={faSignInAlt} size="lg"/> Login
+                    </button>
+                    <button className="subscribe" onClick={subscribeForm}>
+                        subscribe
+                    </button>
+                </>
             }
             {
                 props.isAdmin ? (
