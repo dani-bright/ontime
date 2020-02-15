@@ -15,6 +15,7 @@ export class SubscribeForm extends React.PureComponent {
         password: "",
         error: "",
         errorColor: "error",
+        showError: false,
     };
 
     async componentDidMount() {
@@ -38,6 +39,7 @@ export class SubscribeForm extends React.PureComponent {
     submit = async (e) => {
         e.preventDefault();
         const {userId} = this.props;
+
         if (!userId) {
             await this.create()
         } else {
@@ -47,6 +49,12 @@ export class SubscribeForm extends React.PureComponent {
     };
 
     edit = async (id) => {
+        const {name, username, email, password} = this.state;
+        if (!name || !username || !email || !password) {
+            this.setState({error: "all fields have to be filled", errorColor: "error", showError: true});
+            this.hideMessage();
+            return false;
+        }
         const response = await UserService.update(id, this.state);
         const data = await response.json();
         if (response.ok) {
@@ -58,11 +66,25 @@ export class SubscribeForm extends React.PureComponent {
             });
 
         } else {
-            this.setState({error: data.message, errorColor: "error"})
+            this.setState({error: data.message, errorColor: "error", showError: true});
+            this.hideMessage();
         }
     };
 
+
+    hideMessage = () => {
+        setTimeout(() => {
+            this.setState({showError: false})
+        }, 2500);
+    };
+
     create = async () => {
+        const {name, username, email, password} = this.state;
+        if (!name || !username || !email || !password) {
+            this.setState({error: "all fields have to be filled", errorColor: "error", showError: true});
+            this.hideMessage();
+            return false;
+        }
         const response = await UserService.create(this.state);
         const data = await response.json();
         if (response.ok) {
@@ -71,7 +93,8 @@ export class SubscribeForm extends React.PureComponent {
                 this.context.popup.show(null, null);
             }, 500)
         } else {
-            this.setState({error: JSON.stringify(data.message), errorColor: "error"})
+            this.setState({error: data.message, errorColor: "error", showError: true})
+            this.hideMessage();
         }
     };
 
@@ -82,8 +105,8 @@ export class SubscribeForm extends React.PureComponent {
     };
 
     render() {
-        const {error, errorColor, name, username, password, email} = this.state;
-        const errorMsg = error ? <p className={errorColor}>{error}</p> : null;
+        const {error, errorColor, name, username, password, email, showError} = this.state;
+        const errorMsg = error ? <p className={`message ${showError && 'active'} ${errorColor}`}>{error}</p> : null;
         return (
             <div className="container">
                 <form onSubmit={this.submit}>
