@@ -207,6 +207,7 @@ class MainPlayer extends React.PureComponent {
         const {nowPlaying, user, playlistIndex} = this.props;
         const playPauseIcon = !isPlaying ? faPlay : faPause;
         const favoriteIcon = !isFavorite ? faHeartbeat : faHeart;
+        console.log(nowPlaying)
 
         const displayNext = this.props.playlist.length !== playlistIndex + 1 ?
             <FontAwesomeIcon icon={faForward} onClick={this.next} size="2x" style={{color: 'white'}}/> :
@@ -218,7 +219,7 @@ class MainPlayer extends React.PureComponent {
             <img className="picture" src={nowPlaying.img}/>
             : null;
         const displayInfo = nowPlaying ? <div className="songDetails">
-            {/*<p className="author">{nowPlaying.authors[0].name}</p>*/}
+            <p className="author">{nowPlaying.authors[0].name}</p>
             <p className="title">{nowPlaying.name}</p>
         </div> : null;
 

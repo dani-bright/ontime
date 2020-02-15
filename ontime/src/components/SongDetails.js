@@ -17,7 +17,6 @@ import {getCurrentTime} from "../selectors/audio/getCurrentTime";
 import {getPlaylist} from "../selectors/audio/getPlaylist";
 import {setPlaylist} from "../action-creator/playlist/setPlaylist";
 import {getSongs} from "../selectors/song/getSongs";
-import nowPlaying from "../reducers/nowPlaying";
 
 export class SongDetails extends React.PureComponent {
     //prevent memory leak
@@ -113,8 +112,9 @@ export class SongDetails extends React.PureComponent {
         const playPauseIcon = isPlaying ? faPause : faPlayCircle;
 
         const displayImg = song.img ?
-            <img className="picture" src={song.img}/>
-            : null
+            <div className="imgContainer" style={{background: `url(${song.img}) center center`}}></div>
+            : <div className="imgContainer"></div>
+
         return (
             <div className="detailContainer">
                 <div className="listened">
