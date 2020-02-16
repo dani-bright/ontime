@@ -5,6 +5,8 @@ import {getUser} from "../selectors/user/getUser";
 import {isAdmin} from "../selectors/user/isAdmin";
 import {connect} from "react-redux";
 import {SmartAdminSongList} from "../components/admin/AdminSongList";
+import {setPlaylist} from "../action-creator/playlist/setPlaylist";
+import {getSongs} from "../selectors/song/getSongs";
 
 export class Admin extends React.PureComponent {
     constructor(props) {
@@ -15,6 +17,7 @@ export class Admin extends React.PureComponent {
         if (!this.props.isAdmin) {
             this.props.history.push('/');
         }
+        this.props.setPlaylist(this.props.songs);
     }
 
     componentDidUpdate() {
@@ -57,9 +60,14 @@ export class Admin extends React.PureComponent {
 
 const mapStateToProps = (state) => {
     return {
+        songs: getSongs(state),
         isAdmin: isAdmin(state),
         user: getUser(state),
     }
 };
 
-export const SmartAdmin = connect(mapStateToProps)(Admin);
+const mapDispatchToProps = (dispatch) => ({
+    setPlaylist: (songs) => dispatch(setPlaylist(songs))
+});
+
+export const SmartAdmin = connect(mapStateToProps, mapDispatchToProps)(Admin);

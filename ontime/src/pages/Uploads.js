@@ -6,6 +6,8 @@ import {SmartSongForm} from "../components/form/SongForm";
 import {SmartAlbumForm} from "../components/form/AlbumForm";
 import {SmartAuthorForm} from "../components/form/AuthorForm";
 import {isAdmin} from "../selectors/user/isAdmin";
+import {getSongs} from "../selectors/song/getSongs";
+import {setPlaylist} from "../action-creator/playlist/setPlaylist";
 
 export class Uploads extends React.PureComponent {
     constructor(props) {
@@ -16,6 +18,7 @@ export class Uploads extends React.PureComponent {
         if (!this.props.isAdmin) {
             this.props.history.push('/');
         }
+        this.props.setPlaylist(this.props.songs);
     }
 
     componentDidUpdate() {
@@ -70,9 +73,14 @@ export class Uploads extends React.PureComponent {
 
 const mapStateToProps = (state) => {
     return {
+        songs: getSongs(state),
         isAdmin: isAdmin(state),
         user: getUser(state),
     }
 };
 
-export const SmartUploads = connect(mapStateToProps)(Uploads);
+const mapDispatchToProps = (dispatch) => ({
+    setPlaylist: (songs) => dispatch(setPlaylist(songs))
+});
+
+export const SmartUploads = connect(mapStateToProps, mapDispatchToProps)(Uploads);

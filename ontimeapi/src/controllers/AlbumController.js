@@ -1,6 +1,7 @@
 import Album from "../models/Album";
 import Category from "../models/Category";
 import Song from "../models/Song";
+import Author from "../models/Author";
 
 class AlbumController {
     /***
@@ -47,6 +48,9 @@ class AlbumController {
                         through: {
                             attributes: []
                         },
+                        include: [
+                            Author
+                        ]
                     },
                 ]
             });
@@ -79,6 +83,9 @@ class AlbumController {
                         through: {
                             attributes: []
                         },
+                        include: [
+                            Author
+                        ]
                     },
                 ]
             });

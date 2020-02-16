@@ -13,7 +13,8 @@ table {
 tr {
     text-align: center;
 }
-td{
+
+td {
     border-bottom: 1px solid #ccc;
     padding: 4px;
 }
@@ -22,6 +23,22 @@ td{
     width: 80%;
     margin: 20px auto 0;
     padding: 10px;
+
+}
+
+.albumContainer {
+    overflow: hidden;
+    width: 80%;
+    margin: 0 auto;
+}
+
+.albumContainer .container {
+    height: 490px;
+    width: 100%;
+    overflow-y: scroll;
+    position: relative;
+    padding-right: 17px; /* Increase/decrease this value for cross-browser compatibility */
+    box-sizing: content-box
 }
 
 select, input {

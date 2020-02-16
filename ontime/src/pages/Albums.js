@@ -11,9 +11,11 @@ export class Albums extends React.PureComponent {
     render() {
         const {albums} = this.props;
         return (
-            <div className="container">
+            <div className="albumContainer">
                 <SmartHeading icon={faCompactDisc} pageTitle="albums"/>
-                <AlbumList albums={albums}/>
+                <div className="container">
+                    <AlbumList albums={albums}/>
+                </div>
             </div>
         )
     }

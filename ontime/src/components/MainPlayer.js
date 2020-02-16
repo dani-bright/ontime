@@ -207,7 +207,6 @@ class MainPlayer extends React.PureComponent {
         const {nowPlaying, user, playlistIndex} = this.props;
         const playPauseIcon = !isPlaying ? faPlay : faPause;
         const favoriteIcon = !isFavorite ? faHeartbeat : faHeart;
-        // console.log(nowPlaying)
 
         const displayNext = this.props.playlist.length !== playlistIndex + 1 ?
             <FontAwesomeIcon icon={faForward} onClick={this.next} size="2x" style={{color: 'white'}}/> :

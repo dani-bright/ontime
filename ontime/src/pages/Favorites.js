@@ -22,7 +22,6 @@ export class Favorites extends React.PureComponent {
                 {
                     this.props.user ? (
                         <div className="container">
-                            <SmartHeading icon={faThumbsUp} pageTitle="Favorites"/>
                             {favorites.map((favorite, index) => (
                                 <div key={favorite.id}>
                                     <SmartSongDetail idSong={favorite.songId}/>
