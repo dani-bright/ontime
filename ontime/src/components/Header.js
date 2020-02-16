@@ -48,43 +48,49 @@ const Header = (props) => {
     };
     return (
         <nav className="navBar">
-            <div className="burgerContainer" onClick={showMenu}>
-                <FontAwesomeIcon icon={faAlignJustify} size="2x" style={{color: 'white'}}/>
+            <div className="left">
+                <div className="burgerContainer" onClick={showMenu}>
+                    <FontAwesomeIcon icon={faAlignJustify} size="2x" style={{color: 'white'}}/>
+                </div>
+                <Link className="logo" to="/"><img src={require("../assets/images/logo.png")} alt=""/></Link>
             </div>
-            <Link className="logo" to="/"><img src={require("../assets/images/logo.png")} alt=""/></Link>
-            <SmartSearchBar content={props.songs}/>
-            {
-                props.isAdmin ? (
-                    <>
-                        <Link to="uploads" className="button">
-                            <FontAwesomeIcon icon={faUpload} size="lg"/> upload
-                        </Link>
-                        <Link to="admin" className="button">
-                            <FontAwesomeIcon icon={faUserSecret} size="lg"/>
-                        </Link>
-                    </>
 
-                ) : null}
-            {
-                props.user ? (
-                    <>
-                        <button className="logout" onClick={logout}>
-                            <FontAwesomeIcon icon={faSignOutAlt} size="lg"/> logout
+            <SmartSearchBar content={props.songs}/>
+            <div className="right">
+                {
+                    props.isAdmin ? (
+                        <>
+                            <Link to="uploads" className="button">
+                                <FontAwesomeIcon icon={faUpload} size="lg"/> upload
+                            </Link>
+                            <Link to="admin" className="button">
+                                <FontAwesomeIcon icon={faUserSecret} size="lg"/>
+                            </Link>
+                        </>
+
+                    ) : null}
+                {
+                    props.user ? (
+                        <>
+                            <button className="logout" onClick={logout}>
+                                <FontAwesomeIcon icon={faSignOutAlt} size="lg"/> logout
+                            </button>
+                            <p>
+                                <FontAwesomeIcon icon={faUser} size="lg" color="#46d2e9"/>
+                                <span style={{color: "#46d2e9", marginLeft: "4px"}}>{props.user.username}</span>
+                            </p>
+                        </>
+                    ) : <>
+                        <button className="login" onClick={loginForm}>
+                            <FontAwesomeIcon icon={faSignInAlt} size="lg"/> Login
                         </button>
-                        <p>
-                            <FontAwesomeIcon icon={faUser} size="lg" color="#46d2e9"/>
-                            <span style={{color: "#46d2e9", marginLeft: "4px"}}>{props.user.username}</span>
-                        </p>
+                        <button className="subscribe" onClick={subscribeForm}>
+                            subscribe
+                        </button>
                     </>
-                ) : <>
-                    <button className="login" onClick={loginForm}>
-                        <FontAwesomeIcon icon={faSignInAlt} size="lg"/> Login
-                    </button>
-                    <button className="subscribe" onClick={subscribeForm}>
-                        subscribe
-                    </button>
-                </>
-            }
+                }
+            </div>
+
 
         </nav>
     )

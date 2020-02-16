@@ -10,9 +10,7 @@ export class AlbumSongList extends React.PureComponent {
                 {
                     show ? (
                         songs.map((song, index) => (
-                            <div key={song.id + index}>
-                                <SmartAlbumSongs idSong={song.id} key={index} idAlbum={idAlbum}/>
-                            </div>
+                            <SmartAlbumSongs idSong={song.id} key={index} idAlbum={idAlbum}/>
                         ))
                     ) : null
                 }

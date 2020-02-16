@@ -1,7 +1,7 @@
 .navBar {
     position: fixed;
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-between;
     align-items: center;
     background: #fff;
     font-family: 'Roboto', sans-serif;
@@ -15,20 +15,32 @@
 
 }
 
-.navBar > * {
-    margin: 5px;
-}
-.logo{
+
+.logo {
     margin-right: 45px;
 }
 
 .burgerContainer {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     height: 100%;
     background: #46d2e9;
     margin: 0 40px 0 0;
     cursor: pointer;
     padding: 1px 10px;
+}
+
+.left {
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+.right {
+    position: relative;
+    right: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
