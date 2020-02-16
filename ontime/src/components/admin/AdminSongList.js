@@ -12,16 +12,21 @@ import {setAlbums} from "../../action-creator/albums/setAlbums";
 export default class AdminSongList extends React.Component {
     static contextType = PopupContext;
 
+    state = {
+        showLoader: false,
+    };
+
     deleteSong = async (id) => {
+        this.setState({showLoader: true});
         const response = await SongService.remove(id);
         if (response.ok) {
-            const index = this.props.songs.findIndex(user => user.id === id);
-            this.props.songs.splice(index, 1);
-            this.props.setSongs(this.props.songs);
+            const songs = await SongService.findAll();
+            const dataSongs = await songs.json();
+            this.setState({showLoader: false});
+            this.props.setSongs(dataSongs.songs);
             const albums = await AlbumService.findAll();
             const dataAlbums = await albums.json();
             this.props.setAlbums(dataAlbums.albums);
-            this.setState({})
         }
     };
 
@@ -33,6 +38,8 @@ export default class AdminSongList extends React.Component {
     render() {
         return (
             <table className="table">
+                <img src={require("../../assets/images/loader.gif")}
+                     className={`loader ${this.state.showLoader && 'active'}`} alt="loader"/>
                 <thead>
                 <tr>
                     <th>#</th>

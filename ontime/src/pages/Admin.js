@@ -47,12 +47,16 @@ export class Admin extends React.PureComponent {
             <SmartAdminSongList/> : null;
 
         return (
-            <div className="container">
-                <h2>Admin page</h2>
-                <button onClick={this.displayUsers}>Manage users</button>
-                <button onClick={this.displaySongs}>Manage songs</button>
-                {users}
-                {songs}
+            <div className="tableContainer">
+                <div style={{marginTop: '70px'}}>
+                    <button onClick={this.displayUsers}>Manage users</button>
+                    <button onClick={this.displaySongs}>Manage songs</button>
+                </div>
+                <div className="container">
+                    {users}
+                    {songs}
+                </div>
+
             </div>
         )
     }

@@ -20,6 +20,7 @@ export class SongForm extends React.PureComponent {
         name: "",
         error: "",
         showError: false,
+        showLoader: false,
         errorColor: "error",
     };
 
@@ -64,11 +65,13 @@ export class SongForm extends React.PureComponent {
             return false;
         }
         const response = await SongService.create(this.state);
+        this.setState({showLoader: true});
         const data = await response.json();
         //if adding song doesnt work check your mysql configuration file and set to max_allowed_packet 20M it should be enough
         if (response.ok) {
             const songs = await SongService.findAll();
             const dataSongs = await songs.json();
+            this.setState({showLoader: false});
             this.props.setSongs(dataSongs.songs);
 
             //refresh the songs for an album
@@ -77,11 +80,6 @@ export class SongForm extends React.PureComponent {
             this.props.setAlbums(dataAlbums.albums);
             this.setState({
                 error: "song added to database",
-                img: null,
-                audio: null,
-                categoryId: "",
-                albumId: "",
-                authorId: "",
                 name: "",
                 showError: true,
                 errorColor: "success",
@@ -101,11 +99,15 @@ export class SongForm extends React.PureComponent {
             this.hideMessage();
             return false;
         }
+        this.setState({showLoader: true});
+
         const body = img ? {name, img} : {name};
         const response = await SongService.update(id, body);
         const data = await response.json();
         if (response.ok) {
             const newSongs = await SongService.findAll();
+            this.setState({showLoader: false});
+
             await newSongs.json().then((data) => {
                 //refresh list
                 this.props.setSongs(data.songs);
@@ -142,7 +144,7 @@ export class SongForm extends React.PureComponent {
     };
 
     render() {
-        const {img, error, name, errorColor, showError} = this.state;
+        const {img, error, name, errorColor, showError, showLoader} = this.state;
         const {albums, authors, categories, songId} = this.props;
         const image = img ? <img src={img} alt="" width={60}/> : null;
         const errorMsg = error ? <p className={`message ${showError && 'active'} ${errorColor}`}>{error}</p> : null;
@@ -171,6 +173,12 @@ export class SongForm extends React.PureComponent {
                 ))}
             </select>
         </> : null;
+
+        const button = songId ? <button className="">update</button> : <button className="">Add</button>;
+
+        const displayButton = songId && !showLoader ? button : !showLoader ? button : null;
+
+
         return (
             <form className="form song" onSubmit={this.submit}>
                 <h3>Song</h3>
@@ -181,7 +189,9 @@ export class SongForm extends React.PureComponent {
                 <input type="file" onChange={this.onPhotoSelected} accept="image/png, image/jpeg"/>
                 {creationModeFields}
                 {errorMsg}
-                <button className="">Add</button>
+                {displayButton}
+                <img src={require("../../assets/images/loader.gif")}
+                     className={`loader ${showLoader && 'active'}`} alt="loader"/>
             </form>
         );
     }

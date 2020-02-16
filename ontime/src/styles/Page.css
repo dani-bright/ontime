@@ -19,6 +19,21 @@ td {
     padding: 4px;
 }
 
+.loader {
+    width: 27px;
+    display: none;
+}
+
+.table .loader {
+    position: absolute;
+    right: 37px;
+    top: 12px;
+}
+
+.loader.active {
+    display: block;
+}
+
 .container {
     width: 80%;
     margin: 20px auto 0;
@@ -26,13 +41,13 @@ td {
 
 }
 
-.albumContainer {
+.albumContainer, .tableContainer {
     overflow: hidden;
     width: 80%;
     margin: 0 auto;
 }
 
-.albumContainer .container {
+.albumContainer .container, .tableContainer .container {
     height: 490px;
     width: 100%;
     overflow-y: scroll;
