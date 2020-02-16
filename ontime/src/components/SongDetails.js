@@ -34,6 +34,7 @@ export class SongDetails extends React.PureComponent {
     componentDidMount() {
         this._isMounted = true;
         this.props.setPlaylist(this.props.songs);
+        this.props.isNowPlaying && this.props.isAudioPlayerPlaying && this.setState({isPlaying: true});
     }
 
     componentWillUnmount() {
