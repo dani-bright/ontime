@@ -44,14 +44,13 @@ export class SongDetails extends React.PureComponent {
         this._isMounted && this.props.isNowPlaying ?
             this.setState({
                 audio: this.refs.audio2.audioEl,
-                isPlaying: true,
             }, () => {
                 setInterval(() => {
                     this.getCurrentTime();
                 }, 1000);
             }) : this.setState({
-                audio: this.refs.audio2.audioEl,
                 isPlaying: false,
+                audio: this.refs.audio2.audioEl,
                 percentage: 0,
                 currentTime: '00:00'
             });
@@ -88,8 +87,8 @@ export class SongDetails extends React.PureComponent {
         const {isPlaying} = this.state;
         this.props.setNowPlaying(this.props.song);
 
-        this._isMounted && this.setState({isPlaying: true}, () => {
-            if ((!isPlaying && this._isMounted) || (this.props.isNowPlaying && isPlaying)) {
+        this._isMounted && this.setState({isPlaying: !isPlaying}, () => {
+            if ((!isPlaying && this._isMounted) && this.props.isNowPlaying) {
                 audioPlayer.play();
                 const actualSongIndex = this.props.playlist.findIndex(song => song.id === this.props.song.id);
                 //setting the mainPlayer progress bar with the actual song progressBar
