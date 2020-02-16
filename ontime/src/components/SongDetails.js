@@ -61,7 +61,7 @@ export class SongDetails extends React.PureComponent {
         const audio = e.target;
         const minutes = audio ? Math.floor(audio.duration / 60) : 0;
         const seconds = audio ? audio.duration - minutes * 60 : 0;
-        this.setState({
+        this._isMounted && this.setState({
             duration: `${minutes}:${seconds.toFixed(0)}`
         })
     };
@@ -88,7 +88,7 @@ export class SongDetails extends React.PureComponent {
         const {isPlaying} = this.state;
         this.props.setNowPlaying(this.props.song);
 
-        this.setState({isPlaying: true}, () => {
+        this._isMounted && this.setState({isPlaying: true}, () => {
             if ((!isPlaying && this._isMounted) || (this.props.isNowPlaying && isPlaying)) {
                 audioPlayer.play();
                 const actualSongIndex = this.props.playlist.findIndex(song => song.id === this.props.song.id);

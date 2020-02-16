@@ -24,6 +24,7 @@ import AuthorService from "./services/AuthorService";
 import './styles/Button.css'
 import {setPlaylist} from "./action-creator/playlist/setPlaylist";
 import {SmartAdmin} from "./pages/Admin";
+import Search from "./pages/Search";
 
 class App extends React.PureComponent {
     async componentDidMount() {
@@ -54,6 +55,7 @@ class App extends React.PureComponent {
                     <MenuProvider>
                         <SmartHeader/>
                         <Route exact path="/" component={SmartHome}/>
+                        <Route exact path="/search" component={Search}/>
                         <Route exact path="/albums" component={SmartAlbums}/>
                         <Route exact path="/songs" component={SmartSongs}/>
                         <Route exact path="/trending" component={SmartTrending}/>

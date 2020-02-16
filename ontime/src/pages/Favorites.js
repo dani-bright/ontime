@@ -11,6 +11,8 @@ import {setPlaylist} from "../action-creator/playlist/setPlaylist";
 import {getFavoritesSongs} from "../selectors/getFavoritesSongs";
 
 export class Favorites extends React.PureComponent {
+    //since songs are not persist in redux state (too much weight) do not reload this page
+
     componentDidMount() {
         this.props.setPlaylist(this.props.songs);
     }
@@ -22,6 +24,8 @@ export class Favorites extends React.PureComponent {
                 {
                     this.props.user ? (
                         <div className="container">
+                            <SmartHeading pageTitle="Favorites" icon={faThumbsUp}/>
+
                             {favorites.map((favorite, index) => (
                                 <div key={favorite.id}>
                                     <SmartSongDetail idSong={favorite.songId}/>

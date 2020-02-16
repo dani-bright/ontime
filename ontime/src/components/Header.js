@@ -2,7 +2,6 @@ import * as React from "react";
 import {useContext} from "react";
 import {Link} from "react-router-dom";
 import '../styles/Header.css';
-import SearchBar from "./form/SearchBar";
 import {
     faAlignJustify,
     faSignInAlt,
@@ -20,6 +19,8 @@ import {setUser} from "../action-creator/users/user/setUser";
 import {isAdmin} from "../selectors/user/isAdmin";
 import {getUser} from "../selectors/user/getUser";
 import {SmartUserForm} from "./form/UserForm";
+import {getSongs} from "../selectors/song/getSongs";
+import SmartSearchBar from "./form/SearchBar";
 
 
 const Header = (props) => {
@@ -51,7 +52,7 @@ const Header = (props) => {
                 <FontAwesomeIcon icon={faAlignJustify} size="2x" style={{color: 'white'}}/>
             </div>
             <Link className="logo" to="/"><img src={require("../assets/images/logo.png")} alt=""/></Link>
-            <SearchBar/>
+            <SmartSearchBar content={props.songs}/>
             {
                 props.isAdmin ? (
                     <>
@@ -90,6 +91,7 @@ const Header = (props) => {
 };
 const mapStateToProps = (state) => {
     return {
+        songs: getSongs(state),
         user: getUser(state),
         isAdmin: isAdmin(state),
     }
