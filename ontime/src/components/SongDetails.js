@@ -42,19 +42,25 @@ export class SongDetails extends React.PureComponent {
     }
 
     componentDidUpdate() {
-        this._isMounted && this.props.isNowPlaying ?
-            this.setState({
-                audio: this.refs.audio2.audioEl,
-            }, () => {
-                setInterval(() => {
-                    this.getCurrentTime();
-                }, 1000);
-            }) : this.setState({
-                isPlaying: false,
-                audio: this.refs.audio2.audioEl,
-                percentage: 0,
-                currentTime: '00:00'
-            });
+        if (this._isMounted) {
+            this.props.isNowPlaying && this.props.isAudioPlayerPlaying ?
+                this.setState({
+                    audio: this.refs.audio2.audioEl,
+                    isPlaying: true,
+                }, () => {
+                    setInterval(() => {
+                        this.getCurrentTime();
+                    }, 1000);
+                }) : !this.props.isNowPlaying ? this.setState({
+                    isPlaying: false,
+                    audio: this.refs.audio2.audioEl,
+                    percentage: 0,
+                    currentTime: '00:00'
+                }) : this.setState({
+                    isPlaying: false,
+                    audio: this.refs.audio2.audioEl,
+                });
+        }
     }
 
     getDuration = (e) => {
