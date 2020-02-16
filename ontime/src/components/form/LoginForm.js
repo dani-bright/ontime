@@ -1,5 +1,5 @@
 import * as React from "react";
-import UserService from "../../services/UserService";
+import UserServiceInstance from "../../services/UserService";
 import {PopupContext} from "../../contexts/PopupContext";
 import '../../styles/Form.css';
 import {connect} from "react-redux";
@@ -14,7 +14,7 @@ export class LoginForm extends React.PureComponent {
 
     submit = async (e) => {
         e.preventDefault();
-        const response = await UserService.auth(this.state);
+        const response = await UserServiceInstance.auth(this.state);
         if (response.ok) {
             const data = await response.json();
             localStorage.setItem('token', data.token);

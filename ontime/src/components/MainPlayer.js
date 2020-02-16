@@ -10,7 +10,7 @@ import SongService from "../services/SongService";
 import {setNowPlaying} from "../action-creator/setNowPlaying";
 import {setAudioPlayer} from "../action-creator/audioPlayer/setAudioPlayer";
 import {getUser} from "../selectors/user/getUser";
-import FavoriteService from "../services/FavoriteService";
+import FavoriteServiceInstance from "../services/FavoriteService";
 import {setUser} from "../action-creator/users/user/setUser";
 import {getUserFavorites} from "../selectors/user/getUserFavorites";
 import {getAudioPlayer} from "../selectors/audio/getAudioPlayer";
@@ -50,7 +50,7 @@ class MainPlayer extends React.PureComponent {
     checkFavorite = async () => {
         //call service multiple time gotta find a way to improve it
         if (this.props.playlist.length) {
-            const getResponse = await FavoriteService.findOne(this.props.user.id, this.props.nowPlaying.id);
+            const getResponse = await FavoriteServiceInstance.findOne(this.props.user.id, this.props.nowPlaying.id);
             const favoriteData = await getResponse.json();
             return favoriteData.favorites
         }
@@ -73,7 +73,7 @@ class MainPlayer extends React.PureComponent {
         };
         const favorite = await this.checkFavorite();
         if (favorite) {
-            await FavoriteService.remove(favorite.id);
+            await FavoriteServiceInstance.remove(favorite.id);
             const toRemove = this.props.favorites.findIndex(fav => fav.songId === favorite.songId);
 
             this.props.favorites.splice(toRemove, 1)
@@ -87,7 +87,7 @@ class MainPlayer extends React.PureComponent {
             })
 
         } else {
-            const newFavoriteResponse = await FavoriteService.create(body);
+            const newFavoriteResponse = await FavoriteServiceInstance.create(body);
             const data = await newFavoriteResponse.json();
             this.setState({isFavorite: true})
             //refresh favorites page when adding favorite

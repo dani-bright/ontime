@@ -1,7 +1,9 @@
+import Service from "./Service";
+
 const baseUrl = "http://localhost:3080/favorites";
 
-class FavoriteService {
-    static async findAll(userId) {
+class FavoriteService extends Service {
+    async findAll(userId) {
         const init = {
             method: "GET",
             headers: {
@@ -12,20 +14,7 @@ class FavoriteService {
         return await fetch(`${baseUrl}/${userId}`, init);
     }
 
-    static async create(body) {
-        const init = {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${localStorage.getItem("token")}`
-            },
-            body: JSON.stringify(body),
-
-        };
-        return await fetch(`${baseUrl}`, init);
-    }
-
-    static async findOne(userId, songId) {
+    async findOne(userId, songId) {
         const init = {
             method: "GET",
             headers: {
@@ -35,18 +24,8 @@ class FavoriteService {
         };
         return await fetch(`${baseUrl}/${userId}/${songId}`, init);
     }
-
-    static async remove(id) {
-        const init = {
-            method: "DELETE",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${localStorage.getItem("token")}`
-            }
-        };
-        return await fetch(`${baseUrl}/${id}`, init);
-    }
-
 }
 
-export default FavoriteService;
+const FavoriteServiceInstance = new FavoriteService(baseUrl);
+
+export default FavoriteServiceInstance;

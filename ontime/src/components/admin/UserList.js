@@ -1,5 +1,5 @@
 import * as React from "react";
-import UserService from "../../services/UserService";
+import UserServiceInstance from "../../services/UserService";
 import {SmartUser} from "./User";
 import {getUsers} from "../../selectors/getUsers";
 import {setUsers} from "../../action-creator/users/setUsers";
@@ -11,7 +11,7 @@ class UserList extends React.Component {
     static contextType = PopupContext;
 
     async componentDidMount() {
-        const userResponse = await UserService.findAll();
+        const userResponse = await UserServiceInstance.findAll();
         if (userResponse.ok) {
             const dataUser = await userResponse.json();
             this.props.setUsers(dataUser.users)
@@ -20,7 +20,7 @@ class UserList extends React.Component {
 
 
     deleteUser = async (id) => {
-        const response = await UserService.remove(id);
+        const response = await UserServiceInstance.remove(id);
         if (response.ok) {
             const index = this.props.users.findIndex(user => user.id === id);
             this.props.users.splice(index, 1);

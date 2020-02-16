@@ -1,65 +1,14 @@
+import Service from "./Service";
+
 const baseUrl = "http://localhost:3080/users";
 
-class UserService {
-
-    static async create(body) {
-        const init = {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${localStorage.getItem("token")}`
-            },
-            body: JSON.stringify(body)
-        };
-        return await fetch(`${baseUrl}`, init);
+class UserService extends Service {
+    constructor(baseUrl) {
+        super(baseUrl);
     }
 
-    static async findAll() {
-        const init = {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${localStorage.getItem("token")}`
-            }
-        };
-        return await fetch(`${baseUrl}`, init);
-    }
 
-    static async remove(id) {
-        const init = {
-            method: "DELETE",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${localStorage.getItem("token")}`
-            }
-        };
-        return await fetch(`${baseUrl}/${id}`, init);
-    }
-
-    static async findOne(id) {
-        const init = {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${localStorage.getItem("token")}`
-            }
-        };
-        return await fetch(`${baseUrl}/${id}`, init);
-    }
-
-    static async update(id, body) {
-        const init = {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${localStorage.getItem("token")}`
-            },
-            body: JSON.stringify(body)
-        };
-        return await fetch(`${baseUrl}/${id}`, init);
-    }
-
-    static async auth(body) {
+    async auth(body) {
         const init = {
             method: "POST",
             headers: {
@@ -72,4 +21,6 @@ class UserService {
     }
 }
 
-export default UserService;
+const UserServiceInstance = new UserService(baseUrl);
+
+export default UserServiceInstance;

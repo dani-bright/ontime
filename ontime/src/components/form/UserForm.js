@@ -1,5 +1,5 @@
 import * as React from "react";
-import UserService from "../../services/UserService";
+import UserServiceInstance from "../../services/UserService";
 import {PopupContext} from "../../contexts/PopupContext";
 import '../../styles/Form.css';
 import {connect} from "react-redux";
@@ -21,7 +21,7 @@ export class UserForm extends React.PureComponent {
     async componentDidMount() {
         const {userId} = this.props;
         if (userId) {
-            const response = await UserService.findOne(userId);
+            const response = await UserServiceInstance.findOne(userId);
             if (response.ok) {
                 let data = await response.json();
                 this.setState({
@@ -55,10 +55,10 @@ export class UserForm extends React.PureComponent {
             this.hideMessage();
             return false;
         }
-        const response = await UserService.update(id, this.state);
+        const response = await UserServiceInstance.update(id, this.state);
         const data = await response.json();
         if (response.ok) {
-            const newUsers = await UserService.findAll();
+            const newUsers = await UserServiceInstance.findAll();
             await newUsers.json().then((data) => {
                 //refresh list
                 this.props.setUsers(data.users);
@@ -85,7 +85,7 @@ export class UserForm extends React.PureComponent {
             this.hideMessage();
             return false;
         }
-        const response = await UserService.create(this.state);
+        const response = await UserServiceInstance.create(this.state);
         const data = await response.json();
         if (response.ok) {
             //close popup
