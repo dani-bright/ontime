@@ -124,6 +124,11 @@ class MainPlayer extends React.PureComponent {
 
     next = () => {
         const {audio, songsIndex} = this.state;
+        const actualSongIndex = this.props.playlist.findIndex(song => song.id === this.props.nowPlaying.id) + 1;
+        this.props.playlist.length !== actualSongIndex && this.props.setNowPlaying(this.props.playlist[actualSongIndex]);
+
+        // +1 because now playing hasn't change yet
+        this.props.setPlaylistIndex(actualSongIndex);
         this.setState({
             songsIndex: songsIndex + 1,
         }, () => {
@@ -131,11 +136,7 @@ class MainPlayer extends React.PureComponent {
             audio.load();
             audio.play();
         });
-        const actualSongIndex = this.props.playlist.findIndex(song => song.id === this.props.nowPlaying.id) + 1;
-        this.props.playlist.length !== actualSongIndex && this.props.setNowPlaying(this.props.playlist[actualSongIndex]);
 
-        // +1 because now playing hasn't change yet
-        this.props.setPlaylistIndex(actualSongIndex);
     };
 
     prev = () => {
@@ -185,20 +186,6 @@ class MainPlayer extends React.PureComponent {
             };
             await SongService.update(nowPlaying.id, body);
         }
-    };
-
-    playNext = (e) => {
-        const {audio, songsIndex} = this.state;
-        this.setState({
-            songsIndex: songsIndex + 1,
-        }, () => {
-            audio.play();
-        });
-        const actualSongIndex = this.props.playlist.findIndex(song => song.id === this.props.nowPlaying.id) + 1;
-        this.props.playlist.length !== actualSongIndex && this.props.setNowPlaying(this.props.playlist[actualSongIndex]);
-
-        // +1 because now playing hasn't change yet
-        this.props.setPlaylistIndex(actualSongIndex);
     };
 
 
@@ -251,7 +238,7 @@ class MainPlayer extends React.PureComponent {
                             title="song"
                             onPlay={this.play}
                             onPause={this.stop}
-                            onEnded={this.playNext}
+                            onEnded={this.next}
                             onLoadedMetadata={this.getDuration} onListen={this.getCurrentTime} listenInterval={1000}/>
                     ) : (<ReactAudioPlayer
                         ref="audio"/>)
