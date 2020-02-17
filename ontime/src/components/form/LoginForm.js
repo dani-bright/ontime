@@ -34,7 +34,6 @@ export class LoginForm extends React.PureComponent {
 
     render() {
         return (
-            <div className="container">
                 <form onSubmit={this.submit}>
                     <div>
                         <label>username</label>
@@ -48,7 +47,6 @@ export class LoginForm extends React.PureComponent {
 
                     <button className="btn btn-primary">Connexion</button>
                 </form>
-            </div>
         );
     }
 }

@@ -108,7 +108,6 @@ export class UserForm extends React.PureComponent {
         const {error, errorColor, name, username, password, email, showError} = this.state;
         const errorMsg = error ? <p className={`message ${showError && 'active'} ${errorColor}`}>{error}</p> : null;
         return (
-            <div className="container">
                 <form onSubmit={this.submit}>
                     <div>
                         <label>name</label>
@@ -132,7 +131,6 @@ export class UserForm extends React.PureComponent {
                     {errorMsg}
                     <button className="btn btn-primary">Update</button>
                 </form>
-            </div>
         );
     }
 }

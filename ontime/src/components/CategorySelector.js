@@ -12,7 +12,7 @@ export class CategorySelector extends React.PureComponent {
     render() {
         return (
             <select name="" id="" onChange={this.onCategorySelected}>
-                <option value=""></option>
+                <option value="0"></option>
                 {this.props.categories.map(category => (
                     <option value={category.id} key={category.id}>{category.name}</option>
                 ))}
