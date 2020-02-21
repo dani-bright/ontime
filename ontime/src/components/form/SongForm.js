@@ -37,24 +37,15 @@ export class SongForm extends React.PureComponent {
         }
     }
 
-    onPhotoSelected = (e) => {
+    onFileSelected = (e) => {
         const file = e.target.files[0];
         if (file) {
             const reader = new FileReader();
             reader.onload = (event) => {
-                this.setState({img: event.target.result})
+                file.type.search('image') !== -1 ? this.setState({img: event.target.result}) : this.setState({audio: event.target.result})
             };
             reader.readAsDataURL(file);
         }
-
-    };
-    onAudioSelected = (e) => {
-        const file = e.target.files[0];
-        const reader = new FileReader();
-        reader.onload = (event) => {
-            this.setState({audio: event.target.result})
-        };
-        reader.readAsDataURL(file);
     };
 
     create = async () => {
@@ -150,7 +141,7 @@ export class SongForm extends React.PureComponent {
         const errorMsg = error ? <p className={`message ${showError && 'active'} ${errorColor}`}>{error}</p> : null;
         const creationModeFields = !songId ? <>
             <label>song (required)</label>
-            <input type="file" onChange={this.onAudioSelected} accept=".mp3"/>
+            <input type="file" onChange={this.onFileSelected} accept=".mp3"/>
             <label>author (required)</label>
             <select onChange={this.handleChange} id="authorId">
                 <option value=""></option>
@@ -186,7 +177,7 @@ export class SongForm extends React.PureComponent {
                 <input type="text" onChange={this.handleChange} id="name" value={name}/>
                 <label>image</label>
                 {image}
-                <input type="file" onChange={this.onPhotoSelected} accept="image/png, image/jpeg"/>
+                <input type="file" onChange={this.onFileSelected} accept="image/png, image/jpeg"/>
                 {creationModeFields}
                 {errorMsg}
                 {displayButton}
