@@ -31,7 +31,7 @@ export default class AdminSongList extends React.Component {
     };
 
     editSong = async (id) => {
-        this.context.popup.show("Connexion",
+        this.context.popup.show("Song edition",
             <SmartSongForm songId={id}/>)
     };
 

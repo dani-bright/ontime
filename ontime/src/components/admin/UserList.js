@@ -29,7 +29,7 @@ class UserList extends React.Component {
     };
 
     editUser = async (id) => {
-        this.context.popup.show("Connexion",
+        this.context.popup.show("User edition",
             <SmartUserForm userId={id}/>)
     };
 

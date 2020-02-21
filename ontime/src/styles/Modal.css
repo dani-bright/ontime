@@ -18,11 +18,12 @@
 }
 
 .header {
-    line-height: 1;
+    line-height: 40px;
     height: 40px;
     background: #46d2e9;
-    color: #000;
+    color: #fff;
     width: 100%;
+    font-size: 16px;
     z-index: 1;
     display: flex;
     justify-content: space-between;
@@ -33,7 +34,7 @@
     z-index: 1;
     line-height: 1;
     width: 100%;
-    background: #eee;
+    background: #fff;
     min-height: 100px;
     padding: 15px
 }
