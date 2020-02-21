@@ -31,7 +31,8 @@ class MainPlayer extends React.PureComponent {
         songsIndex: 0,
     };
 
-    async componentDidUpdate() {
+
+    async componentDidUpdate(prevProps, prevState) {
         this.setState({
             audio: this.refs.audio.audioEl
         });
@@ -41,20 +42,18 @@ class MainPlayer extends React.PureComponent {
         }
 
         //no favorite if there is no user
-        if (this.props.user) {
+        if (this.props.user && prevProps.nowPlaying !== this.props.nowPlaying) {
+            await this.checkFavorite() ? this.setState({isFavorite: true}) : this.setState({isFavorite: false})
+        } else if (this.props.user && !this.state.isPlaying) {
             await this.checkFavorite() ? this.setState({isFavorite: true}) : this.setState({isFavorite: false})
         }
 
     }
 
     checkFavorite = async () => {
-        //call service multiple time gotta find a way to improve it
-        if (this.props.playlist.length) {
-            const getResponse = await FavoriteServiceInstance.findOne(this.props.user.id, this.props.nowPlaying.id);
-            const favoriteData = await getResponse.json();
-            return favoriteData.favorites
-        }
-
+        const getResponse = await FavoriteServiceInstance.findOne(this.props.user.id, this.props.nowPlaying.id);
+        const favoriteData = await getResponse.json();
+        return favoriteData.favorites
     };
 
     togglePlay = () => {
