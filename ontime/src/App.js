@@ -55,13 +55,13 @@ class App extends React.PureComponent {
                     <MenuProvider>
                         <SmartHeader/>
                         <Route exact path="/" component={SmartHome}/>
-                        <Route exact path="/search" component={Search}/>
-                        <Route exact path="/albums" component={SmartAlbums}/>
-                        <Route exact path="/songs" component={SmartSongs}/>
-                        <Route exact path="/trending" component={SmartTrending}/>
-                        <Route exact path="/favorites" component={SmartFavorites}/>
-                        <Route exact path="/uploads" component={SmartUploads}/>
-                        <Route exact path="/admin" component={SmartAdmin}/>
+                        <Route path="/search" component={Search}/>
+                        <Route path="/albums" component={SmartAlbums}/>
+                        <Route path="/songs" component={SmartSongs}/>
+                        <Route path="/trending" component={SmartTrending}/>
+                        <Route path="/favorites" component={SmartFavorites}/>
+                        <Route path="/uploads" component={SmartUploads}/>
+                        <Route path="/admin" component={SmartAdmin}/>
                         <SmartMainPlayer/>
                     </MenuProvider>
                 </BrowserRouter>

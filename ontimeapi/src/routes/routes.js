@@ -13,7 +13,6 @@ router.post('/users/authenticate', UserController.authenticate);
 router.post('/users', UserController.create);
 router.get('/users/:id', UserController.findOne);
 router.delete('/users/:id', UserController.delete);
-// router.delete('/users/:id', Auth.auth(10), UserController.delete);
 router.put('/users/:id', UserController.update);
 
 router.get('/authors', AuthorController.findAll);
