@@ -44,7 +44,7 @@ class MainPlayer extends React.PureComponent {
         //no favorite if there is no user
         if (this.props.user && prevProps.nowPlaying !== this.props.nowPlaying) {
             await this.checkFavorite() ? this.setState({isFavorite: true}) : this.setState({isFavorite: false})
-        } else if (this.props.user && !this.state.isPlaying) {
+        } else if (this.props.user && !this.state.isPlaying && this.props.nowPlaying) {
             await this.checkFavorite() ? this.setState({isFavorite: true}) : this.setState({isFavorite: false})
         }
 
