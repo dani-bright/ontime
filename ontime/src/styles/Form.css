@@ -35,7 +35,7 @@
     color: mediumseagreen;
 }
 
-.form input, form select, input {
+.form input, form select, form input {
     position: relative;
     padding: 4px;
     display: block;

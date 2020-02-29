@@ -118,7 +118,7 @@ export class SongDetails extends React.PureComponent {
         const playPauseIcon = isPlaying ? faPause : faPlayCircle;
 
         const displayImg = song.img ?
-            <div className="imgContainer" style={{background: `url(${song.img}) center center`}}></div>
+            <div className="imgContainer" style={{background: `url(${song.img}) center center /cover`}}></div>
             : <div className="imgContainer"></div>
 
         return (
