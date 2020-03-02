@@ -40,7 +40,7 @@ class Canvas extends React.PureComponent {
             x_end = center_x + Math.cos(rads * i) * (radius + bar_height);
             y_end = center_y + Math.sin(rads * i) * (radius + bar_height);
 
-            if (context.frequency_array[i] > 252) {
+            if (context.frequency_array[i] > 250) {
                 this.drawBar(x, y, x_end, y_end, context.frequency_array[i], ctx, canvas);
                 this.drawBar(x, y, x_end, y_end, context.frequency_array[i], ctx, canvas);
                 this.drawBar(x, y, x_end, y_end, context.frequency_array[i], ctx, canvas);
