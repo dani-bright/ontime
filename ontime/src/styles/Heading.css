@@ -1,20 +1,21 @@
 .heading {
     position: relative;
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
     align-items: center;
     width: 100%;
-    background: #46d2e9;
-    color: #000;
+    background: #fff;
+    color: #46d2e9;
     height: 60px;
     margin: 50px 0 30px;
+    border: 2px solid #46d2e9;
 }
 
 .headingTitle {
+    margin-left: 15px;
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    color: #fff;
 }
 
 .headingTitle p {

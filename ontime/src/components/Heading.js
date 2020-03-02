@@ -14,11 +14,11 @@ export class Heading extends React.PureComponent {
         return (
             <div className="heading">
                 <div className="headingTitle">
-                    <FontAwesomeIcon icon={icon} size="lg" style={{color: '#fff'}}/>
+                    <FontAwesomeIcon icon={icon} size="lg" style={{color: '#46d2e9'}}/>
                     <p>{pageTitle}</p>
                 </div>
-                <div style={{textAlign: "center"}}>
-                    <p style={{margin: '0', color: '#fff'}}>{categoryName}</p>
+                <div style={{textAlign: "center", marginRight:'15px'}}>
+                    <p style={{margin: '0', color: '#46d2e9'}}>{categoryName}</p>
                     <SmartCategorySelector/>
                 </div>
             </div>
