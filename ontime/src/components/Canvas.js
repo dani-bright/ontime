@@ -7,7 +7,7 @@ let ctx, x_end, y_end, bar_height;
 const width = 300;
 const height = window.innerHeight;
 const bars = 200;
-const bar_width = 10;
+const bar_width = 2;
 const radius = 0;
 const center_x = width / 2;
 const center_y = height / 2;
@@ -65,7 +65,7 @@ class Canvas extends React.PureComponent {
 
         const lineColor = "rgb(" + frequency + ", " + 210 + ", " + 233 + ")";
         const lineColor2 = "rgb(" + frequency + ", " + 84 + ", " + 246 + ")";
-        if (frequency > 250) {
+        if (frequency > 230) {
             ctx.strokeStyle = lineColor2
         } else {
             ctx.strokeStyle = lineColor
