@@ -19,6 +19,7 @@ import {getPlaylistIndex} from "../selectors/audio/getPlaylistIndex";
 import {setPlaylistIndex} from "../action-creator/playlist/setPlaylistIndex";
 import {setIsPlaying} from "../action-creator/audioPlayer/setIsPlaying";
 import {setCurrentTime} from "../action-creator/audioPlayer/setCurrentTime";
+import {setContext} from "../action-creator/audioPlayer/setContext";
 
 class MainPlayer extends React.PureComponent {
     state = {
@@ -39,6 +40,17 @@ class MainPlayer extends React.PureComponent {
 
         if (!this.props.audioPlayer) {
             this.props.setAudioPlayer(this.refs.audio.audioEl);
+            const context = new AudioContext();
+            const source = context.createMediaElementSource(this.refs.audio.audioEl);
+            const analyser = context.createAnalyser();
+            const frequency_array = new Uint8Array(analyser.frequencyBinCount);
+            const contextDetails = {
+                context,
+                source,
+                analyser,
+                frequency_array
+            };
+            this.props.setContext(contextDetails);
         }
 
         //no favorite if there is no user
@@ -267,6 +279,7 @@ const mapDispatchToProps = (dispatch) => {
         setAudioPlayer: (audioTag) => dispatch(setAudioPlayer(audioTag)),
         setUser: (user) => dispatch(setUser(user)),
         setIsPlaying: (isPlaying) => dispatch(setIsPlaying(isPlaying)),
+        setContext: (context) => dispatch(setContext(context)),
     }
 
 };

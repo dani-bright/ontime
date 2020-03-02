@@ -25,6 +25,7 @@ import './styles/Button.css'
 import {setPlaylist} from "./action-creator/playlist/setPlaylist";
 import {SmartAdmin} from "./pages/Admin";
 import Search from "./pages/Search";
+import {SmartVisualizer} from "./components/Visualizer";
 
 class App extends React.PureComponent {
     async componentDidMount() {
@@ -62,6 +63,7 @@ class App extends React.PureComponent {
                         <Route path="/favorites" component={SmartFavorites}/>
                         <Route path="/uploads" component={SmartUploads}/>
                         <Route path="/admin" component={SmartAdmin}/>
+                        <SmartVisualizer/>
                         <SmartMainPlayer/>
                     </MenuProvider>
                 </BrowserRouter>
