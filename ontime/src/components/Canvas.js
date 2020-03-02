@@ -65,12 +65,10 @@ class Canvas extends React.PureComponent {
 
         const lineColor = "rgb(" + frequency + ", " + 210 + ", " + 233 + ")";
         const lineColor2 = "rgb(" + frequency + ", " + 84 + ", " + 246 + ")";
-        if(frequency>250){
-            ctx.strokeStyle=lineColor2
-        }
-        else{
-            ctx.strokeStyle=lineColor
-
+        if (frequency > 250) {
+            ctx.strokeStyle = lineColor2
+        } else {
+            ctx.strokeStyle = lineColor
         }
         ctx.lineWidth = bar_width;
         ctx.beginPath();
