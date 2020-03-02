@@ -43,12 +43,20 @@ class MainPlayer extends React.PureComponent {
             const context = new AudioContext();
             const source = context.createMediaElementSource(this.refs.audio.audioEl);
             const analyser = context.createAnalyser();
+
+            source.connect(analyser);
+            analyser.connect(context.destination)
+
+            analyser.minDecibels = -90;
+            analyser.maxDecibels = -5;
+            //max = 32768
+            analyser.fftSize = 4096;
             const frequency_array = new Uint8Array(analyser.frequencyBinCount);
             const contextDetails = {
                 context,
                 source,
                 analyser,
-                frequency_array
+                frequency_array,
             };
             this.props.setContext(contextDetails);
         }
