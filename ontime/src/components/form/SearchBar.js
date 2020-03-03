@@ -3,28 +3,20 @@ import "../../styles/SearchBar.css"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSearch} from "@fortawesome/free-solid-svg-icons";
 import {withRouter} from "react-router-dom";
-import {getSongs} from "../../selectors/song/getSongs";
-import {connect} from "react-redux";
 
 class SearchBar extends React.PureComponent {
     state = {
-        initialSongs: [],
-        songs: [],
-        searchBar: "",
+        query: "",
     };
 
     redirect = (e) => {
         e.preventDefault();
-        const {searchBar} = this.state;
-        const songs = this.state.initialSongs;
-        const filteredItems = songs.filter(item => item.name.toLowerCase().search(searchBar.toLowerCase()) !== -1 || item.authors[0].name.toLowerCase().search(searchBar.toLowerCase()) !== -1)
-        this.setState({songs: filteredItems}, () => {
-            this.props.history.push({
-                pathname: "/search",
-                state: {
-                    songs: filteredItems
-                }
-            });
+        const {query} = this.state;
+        this.props.history.push({
+            pathname: "/search",
+            state: {
+                query: query
+            }
         });
     };
 
@@ -34,37 +26,24 @@ class SearchBar extends React.PureComponent {
         })
     };
 
-    componentDidUpdate() {
-        this.setState({
-            initialSongs: this.props.songs,
-            songs: this.props.songs
-        })
-    }
-
 
     render() {
-        const {searchBar} = this.state;
+        const {query} = this.state;
 
         return (
             <>
                 <form className="searchBar">
-                    <input type="text" placeholder="Search for a song or an artist" id="searchBar"
+                    <input type="text" placeholder="Search for a song or an artist" id="query"
                            onChange={this.handleChange}
-                           value={searchBar}/>
+                           value={query}/>
                     <button onClick={this.redirect}>
                         <FontAwesomeIcon icon={faSearch} size="lg"/>
                     </button>
                 </form>
-
             </>
         )
     }
 }
 
-const mapStateToProps = (state) => ({
-    songs: getSongs(state)
-});
 
-const SmartSearchBar = connect(mapStateToProps)(SearchBar)
-
-export default withRouter(SmartSearchBar);
+export default withRouter(SearchBar);

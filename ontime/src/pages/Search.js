@@ -1,9 +1,11 @@
 import * as React from "react";
 import {SmartSongDetail} from "../components/SongDetails";
+import {getSongs} from "../selectors/song/getSongs";
+import {connect} from "react-redux";
 
 export default class Search extends React.PureComponent {
     state = {
-        songs: []
+        query: ""
     };
 
     componentDidMount() {
@@ -12,22 +14,24 @@ export default class Search extends React.PureComponent {
             this.props.history.push('/');
             return false;
         }
-        const {songs} = this.props.location.state;
-        this.props.location.state.songs && this.setState({songs})
+        const {query} = this.props.location.state;
+        this.props.location.state.query && this.setState({query})
     }
 
     componentDidUpdate() {
-        const {songs} = this.props.location.state;
-        songs && this.setState({songs})
+        const {query} = this.props.location.state;
+        query && this.setState({query})
     }
 
     render() {
-        const {songs} = this.state;
+        const {songs} = this.props;
+        const {query} = this.state;
+        const filteredSongs = songs.filter(item => item.name.toLowerCase().search(query.toLowerCase()) !== -1 || item.authors[0].name.toLowerCase().search(query.toLowerCase()) !== -1)
         return (
             <div className="container">
                 {
-                    songs.length ? (
-                        songs.map(song => <SmartSongDetail key={song.id} idSong={song.id}/>)
+                    filteredSongs.length ? (
+                        filteredSongs.map(song => <SmartSongDetail key={song.id} idSong={song.id}/>)
                     ) : (<p
                         style={{
                             color: 'black', position: 'fixed',
@@ -40,3 +44,9 @@ export default class Search extends React.PureComponent {
         )
     }
 }
+
+const mapStateToProps = (state) => ({
+    songs: getSongs(state)
+});
+
+export const SmartSearch = connect(mapStateToProps)(Search);

@@ -20,7 +20,7 @@ import {isAdmin} from "../selectors/user/isAdmin";
 import {getUser} from "../selectors/user/getUser";
 import {SmartUserForm} from "./form/UserForm";
 import {getSongs} from "../selectors/song/getSongs";
-import SmartSearchBar from "./form/SearchBar";
+import SearchBar from "./form/SearchBar";
 
 
 const Header = (props) => {
@@ -55,7 +55,7 @@ const Header = (props) => {
                 <Link className="logo" to="/"><img src={require("../assets/images/logo.png")} alt=""/></Link>
             </div>
 
-            <SmartSearchBar content={props.songs}/>
+            <SearchBar/>
             <div className="right">
                 {
                     props.isAdmin ? (

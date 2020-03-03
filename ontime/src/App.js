@@ -24,7 +24,7 @@ import AuthorService from "./services/AuthorService";
 import './styles/Button.css'
 import {setPlaylist} from "./action-creator/playlist/setPlaylist";
 import {SmartAdmin} from "./pages/Admin";
-import Search from "./pages/Search";
+import Search, {SmartSearch} from "./pages/Search";
 import {SmartVisualizer} from "./components/Visualizer";
 
 class App extends React.PureComponent {
@@ -56,7 +56,7 @@ class App extends React.PureComponent {
                     <MenuProvider>
                         <SmartHeader/>
                         <Route exact path="/" component={SmartHome}/>
-                        <Route path="/search" component={Search}/>
+                        <Route path="/search" component={SmartSearch}/>
                         <Route path="/albums" component={SmartAlbums}/>
                         <Route path="/songs" component={SmartSongs}/>
                         <Route path="/trending" component={SmartTrending}/>
