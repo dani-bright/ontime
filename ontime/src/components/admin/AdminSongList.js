@@ -6,8 +6,11 @@ import {getSongs} from "../../selectors/song/getSongs";
 import SongService from "../../services/SongService";
 import {SmartSongForm} from "../form/SongForm";
 import {SmartAdminSong} from "./AdminSong";
+import FavoriteServiceInstance from "../../services/FavoriteService";
 import AlbumService from "../../services/AlbumService";
 import {setAlbums} from "../../action-creator/albums/setAlbums";
+import {getUser} from "../../selectors/user/getUser";
+import {setUser} from "../../action-creator/users/user/setUser";
 
 export default class AdminSongList extends React.Component {
     static contextType = PopupContext;
@@ -27,6 +30,21 @@ export default class AdminSongList extends React.Component {
             const albums = await AlbumService.findAll();
             const dataAlbums = await albums.json();
             this.props.setAlbums(dataAlbums.albums);
+
+            const isFavorite = await FavoriteServiceInstance.findOne(this.props.user.id, id);
+            const favorite = await isFavorite.json();
+            if (favorite) {
+                await FavoriteServiceInstance.remove(favorite.id);
+                const toRemove = this.props.favorites.findIndex(fav => fav.songId === id);
+                this.props.favorites.splice(toRemove, 1)
+
+                this.props.setUser({
+                    user: {
+                        ...this.props.user
+                    },
+                    favorites: this.props.favorites
+                });
+            }
         }
     };
 
@@ -71,7 +89,9 @@ export default class AdminSongList extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        songs: getSongs(state)
+        songs: getSongs(state),
+        user: getUser(state),
+        favorites: state.user.favorites
     }
 };
 
@@ -79,6 +99,7 @@ const mapDispatchToProps = (dispatch) => {
     return {
         setSongs: (songs) => dispatch(setSongs(songs)),
         setAlbums: (albums) => dispatch(setAlbums(albums)),
+        setUser: (user) => dispatch(setUser(user)),
     }
 };
 
