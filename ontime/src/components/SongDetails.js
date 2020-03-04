@@ -120,11 +120,8 @@ export class SongDetails extends React.PureComponent {
             <div className="imgContainer" style={{background: `url(${song.img}) center center /cover`}}></div>
             : <div className="imgContainer"></div>
 
-        const isNowPlaying = this.props.isNowPlaying ? "true" : "false"
-
         return (
             <div className="detailContainer">
-                <span style={{position: 'relative', right: "-580px"}}>{isNowPlaying}</span>
                 <div className="listened">
                     <p>{song.listened}</p>
                     <FontAwesomeIcon icon={faHeadphones} size="lg" style={{color: '#46d2e9'}}/>
