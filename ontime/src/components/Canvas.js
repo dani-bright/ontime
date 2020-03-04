@@ -48,7 +48,6 @@ class Canvas extends React.PureComponent {
                 this.drawBar(x, y, x_end, y_end, context.frequency_array[i], ctx, canvas);
                 this.drawBar(x, y, x_end, y_end, context.frequency_array[i], ctx, canvas);
                 this.drawBar(x, y, x_end, y_end, context.frequency_array[i], ctx, canvas);
-                this.drawBar(x, y, x_end, y_end, context.frequency_array[i], ctx, canvas);
             } else {
                 this.drawBar(x, y, x_end, y_end, context.frequency_array[i], ctx, canvas);
             }
@@ -67,10 +66,12 @@ class Canvas extends React.PureComponent {
         const lineColor2 = "rgb(" + frequency + ", " + 84 + ", " + 246 + ")";
         if (frequency > 230) {
             ctx.strokeStyle = lineColor2
+            ctx.lineWidth = 6
         } else {
             ctx.strokeStyle = lineColor
+            ctx.lineWidth = bar_width
         }
-        ctx.lineWidth = bar_width;
+
         ctx.beginPath();
         ctx.moveTo(x1, y1);
         ctx.lineTo(x2, y2);
