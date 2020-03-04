@@ -1,7 +1,6 @@
 import * as React from "react";
 import {connect} from "react-redux";
 import {SmartHeading} from "../components/Heading";
-import {SmartSongDetail} from "../components/SongDetails";
 import {getUser} from "../selectors/user/getUser";
 import {getUserFavorites} from "../selectors/user/getUserFavorites";
 import {getSelectedCategory} from "../selectors/category/getSelectedCategory";
@@ -9,29 +8,21 @@ import {getFavoritesByCategory} from "../selectors/getFavoritesByCategory";
 import {faThumbsUp} from "@fortawesome/free-solid-svg-icons";
 import {setPlaylist} from "../action-creator/playlist/setPlaylist";
 import {getFavoritesSongs} from "../selectors/getFavoritesSongs";
+import {SongList} from "../components/SongList";
 
 export class Favorites extends React.PureComponent {
-    //since songs are not persist in redux state (too much weight) do not reload this page
-
-    componentDidMount() {
-        this.props.setPlaylist(this.props.songs);
-    }
+    // componentDidMount() {
+    //     this.props.setPlaylist(this.props.songs);
+    // }
 
     render() {
-        const {favorites} = this.props;
+        const {favorites, user, songs} = this.props;
         return (
-            <>
+            <div className="container">
+                <SmartHeading pageTitle="Favorites" icon={faThumbsUp}/>
                 {
-                    this.props.user ? (
-                        <div className="container">
-                            <SmartHeading pageTitle="Favorites" icon={faThumbsUp}/>
-
-                            {favorites.map((favorite, index) => (
-                                <div key={favorite.id}>
-                                    <SmartSongDetail idSong={favorite.songId}/>
-                                </div>
-                            ))}
-                        </div>) : <p
+                    user && songs.length ? (
+                        <SongList songs={favorites}/>) : <p
                         style={{
                             color: 'black', position: 'fixed',
                             top: '50%',
@@ -39,7 +30,7 @@ export class Favorites extends React.PureComponent {
                             transform: 'translateX(-50%)', fontSize: '20px', textTransform: 'uppercase'
                         }}>You have to be logged in</p>
                 }
-            </>
+            </div>
         )
     }
 }

@@ -15,8 +15,6 @@ import {getNowPlaying} from "../selectors/audio/getNowPlaying";
 import {setPlaylistIndex} from "../action-creator/playlist/setPlaylistIndex";
 import {getCurrentTime} from "../selectors/audio/getCurrentTime";
 import {getPlaylist} from "../selectors/audio/getPlaylist";
-import {setPlaylist} from "../action-creator/playlist/setPlaylist";
-import {getSongs} from "../selectors/song/getSongs";
 
 export class SongDetails extends React.PureComponent {
     //prevent memory leak
@@ -33,7 +31,6 @@ export class SongDetails extends React.PureComponent {
 
     componentDidMount() {
         this._isMounted = true;
-        this.props.setPlaylist(this.props.songs);
         this.props.isNowPlaying && this.props.isAudioPlayerPlaying && this.setState({isPlaying: true});
     }
 
@@ -48,6 +45,7 @@ export class SongDetails extends React.PureComponent {
                     audio: this.refs.audio2.audioEl,
                     isPlaying: true,
                 }, () => {
+                    //setting the mainPlayer progress bar with the actual song progressBar
                     setInterval(() => {
                         this.getCurrentTime();
                     }, 1000);
@@ -89,16 +87,17 @@ export class SongDetails extends React.PureComponent {
 
     };
 
-    setNowPlaying = () => {
+    setNowPlaying = async () => {
         const {audioPlayer} = this.props;
         const {isPlaying} = this.state;
-        this.props.setNowPlaying(this.props.song);
+
+        //wait for the props to change before using it below (strangely had to do that only for favorites page)
+        await this.props.setNowPlaying(this.props.song);
 
         this._isMounted && this.setState({isPlaying: !isPlaying}, () => {
             if ((!isPlaying && this._isMounted) && this.props.isNowPlaying) {
                 audioPlayer.play();
                 const actualSongIndex = this.props.playlist.findIndex(song => song.id === this.props.song.id);
-                //setting the mainPlayer progress bar with the actual song progressBar
                 setInterval(() => {
                     this.getCurrentTime();
                 }, 1000);
@@ -121,8 +120,11 @@ export class SongDetails extends React.PureComponent {
             <div className="imgContainer" style={{background: `url(${song.img}) center center /cover`}}></div>
             : <div className="imgContainer"></div>
 
+        const isNowPlaying = this.props.isNowPlaying ? "true" : "false"
+
         return (
             <div className="detailContainer">
+                <span style={{position: 'relative', right: "-580px"}}>{isNowPlaying}</span>
                 <div className="listened">
                     <p>{song.listened}</p>
                     <FontAwesomeIcon icon={faHeadphones} size="lg" style={{color: '#46d2e9'}}/>
@@ -164,7 +166,6 @@ export class SongDetails extends React.PureComponent {
 const mapStateToProps = (state, ownProps) => {
     return {
         audioPlayerCurrentTime: getCurrentTime(state),
-        songs: getSongs(state),
         playlist: getPlaylist(state),
         nowPlaying: getNowPlaying(state),
         isNowPlaying: isNowPlaying(state)(ownProps.idSong),
@@ -174,11 +175,11 @@ const mapStateToProps = (state, ownProps) => {
         audioPlayer: getAudioPlayer(state),
     }
 };
+
 const mapDispatchToProps = (dispatch) => {
     return {
-        setNowPlaying: (song) => dispatch(setNowPlaying(song)),
+        setNowPlaying: async (song) => await dispatch(setNowPlaying(song)),
         setPlaylistIndex: (song) => dispatch(setPlaylistIndex(song)),
-        setPlaylist: (songs) => dispatch(setPlaylist(songs)),
     }
 };
 
