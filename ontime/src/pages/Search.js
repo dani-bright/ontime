@@ -2,6 +2,7 @@ import * as React from "react";
 import {SmartSongDetail} from "../components/SongDetails";
 import {getSongs} from "../selectors/song/getSongs";
 import {connect} from "react-redux";
+import {SongList} from "../components/SongList";
 
 export default class Search extends React.PureComponent {
     state = {
@@ -31,7 +32,7 @@ export default class Search extends React.PureComponent {
             <div className="container">
                 {
                     filteredSongs.length ? (
-                        filteredSongs.map(song => <SmartSongDetail key={song.id} idSong={song.id}/>)
+                        <SongList songs={filteredSongs}/>
                     ) : (<p
                         style={{
                             color: 'black', position: 'fixed',
