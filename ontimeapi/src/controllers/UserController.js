@@ -1,4 +1,4 @@
-import jwt from "jsonwebtoken";
+ import jwt from "jsonwebtoken";
 import User from "../models/User";
 import Role from "../models/Role";
 import {getUserFavorite} from "../helpers/getUserFavorite";

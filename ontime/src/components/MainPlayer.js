@@ -41,6 +41,7 @@ class MainPlayer extends React.PureComponent {
         if (!this.props.audioPlayer) {
             this.props.setAudioPlayer(this.refs.audio.audioEl);
             const context = new AudioContext();
+            context.resume();
             const source = context.createMediaElementSource(this.refs.audio.audioEl);
             const analyser = context.createAnalyser();
 

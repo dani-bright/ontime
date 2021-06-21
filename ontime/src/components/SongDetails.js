@@ -83,8 +83,6 @@ export class SongDetails extends React.PureComponent {
                 }
             );
         }
-
-
     };
 
     setNowPlaying = async () => {
